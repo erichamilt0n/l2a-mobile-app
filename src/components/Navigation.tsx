@@ -9,14 +9,12 @@ interface NavigationProps {
 export default function Navigation({ isOpen, onClose }: NavigationProps) {
   const location = useLocation()
   const navigate = useNavigate()
-  const [isHovered, setIsHovered] = useState(false)
+  const [activeItem, setActiveItem] = useState<string | null>(null);
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     onClose();
   };
 
