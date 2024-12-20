@@ -1,0 +1,65 @@
+name: Linear & SonarQube Integration
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  analysis:
+    name: Linear-SonarQube Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Important for SonarQube to get full SCM history
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run tests with coverage
+        run: npm run test:coverage
+        
+      - name: SonarQube Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=your-org-key
+            -Dsonar.projectKey=your-project-key
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            
+      - name: Get PR Details
+        id: pr
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "::set-output name=title::$(echo ${{ github.event.pull_request.title }} | grep -o 'LIN-[0-9]\+')"
+          
+      - name: Update Linear Issue
+        if: steps.pr.outputs.title != ''
+        run: |
+          curl -X POST 'https://api.linear.app/graphql' \
+          -H 'Authorization: ${{ secrets.LINEAR_API_KEY }}' \
+          -H 'Content-Type: application/json' \
+          --data-raw '{
+            "query": "mutation {
+              updateIssue(
+                id: \"${{ steps.pr.outputs.title }}\",
+                input: {
+                  description: \"SonarQube analysis completed. [View Results](https://sonarcloud.io/dashboard?id=${{ github.repository }})\"
+                }
+              ) {
+                success
+              }
+            }"
+          }'
