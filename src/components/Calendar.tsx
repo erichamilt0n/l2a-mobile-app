@@ -8,9 +8,8 @@ interface CalendarProps {
 }
 
 export default function Calendar({ onDateSelect, selectedDate = new Date(), minDate, maxDate }: CalendarProps) {
-  const [currentDate, setCurrentDate] = useState(selectedDate);
-  const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
-  const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(selectedDate.getMonth());
+  const [currentYear, setCurrentYear] = useState(selectedDate.getFullYear());
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',

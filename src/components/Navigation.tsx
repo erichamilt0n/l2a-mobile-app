@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 
 interface NavigationProps {
   isOpen: boolean;
@@ -9,7 +8,6 @@ interface NavigationProps {
 export default function Navigation({ isOpen, onClose }: NavigationProps) {
   const location = useLocation()
   const navigate = useNavigate()
-  const [activeItem, setActiveItem] = useState<string | null>(null);
 
   const handleMouseEnter = () => {
   };
