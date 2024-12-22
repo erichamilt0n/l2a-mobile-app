@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import SettingsLayout from '../components/SettingsLayout';
+import React, { useState } from 'react'
+import SettingsLayout from '../components/SettingsLayout'
 
 interface NotificationSetting {
-  id: string;
-  title: string;
-  description: string;
-  enabled: boolean;
+  id: string
+  title: string
+  description: string
+  enabled: boolean
 }
 
 export default function Notifications() {
@@ -34,15 +34,15 @@ export default function Notifications() {
       description: 'Receive notifications about reservations updates',
       enabled: true,
     },
-  ]);
+  ])
 
   const toggleNotification = (id: string) => {
-    setNotifications(notifications.map(notification => 
-      notification.id === id 
-        ? { ...notification, enabled: !notification.enabled }
-        : notification
-    ));
-  };
+    setNotifications(
+      notifications.map(notification =>
+        notification.id === id ? { ...notification, enabled: !notification.enabled } : notification
+      )
+    )
+  }
 
   return (
     <SettingsLayout
@@ -51,14 +51,16 @@ export default function Notifications() {
     >
       <div className="bg-white rounded-xl p-8">
         <div className="space-y-6">
-          {notifications.map((notification) => (
+          {notifications.map(notification => (
             <div key={notification.id} className="flex items-center justify-between py-4">
               <div>
                 <h3 className="text-gray-900 font-medium">{notification.title}</h3>
                 <p className="text-gray-500 text-sm">{notification.description}</p>
               </div>
               <button
-                onClick={() => toggleNotification(notification.id)}
+                onClick={() => {
+                  toggleNotification(notification.id)
+                }}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   notification.enabled ? 'bg-[#333e48]' : 'bg-gray-200'
                 }`}
@@ -74,5 +76,5 @@ export default function Notifications() {
         </div>
       </div>
     </SettingsLayout>
-  );
+  )
 }

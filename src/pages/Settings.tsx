@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 interface PaymentHistory {
-  id: string;
-  date: string;
-  description: string;
-  amount: number;
-  status: 'completed' | 'pending' | 'failed';
+  id: string
+  date: string
+  description: string
+  amount: number
+  status: 'completed' | 'pending' | 'failed'
 }
 
 export default function Settings() {
@@ -14,44 +14,44 @@ export default function Settings() {
       id: '1',
       date: 'Dec 15, 2024',
       description: 'Bay Reservation - 2 Hours',
-      amount: 120.00,
-      status: 'completed'
+      amount: 120.0,
+      status: 'completed',
     },
     {
       id: '2',
       date: 'Dec 10, 2024',
       description: 'Pro Shop Purchase - Golf Balls',
       amount: 45.99,
-      status: 'completed'
+      status: 'completed',
     },
     {
       id: '3',
       date: 'Dec 5, 2024',
       description: 'Monthly Membership Fee',
       amount: 199.99,
-      status: 'completed'
+      status: 'completed',
     },
     {
       id: '4',
       date: 'Nov 28, 2024',
       description: 'Table Reservation - Dinner',
-      amount: 85.00,
-      status: 'completed'
-    }
-  ];
+      amount: 85.0,
+      status: 'completed',
+    },
+  ]
 
   const getStatusColor = (status: PaymentHistory['status']) => {
     switch (status) {
       case 'completed':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800'
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800'
       case 'failed':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 text-red-800'
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800'
     }
-  };
+  }
 
   return (
     <div className="tablet:pl-16 tablet:group-hover:pl-64 transition-[padding] duration-200">
@@ -69,7 +69,12 @@ export default function Settings() {
               </div>
               <button className="w-full md:w-auto px-4 py-2 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors flex items-center justify-center">
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                  />
                 </svg>
                 Edit Profile
               </button>
@@ -117,8 +122,18 @@ export default function Settings() {
               </div>
               <div className="flex flex-col md:flex-row w-full md:w-auto space-y-3 md:space-y-0 md:space-x-3">
                 <button className="w-full md:w-auto px-4 py-2 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors flex items-center justify-center">
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                    />
                   </svg>
                   Edit Billing
                 </button>
@@ -129,7 +144,7 @@ export default function Settings() {
             </div>
 
             <div className="space-y-4">
-              {paymentHistory.map((payment) => (
+              {paymentHistory.map(payment => (
                 <div
                   key={payment.id}
                   className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 bg-dark-200 rounded-lg"
@@ -139,8 +154,12 @@ export default function Settings() {
                     <p className="text-sm text-gray-400">{payment.date}</p>
                   </div>
                   <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-4">
-                    <span className="text-lg font-medium text-white">${payment.amount.toFixed(2)}</span>
-                    <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(payment.status)}`}>
+                    <span className="text-lg font-medium text-white">
+                      ${payment.amount.toFixed(2)}
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm ${getStatusColor(payment.status)}`}
+                    >
                       {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
                     </span>
                   </div>
@@ -243,5 +262,5 @@ export default function Settings() {
         </div>
       </div>
     </div>
-  );
+  )
 }

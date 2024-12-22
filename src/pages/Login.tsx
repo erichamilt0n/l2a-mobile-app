@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
@@ -24,8 +24,18 @@ export default function Login() {
       <div className="w-full max-w-2xl bg-dark-100 p-12 rounded-2xl shadow-2xl">
         <div>
           <div className="w-24 h-24 mx-auto">
-            <svg className="w-full h-full text-[#333e48]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            <svg
+              className="w-full h-full text-[#333e48]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+              />
             </svg>
           </div>
           <h2 className="mt-8 text-center text-4xl font-bold text-white">Welcome Back</h2>
@@ -48,7 +58,9 @@ export default function Login() {
                 className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
                 placeholder="member@email.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => {
+                  setEmail(e.target.value)
+                }}
               />
             </div>
             <div>
@@ -62,7 +74,9 @@ export default function Login() {
                 className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => {
+                  setPassword(e.target.value)
+                }}
               />
             </div>
           </div>
