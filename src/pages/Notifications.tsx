@@ -58,7 +58,7 @@ export default function Notifications() {
                 <p className="text-gray-500 text-sm">{notification.description}</p>
               </div>
               <button
-                onClick={() => toggleNotification(notification.id)}
+                onClick={() => { toggleNotification(notification.id); }}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   notification.enabled ? 'bg-[#333e48]' : 'bg-gray-200'
                 }`}

@@ -16,7 +16,7 @@ We take the security of our project seriously. If you believe you have found a s
 ### How to Report a Security Vulnerability
 
 1. **Do Not** create a public GitHub issue for the vulnerability.
-2. Email your findings to security@example.com
+2. Email your findings to <security@example.com>
 3. Include detailed steps to reproduce the issue
 4. If possible, provide a proof of concept
 

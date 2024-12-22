@@ -52,7 +52,7 @@ export default function Preferences() {
                 <p className="text-gray-500 text-sm">{preference.description}</p>
               </div>
               <button
-                onClick={() => togglePreference(preference.id)}
+                onClick={() => { togglePreference(preference.id); }}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   preference.enabled ? 'bg-[#333e48]' : 'bg-gray-200'
                 }`}

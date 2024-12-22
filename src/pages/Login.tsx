@@ -48,7 +48,7 @@ export default function Login() {
                 className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
                 placeholder="member@email.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); }}
               />
             </div>
             <div>
@@ -62,7 +62,7 @@ export default function Login() {
                 className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => { setPassword(e.target.value); }}
               />
             </div>
           </div>

@@ -36,7 +36,7 @@ export default function Calendar({ onDateSelect, selectedDate = new Date(), minD
     const today = new Date();
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentYear, currentMonth, i);
-      const isDisabled = (minDate && date < minDate) || (maxDate && date > maxDate);
+      const isDisabled = (minDate && date < minDate) ?? (maxDate && date > maxDate);
       
       days.push({
         day: i,
@@ -108,7 +108,7 @@ export default function Calendar({ onDateSelect, selectedDate = new Date(), minD
         <div className="flex items-center space-x-2">
           <select
             value={currentMonth}
-            onChange={(e) => setCurrentMonth(parseInt(e.target.value))}
+            onChange={(e) => { setCurrentMonth(parseInt(e.target.value)); }}
             className="bg-dark-200 text-black px-3 py-1 rounded-xl"
           >
             {months.map((month, index) => (
@@ -117,7 +117,7 @@ export default function Calendar({ onDateSelect, selectedDate = new Date(), minD
           </select>
           <select
             value={currentYear}
-            onChange={(e) => setCurrentYear(parseInt(e.target.value))}
+            onChange={(e) => { setCurrentYear(parseInt(e.target.value)); }}
             className="bg-dark-200 text-black px-3 py-1 rounded-xl"
           >
             {Array.from({ length: 10 }, (_, i) => currentYear - 5 + i).map(year => (
@@ -147,7 +147,7 @@ export default function Calendar({ onDateSelect, selectedDate = new Date(), minD
         {generateCalendarDays().map((day, index) => (
           <button
             key={index}
-            onClick={() => handleDateClick(day.day, day.isCurrentMonth)}
+            onClick={() => { handleDateClick(day.day, day.isCurrentMonth); }}
             disabled={day.isDisabled}
             className={`
               p-2 rounded-xl text-center transition-colors

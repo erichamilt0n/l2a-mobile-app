@@ -27,7 +27,7 @@ function AppContent() {
       {!isLoginPage && (
         <>
           <Navigation isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
-          <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)} />
+          <MobileMenuButton onClick={() => { setIsMobileMenuOpen(true); }} />
           <div className="tablet:ml-16 tablet:group-hover:ml-64 transition-[margin] duration-200 ease-in-out">
             <div className="max-w-[1920px] w-full mx-auto px-4 tablet:px-8 py-6 tablet:py-10">
               <Routes>
