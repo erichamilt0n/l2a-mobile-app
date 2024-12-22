@@ -1,23 +1,16 @@
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence,
-# these owners will be requested for review when someone 
+# @erichamilt0n will be requested for review when someone 
 # opens a pull request.
-*       @organization/maintainers
+*       @erichamilt0n
 
-# CI/CD Configuration
-.github/workflows/    @organization/devops
-.semaphore/          @organization/devops
-vercel.json          @organization/devops
+# Mobile app specific files
+/src/   @erichamilt0n
+/app/   @erichamilt0n
 
-# Security and Code Quality
-.codacy.yml          @organization/security
-SECURITY.md          @organization/security
-package.json         @organization/security
+# CI/CD and GitHub Actions
+/.github/workflows/   @erichamilt0n
 
-# Documentation
-*.md                 @organization/docs
-LICENSE              @organization/legal
-
-# Source Code
-/src/               @organization/developers
-/test/              @organization/developers
+# Security and configuration
+/security/   @erichamilt0n
+*.config.js  @erichamilt0n
