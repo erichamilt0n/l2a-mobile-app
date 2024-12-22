@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: "CodeQL Security Scanning"
 
 on:
   push:
@@ -7,6 +7,8 @@ on:
     branches: [ "main" ]
   schedule:
     - cron: '30 1 * * 0'  # Run at 1:30 UTC every Sunday
+  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   analyze:
