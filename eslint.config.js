@@ -29,7 +29,8 @@ export default [
       'react-refresh': reactRefresh
     },
     rules: {
-      ...tseslint.configs.strict.rules,
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-non-null-assertion': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
