@@ -8,6 +8,11 @@ ignore:
         reason: 'No patch available, actively monitored'
         expires: 2024-03-23T00:00:00.000Z
         created: 2024-12-23T00:00:00.000Z
+  '.vercel/*':
+    - '*':
+        reason: 'Vercel build artifacts, not relevant for security scanning'
+        expires: 2025-12-23T00:00:00.000Z
+        created: 2024-12-23T00:00:00.000Z
 
 # patches apply the minimum changes required to fix a vulnerability
 patch: {}
@@ -15,3 +20,7 @@ patch: {}
 # Snyk can be configured to monitor your project's dependencies for new vulnerabilities
 # and send alerts when they are discovered.
 # For more information, see https://snyk.io/docs/using-snyk/
+
+exclude:
+  global:
+    - .vercel/
