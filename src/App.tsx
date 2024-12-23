@@ -3,7 +3,6 @@ import { useState } from 'react'
 import Stats from './pages/Stats'
 import Login from './pages/Login'
 import Events from './pages/Events'
-import Reservation from './pages/Reservation'
 import Reservations from './pages/Reservations'
 import Dashboard from './pages/Dashboard'
 import ProShop from './pages/ProShop'
@@ -38,7 +37,6 @@ function AppContent() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/events" element={<Events />} />
-                <Route path="/reservation" element={<Reservation />} />
                 <Route path="/reservations" element={<Reservations />} />
                 <Route path="/pro-shop" element={<ProShop />} />
                 <Route path="/settings" element={<Settings />} />

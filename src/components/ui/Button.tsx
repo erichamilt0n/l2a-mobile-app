@@ -1,13 +1,13 @@
-import React from 'react'
+import type { ButtonHTMLAttributes, FC } from 'react'
 import clsx from 'clsx'
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary'
   icon?: React.ReactNode
   fullWidth?: boolean
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   children,
   variant = 'primary',
   icon,
