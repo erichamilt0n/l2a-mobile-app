@@ -56,13 +56,10 @@ workflows:
   version: 2
   build_test_deploy:
     jobs:
-      - lint:
-          name: "ci/circleci: lint"
+      - lint
       - test:
-          name: "ci/circleci: test"
           requires:
-            - "ci/circleci: lint"
+            - lint
       - build:
-          name: "ci/circleci: build"
           requires:
-            - "ci/circleci: test"
+            - test
