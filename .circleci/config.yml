@@ -18,7 +18,7 @@ commands:
           override-ci-command: npm ci
 
 jobs:
-  ci/circleci: lint:
+  "ci/circleci: lint":
     executor: default
     steps:
       - checkout
@@ -30,7 +30,7 @@ jobs:
           name: Check Code Formatting
           command: npm run format:check
 
-  ci/circleci: test:
+  "ci/circleci: test":
     executor: default
     steps:
       - checkout
@@ -39,7 +39,7 @@ jobs:
           name: Run Tests
           command: npm test
 
-  ci/circleci: build:
+  "ci/circleci: build":
     executor: default
     steps:
       - checkout
@@ -56,13 +56,13 @@ workflows:
   version: 2
   build_test_deploy:
     jobs:
-      - ci/circleci: lint:
+      - "ci/circleci: lint":
           context: org-global
-      - ci/circleci: test:
-          context: org-global
-          requires:
-            - ci/circleci: lint
-      - ci/circleci: build:
+      - "ci/circleci: test":
           context: org-global
           requires:
-            - ci/circleci: test
+            - "ci/circleci: lint"
+      - "ci/circleci: build":
+          context: org-global
+          requires:
+            - "ci/circleci: test"
