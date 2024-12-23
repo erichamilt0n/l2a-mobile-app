@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary'
   icon?: React.ReactNode
   fullWidth?: boolean
