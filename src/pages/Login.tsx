@@ -1,3 +1,5 @@
+/// <reference types="react" />
+/// <reference types="DOM" />
 import { type FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

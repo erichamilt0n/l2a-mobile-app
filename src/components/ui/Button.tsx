@@ -1,3 +1,5 @@
+/// <reference types="react" />
+/// <reference types="DOM" />
 import type { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import clsx from 'clsx'
 
