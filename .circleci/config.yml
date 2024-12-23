@@ -15,7 +15,7 @@ commands:
       - node/install-packages:
           pkg-manager: npm
           cache-path: ~/project/node_modules
-          override-ci-command: npm ci
+          override-ci-command: npm install
 
 jobs:
   lint:
