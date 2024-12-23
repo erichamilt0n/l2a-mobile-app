@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1.0
-  snyk: snyk/snyk@2.0.2
 
 executors:
   default:
@@ -45,11 +44,18 @@ jobs:
     steps:
       - checkout
       - install_dependencies
-      - snyk/scan:
-          severity-threshold: high
-          monitor-on-build: true
-          fail-on-issues: true
-          token-variable: SNYK_TOKEN
+      - run:
+          name: Install Snyk
+          command: npm install -g snyk
+      - run:
+          name: Authenticate with Snyk
+          command: snyk auth $SNYK_TOKEN
+      - run:
+          name: Run Snyk Test
+          command: snyk test --severity-threshold=high
+      - run:
+          name: Monitor Project in Snyk
+          command: snyk monitor
 
   build:
     executor: default
