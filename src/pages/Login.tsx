@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setError('')
+    setError(null)
 
     // Check credentials
     if (email === 'member@email.com' && password === 'password') {
@@ -40,7 +40,7 @@ export default function Login() {
           </div>
           <h2 className="mt-8 text-center text-4xl font-bold text-white">Welcome Back</h2>
         </div>
-        {error && (
+        {error !== null && (
           <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-xl text-red-200">
             {error}
           </div>
