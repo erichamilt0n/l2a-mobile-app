@@ -1,5 +1,4 @@
 /// <reference types="react" />
-/// <reference types="DOM" />
 import type { ComponentPropsWithRef, ReactNode } from 'react'
 import clsx from 'clsx'
 
