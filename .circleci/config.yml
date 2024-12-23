@@ -46,7 +46,7 @@ jobs:
       - install_dependencies
       - run:
           name: Install Snyk
-          command: npm install -g snyk
+          command: sudo npm install -g snyk
       - run:
           name: Authenticate with Snyk
           command: snyk auth $SNYK_TOKEN
