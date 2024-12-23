@@ -43,11 +43,7 @@ export default function Reservations() {
             const date = new Date('2024-12-16T16:56:15-05:00')
             date.setDate(date.getDate() + index)
             return (
-              <Button
-                key={index}
-                variant={index === 0 ? 'primary' : 'secondary'}
-                fullWidth
-              >
+              <Button key={index} variant={index === 0 ? 'primary' : 'secondary'} fullWidth>
                 <div className="text-sm font-medium">
                   {date.toLocaleDateString('en-US', { weekday: 'short' })}
                 </div>
@@ -79,15 +75,41 @@ export default function Reservations() {
       <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Number of Guests</h2>
         <div className="flex items-center space-x-4">
-          <Button variant="secondary" icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>} />
+          <Button
+            variant="secondary"
+            icon={
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+              </svg>
+            }
+          />
           <span className="text-xl font-bold text-white">4</span>
-          <Button variant="secondary" icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>} />
+          <Button
+            variant="secondary"
+            icon={
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            }
+          />
         </div>
       </div>
 
       {/* Submit Button */}
       <Button variant="primary" fullWidth>
-        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
         Complete Reservation
       </Button>
     </div>
