@@ -4,9 +4,17 @@ engines:
     enabled: false
   duplication:
     enabled: true
+    config:
+      languages:
+        - typescript
+        - javascript
   metrics:
     enabled: true
   coverage:
+    enabled: true
+  eslint:
+    enabled: true
+  tslint:
     enabled: true
 exclude_paths:
   - 'node_modules/**'
@@ -15,8 +23,10 @@ exclude_paths:
   - 'coverage/**'
   - 'docs/**'
   - '*.min.js'
-  - '*.test.js'
-  - '*.spec.js'
+  - '*.test.{ts,tsx,js,jsx}'
+  - '*.spec.{ts,tsx,js,jsx}'
   - '.next/**'
   - 'build/**'
   - '.cache/**'
+  - 'vite.config.ts'
+  - '*.d.ts'
