@@ -2,10 +2,14 @@ name: Grafana Metrics
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   metrics:
     runs-on: ubuntu-24.04
+    # Skip on PR if it's from a fork for security
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
     steps:
       - uses: actions/checkout@v4
       
