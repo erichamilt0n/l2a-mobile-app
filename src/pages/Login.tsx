@@ -1,6 +1,6 @@
 /// <reference types="react" />
 /// <reference types="DOM" />
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, type FormEventHandler, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
@@ -9,7 +9,7 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     setError(null)
 

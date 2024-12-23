@@ -1,6 +1,6 @@
 /// <reference types="react" />
 /// <reference types="DOM" />
-import type { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import { type ButtonHTMLAttributes, type FC, type ReactNode } from 'react'
 import clsx from 'clsx'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
