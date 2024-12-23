@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1.0
+  snyk: snyk/snyk@2.0.2
 
 executors:
   default:
@@ -39,6 +40,17 @@ jobs:
           name: Run Tests
           command: npm test
 
+  security:
+    executor: default
+    steps:
+      - checkout
+      - install_dependencies
+      - snyk/scan:
+          severity-threshold: high
+          monitor-on-build: true
+          fail-on-issues: true
+          token-variable: SNYK_TOKEN
+
   build:
     executor: default
     steps:
@@ -60,6 +72,9 @@ workflows:
       - test:
           requires:
             - lint
-      - build:
+      - security:
           requires:
             - test
+      - build:
+          requires:
+            - security
