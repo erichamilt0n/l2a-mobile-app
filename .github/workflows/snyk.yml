@@ -59,4 +59,3 @@ jobs:
         if: github.event_name != 'pull_request'  # Only monitor on push to main
         with:
           command: monitor
-          args: --all-projects
