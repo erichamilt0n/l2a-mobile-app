@@ -1,11 +1,11 @@
 /// <reference types="react" />
 /// <reference types="DOM" />
-import type { ComponentPropsWithRef } from 'react'
+import type { ComponentPropsWithRef, ReactNode } from 'react'
 import clsx from 'clsx'
 
 type ButtonProps = ComponentPropsWithRef<'button'> & {
   variant?: 'primary' | 'secondary'
-  icon?: React.ReactNode
+  icon?: ReactNode
   fullWidth?: boolean
 }
 
