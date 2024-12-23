@@ -1,16 +1,17 @@
-# These owners will be the default owners for everything in
-# the repo. Unless a later match takes precedence,
-# @erichamilt0n will be requested for review when someone 
-# opens a pull request.
-*       @erichamilt0n
+# Global code owners
+* @erichamilt0n
 
-# Mobile app specific files
-/src/   @erichamilt0n
-/app/   @erichamilt0n
+# Frontend code
+/src/ @erichamilt0n
 
-# CI/CD and GitHub Actions
-/.github/workflows/   @erichamilt0n
+# Configuration files
+*.json @erichamilt0n
+*.yml @erichamilt0n
+*.yaml @erichamilt0n
+*.config.js @erichamilt0n
 
-# Security and configuration
-/security/   @erichamilt0n
-*.config.js  @erichamilt0n
+# GitHub Actions workflows
+/.github/workflows/ @erichamilt0n
+
+# CircleCI configuration
+/.circleci/ @erichamilt0n
