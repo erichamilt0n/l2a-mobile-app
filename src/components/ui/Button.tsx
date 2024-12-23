@@ -1,22 +1,22 @@
 /// <reference types="react" />
 /// <reference types="DOM" />
-import { type ButtonHTMLAttributes, type FC, type ReactNode } from 'react'
+import type { ComponentPropsWithRef } from 'react'
 import clsx from 'clsx'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ComponentPropsWithRef<'button'> & {
   variant?: 'primary' | 'secondary'
-  icon?: ReactNode
+  icon?: React.ReactNode
   fullWidth?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({
+export const Button = ({
   children,
   variant = 'primary',
   icon,
   fullWidth = false,
   className,
   ...props
-}) => {
+}: ButtonProps) => {
   return (
     <button
       className={clsx(
