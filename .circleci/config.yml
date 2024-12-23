@@ -57,15 +57,15 @@ workflows:
   build_test_deploy:
     jobs:
       - lint:
-          name: ci/circleci: lint
+          name: "ci/circleci: lint"
           context: org-global
       - test:
-          name: ci/circleci: test
+          name: "ci/circleci: test"
           context: org-global
           requires:
-            - ci/circleci: lint
+            - "ci/circleci: lint"
       - build:
-          name: ci/circleci: build
+          name: "ci/circleci: build"
           context: org-global
           requires:
-            - ci/circleci: test
+            - "ci/circleci: test"
