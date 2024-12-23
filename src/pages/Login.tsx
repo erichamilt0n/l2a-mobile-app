@@ -1,5 +1,3 @@
-/// <reference types="react" />
-/// <reference types="DOM" />
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

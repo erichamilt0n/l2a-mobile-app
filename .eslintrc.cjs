@@ -31,7 +31,7 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
-    'no-undef': 'off' // TypeScript handles this for us
+    'no-undef': 'off'
   },
   settings: {
     react: {
