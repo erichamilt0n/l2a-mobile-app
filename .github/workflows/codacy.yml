@@ -1,4 +1,4 @@
-name: Codacy Security Scan
+name: Codacy Static Code Analysis
 
 on:
   push:
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   codacy-security-scan:
-    name: Codacy Security Scan
+    name: Codacy Static Code Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
