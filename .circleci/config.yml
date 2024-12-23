@@ -58,14 +58,11 @@ workflows:
     jobs:
       - lint:
           name: "ci/circleci: lint"
-          context: org-global
       - test:
           name: "ci/circleci: test"
-          context: org-global
           requires:
             - "ci/circleci: lint"
       - build:
           name: "ci/circleci: build"
-          context: org-global
           requires:
             - "ci/circleci: test"
