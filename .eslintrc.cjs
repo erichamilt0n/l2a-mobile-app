@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 module.exports = {
   root: true,
   env: {
@@ -9,15 +11,13 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.json'],
-    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json']
   },
   plugins: ['react-refresh', '@typescript-eslint'],
   rules: {
@@ -25,8 +25,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    '@typescript-eslint/no-unsafe-member-access': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'off',
     'no-undef': 'off' // TypeScript handles this for us
   },
   settings: {

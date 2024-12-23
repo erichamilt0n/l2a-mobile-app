@@ -1,9 +1,9 @@
-import type { ButtonHTMLAttributes, FC } from 'react'
+import type { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import clsx from 'clsx'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary'
-  icon?: React.ReactNode
+  icon?: ReactNode
   fullWidth?: boolean
 }
 
