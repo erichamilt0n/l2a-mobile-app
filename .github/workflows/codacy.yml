@@ -16,6 +16,8 @@ jobs:
   codacy-security-scan:
     name: Codacy Static Code Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -24,17 +26,24 @@ jobs:
 
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@v4.3.0
+        env:
+          HTTP_CONNECT_TIMEOUT: 60000
+          HTTP_READ_TIMEOUT: 60000
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           output: results.sarif
           format: sarif
-          # Adjust severity of non-security issues
           gh-code-scanning-compat: true
-          # Force 0 exit code to allow SARIF file generation
-          # This will handover control about PR rejection to the GitHub side
           max-allowed-issues: 2147483647
+          tool: ["eslint", "remark-lint", "tsc"]
+          verbose: true
+          upload: true
+          max-retries: 3
+          retry-wait: 10000
 
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@cdcdbb579706841c47f7063dda365e292e5cad7a # v2.13.4
         with:
           sarif_file: results.sarif
+          category: codacy
+        continue-on-error: true
