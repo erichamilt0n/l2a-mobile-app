@@ -33,27 +33,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Clean any existing SARIF files
+        run: rm -f results.sarif || true
+
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@v4.3.0
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          HTTP_CONNECT_TIMEOUT: 60000
-          HTTP_READ_TIMEOUT: 60000
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           output: results.sarif
           format: sarif
           gh-code-scanning-compat: true
-          max-allowed-issues: 2147483647
-          tool: eslint,remark-lint,typescript
+          tools: eslint,remark-lint,typescript
           verbose: true
-          upload: true
-          max-retries: 3
-          retry-wait: 10000
 
       - name: Upload SARIF results file
         uses: github/codeql-action/upload-sarif@cdcdbb579706841c47f7063dda365e292e5cad7a # v2.13.4
         with:
           sarif_file: results.sarif
           category: codacy
-        continue-on-error: true
