@@ -6,6 +6,7 @@
   "git": {
     "deploymentEnabled": {
       "main": true,
+      "fix/eslint-errors": true,
       "development": false,
       "*": false
     }
