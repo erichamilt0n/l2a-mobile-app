@@ -45,7 +45,7 @@ jobs:
           output: results.sarif
           format: sarif
           gh-code-scanning-compat: true
-          tools: eslint,remark-lint,typescript
+          tools: eslint,markdownlint,stylelint
           verbose: true
 
       - name: Upload SARIF results file
