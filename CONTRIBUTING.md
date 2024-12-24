@@ -11,32 +11,32 @@ By participating in this project, you agree to abide by our Code of Conduct. Ple
 We use several tools to ensure code quality and security. Here's what happens when you make changes:
 
 ### 1. Code Quality Checks
-- **ESLint**: Checks your code for errors and style issues
-- **Prettier**: Makes sure your code follows our formatting rules
-- **TypeScript**: Ensures type safety across the codebase
-- **Codacy**: Gives your code a quality score and suggests improvements
+* **ESLint**: Checks your code for errors and style issues
+* **Prettier**: Makes sure your code follows our formatting rules
+* **TypeScript**: Ensures type safety across the codebase
+* **Codacy**: Gives your code a quality score and suggests improvements
 
 ### 2. Security Checks
-- **CodeQL**: Looks for security problems in your code
-- **Snyk**: Checks for vulnerabilities in our dependencies
-- **Secret Scanning**: Makes sure no passwords or keys are accidentally shared
+* **CodeQL**: Looks for security problems in your code
+* **Snyk**: Checks for vulnerabilities in our dependencies
+* **Secret Scanning**: Makes sure no passwords or keys are accidentally shared
 
 ### 3. Performance Checks
-- **Lighthouse**: Measures how fast and accessible your changes are
-- **Bundle Size**: Makes sure your changes don't make the app too big
-- **Performance Budgets**: Keeps load times fast for users
+* **Lighthouse**: Measures how fast and accessible your changes are
+* **Bundle Size**: Makes sure your changes don't make the app too big
+* **Performance Budgets**: Keeps load times fast for users
 
 ### 4. Testing
-- **Unit Tests**: Makes sure individual parts work correctly
-- **Integration Tests**: Checks if different parts work together
-- **Coverage Reports**: Shows how much of the code is tested
+* **Unit Tests**: Makes sure individual parts work correctly
+* **Integration Tests**: Checks if different parts work together
+* **Coverage Reports**: Shows how much of the code is tested
 
 ### 5. Monitoring
-- **Grafana Metrics**: Tracks important numbers about our app
-  - Build time and size
-  - Test coverage
-  - Performance scores
-  - Error rates
+* **Grafana Metrics**: Tracks important numbers about our app
+  * Build time and size
+  * Test coverage
+  * Performance scores
+  * Error rates
 
 ## How to Make Changes
 
@@ -49,9 +49,9 @@ We use several tools to ensure code quality and security. Here's what happens wh
    Example: `git checkout -b fix/login-button`
 
 2. **Make Your Changes**
-   - Write your code
-   - Test it locally
-   - Add comments to explain complex parts
+   * Write your code
+   * Test it locally
+   * Add comments to explain complex parts
 
 3. **Check Your Work**
    ```bash
@@ -77,19 +77,19 @@ We use several tools to ensure code quality and security. Here's what happens wh
 ## What Happens Next?
 
 1. **Automatic Checks** (about 5-10 minutes)
-   - Green check = Good to go
-   - Red X = Something needs fixing
-   - Yellow dot = Still running
+   * Green check = Good to go
+   * Red X = Something needs fixing
+   * Yellow dot = Still running
 
 2. **Code Review**
-   - At least one team member will review
-   - They might suggest changes
-   - Make changes if needed
+   * At least one team member will review
+   * They might suggest changes
+   * Make changes if needed
 
 3. **Merging**
-   - All checks must pass
-   - Need at least one approval
-   - PR will be merged to main
+   * All checks must pass
+   * Need at least one approval
+   * PR will be merged to main
 
 ## Common Issues and Solutions
 
@@ -122,9 +122,9 @@ git push origin your-branch
 
 ## Need Help?
 
-- Create an issue for questions
-- Ask in pull request comments
-- Check existing documentation
+* Create an issue for questions
+* Ask in pull request comments
+* Check existing documentation
 
 Remember: It's okay to make mistakes! The CI/CD pipeline is here to help catch problems before they reach users.
 
@@ -144,25 +144,25 @@ Remember: It's okay to make mistakes! The CI/CD pipeline is here to help catch p
 
 ## Coding Standards
 
-- Follow ESLint and Prettier configurations
-- Write self-documenting code
-- Include JSDoc comments for functions
-- Keep functions small and focused
-- Write meaningful variable and function names
+* Follow ESLint and Prettier configurations
+* Write self-documenting code
+* Include JSDoc comments for functions
+* Keep functions small and focused
+* Write meaningful variable and function names
 
 ## Testing Guidelines
 
-- Write unit tests for new features
-- Maintain or improve code coverage
-- Test edge cases and error conditions
-- Use meaningful test descriptions
+* Write unit tests for new features
+* Maintain or improve code coverage
+* Test edge cases and error conditions
+* Use meaningful test descriptions
 
 ## Documentation
 
-- Update README.md for significant changes
-- Document new features and APIs
-- Include examples where appropriate
-- Keep documentation up to date
+* Update README.md for significant changes
+* Document new features and APIs
+* Include examples where appropriate
+* Keep documentation up to date
 
 ## Review Process
 
@@ -173,9 +173,9 @@ Remember: It's okay to make mistakes! The CI/CD pipeline is here to help catch p
 
 ## Additional Resources
 
-- [Issue Templates](.github/ISSUE_TEMPLATE/)
-- [Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)
-- [Security Policy](SECURITY.md)
+* [Issue Templates](.github/ISSUE_TEMPLATE/)
+* [Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)
+* [Security Policy](SECURITY.md)
 
 ## Questions?
 
