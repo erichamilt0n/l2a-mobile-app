@@ -19,18 +19,21 @@ export const Button = ({
   return (
     <button
       className={clsx(
-        'p-4 md:p-6 rounded-xl transition-colors flex items-center justify-center',
+        'p-4 md:p-6 rounded-xl transition-colors',
         {
-          'bg-blue-500 hover:bg-blue-600 text-white': variant === 'primary',
-          'bg-gray-100 hover:bg-gray-200 text-gray-900': variant === 'secondary',
+          'bg-[#2d3339] hover:bg-[#3a424a] text-white': variant === 'primary',
+          'bg-[#1e2327] hover:bg-[#2d3339] text-gray-400': variant === 'secondary',
           'w-full': fullWidth,
+          'opacity-50 cursor-not-allowed': props.disabled,
         },
         className
       )}
       {...props}
     >
-      {icon && <span className="mr-2">{icon}</span>}
-      {children}
+      <div className="flex items-center justify-center">
+        {icon && <span className="mr-2">{icon}</span>}
+        {children}
+      </div>
     </button>
   )
 }

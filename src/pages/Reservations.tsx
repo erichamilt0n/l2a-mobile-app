@@ -26,28 +26,30 @@ export default function Reservations() {
       </div>
 
       {/* Reservation Type Selection */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 md:mb-8">
-        <Button variant="primary" icon={<BayIcon />}>
+      <div className="grid grid-cols-1 gap-4 mb-6 md:mb-8">
+        <Button variant="primary" icon={<BayIcon />} fullWidth>
           Bay Reservation
         </Button>
-        <Button variant="secondary" icon={<TableIcon />}>
+        <Button variant="secondary" icon={<TableIcon />} fullWidth>
           Table Reservation
         </Button>
       </div>
 
       {/* Date Selection */}
-      <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-[#1e2327] rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Select Date</h2>
         <div className="grid grid-cols-3 md:grid-cols-7 gap-2">
           {Array.from({ length: 7 }).map((_, index) => {
-            const date = new Date('2024-12-16T16:56:15-05:00')
+            const date = new Date()
             date.setDate(date.getDate() + index)
             return (
               <Button key={index} variant={index === 0 ? 'primary' : 'secondary'} fullWidth>
-                <div className="text-sm font-medium">
-                  {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                <div className="flex flex-col items-center space-y-1">
+                  <div className="text-sm font-medium">
+                    {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                  </div>
+                  <div className="text-lg font-bold">{date.getDate()}</div>
                 </div>
-                <div className="text-lg font-bold">{date.getDate()}</div>
               </Button>
             )
           })}
@@ -55,9 +57,9 @@ export default function Reservations() {
       </div>
 
       {/* Time Selection */}
-      <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-[#1e2327] rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Select Time</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-3">
           {timeSlots.map(slot => (
             <Button
               key={slot.id}
@@ -72,7 +74,7 @@ export default function Reservations() {
       </div>
 
       {/* Guest Count */}
-      <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-[#1e2327] rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Number of Guests</h2>
         <div className="flex items-center space-x-4">
           <Button
