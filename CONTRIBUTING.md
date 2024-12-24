@@ -11,32 +11,33 @@ By participating in this project, you agree to abide by our Code of Conduct. Ple
 We use several tools to ensure code quality and security. Here's what happens when you make changes:
 
 ### 1. Code Quality Checks
+
 * **ESLint**: Checks your code for errors and style issues
-* **Prettier**: Makes sure your code follows our formatting rules
-* **TypeScript**: Ensures type safety across the codebase
-* **Codacy**: Gives your code a quality score and suggests improvements
+* **Prettier**: Makes your code look consistent
+* **TypeScript**: Makes sure your types are correct
 
 ### 2. Security Checks
+
 * **CodeQL**: Looks for security problems in your code
-* **Snyk**: Checks for vulnerabilities in our dependencies
-* **Secret Scanning**: Makes sure no passwords or keys are accidentally shared
+* **Snyk**: Checks for security issues in dependencies
+* **Dependabot**: Keeps dependencies up to date
 
 ### 3. Performance Checks
+
 * **Lighthouse**: Measures how fast and accessible your changes are
-* **Bundle Size**: Makes sure your changes don't make the app too big
-* **Performance Budgets**: Keeps load times fast for users
+* **Bundle Size**: Makes sure the app stays small and fast
 
 ### 4. Testing
+
 * **Unit Tests**: Makes sure individual parts work correctly
-* **Integration Tests**: Checks if different parts work together
-* **Coverage Reports**: Shows how much of the code is tested
+* **Integration Tests**: Checks if everything works together
+* **E2E Tests**: Tests the whole app like a real user
 
 ### 5. Monitoring
+
 * **Grafana Metrics**: Tracks important numbers about our app
-  * Build time and size
-  * Test coverage
-  * Performance scores
-  * Error rates
+* **Error Tracking**: Watches for problems in production
+* **Usage Analytics**: Helps us understand how people use the app
 
 ## How to Make Changes
 
@@ -94,13 +95,14 @@ We use several tools to ensure code quality and security. Here's what happens wh
 ## Common Issues and Solutions
 
 ### "Checks Failed"
+
 1. Click the "Details" link
-2. Read the error message
+2. Look at what failed
 3. Fix the problem
 4. Push your changes
-5. Checks will run again
 
 ### "Merge Conflicts"
+
 1. Get the latest main:
    ```bash
    git checkout main
@@ -109,9 +111,10 @@ We use several tools to ensure code quality and security. Here's what happens wh
    git merge main
    ```
 2. Fix any conflicts
-3. Push again
+3. Push your changes
 
 ### "Branch Out of Date"
+
 ```bash
 git checkout main
 git pull origin main
