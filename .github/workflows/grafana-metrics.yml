@@ -1,29 +1,109 @@
 name: Grafana Metrics
+
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  # Run daily at midnight UTC
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
-  metrics:
-    runs-on: ubuntu-24.04
+  collect-metrics:
+    runs-on: ubuntu-latest
     # Skip on PR if it's from a fork for security
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Verify metrics file
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Collect build metrics
+        id: build-metrics
         run: |
-          if [ ! -f metrics.json ]; then
-            echo "Error: metrics.json file not found"
-            exit 1
-          fi
+          start_time=$(date +%s%N)
+          npm run build
+          end_time=$(date +%s%N)
+          build_duration=$((($end_time - $start_time)/1000000))
+          bundle_size=$(du -sb dist | cut -f1)
           
-      - name: Send metrics
+          echo "build_duration=$build_duration" >> $GITHUB_ENV
+          echo "bundle_size=$bundle_size" >> $GITHUB_ENV
+
+      - name: Run tests with coverage
+        id: test-metrics
+        run: |
+          start_time=$(date +%s%N)
+          npm run test
+          end_time=$(date +%s%N)
+          test_duration=$((($end_time - $start_time)/1000000))
+          
+          echo "test_duration=$test_duration" >> $GITHUB_ENV
+          
+          # Extract coverage metrics (assuming coverage output is in JSON format)
+          if [ -f coverage/coverage-summary.json ]; then
+            coverage=$(jq .total.lines.pct coverage/coverage-summary.json)
+            echo "coverage=$coverage" >> $GITHUB_ENV
+          fi
+
+      - name: Generate metrics payload
+        run: |
+          cat > metrics.json << EOL
+          {
+            "metrics": [
+              {
+                "name": "build_duration_ms",
+                "value": ${{ env.build_duration }},
+                "timestamp": $(date +%s000),
+                "labels": {
+                  "branch": "${GITHUB_REF#refs/heads/}",
+                  "commit": "$GITHUB_SHA"
+                }
+              },
+              {
+                "name": "bundle_size_bytes",
+                "value": ${{ env.bundle_size }},
+                "timestamp": $(date +%s000),
+                "labels": {
+                  "branch": "${GITHUB_REF#refs/heads/}",
+                  "commit": "$GITHUB_SHA"
+                }
+              },
+              {
+                "name": "test_duration_ms",
+                "value": ${{ env.test_duration }},
+                "timestamp": $(date +%s000),
+                "labels": {
+                  "branch": "${GITHUB_REF#refs/heads/}",
+                  "commit": "$GITHUB_SHA"
+                }
+              }
+              $([ ! -z "${{ env.coverage }}" ] && echo ",{
+                \"name\": \"test_coverage_percent\",
+                \"value\": ${{ env.coverage }},
+                \"timestamp\": $(date +%s000),
+                \"labels\": {
+                  \"branch\": \"${GITHUB_REF#refs/heads/}\",
+                  \"commit\": \"$GITHUB_SHA\"
+                }
+              }")
+            ]
+          }
+          EOL
+
+      - name: Send metrics to Grafana
         env:
           GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}
-          GRAFANA_API_URL: https://api.grafana.com/metrics/v1/push
+          GRAFANA_API_URL: ${{ secrets.GRAFANA_API_URL }}
         run: |
           response=$(curl -w "\n%{http_code}" -X POST \
             -H "Authorization: Bearer $GRAFANA_API_KEY" \
@@ -39,5 +119,13 @@ jobs:
           
           if [ "$status_code" -ge 400 ]; then
             echo "Error: Failed to send metrics to Grafana"
+            echo "Response: $body"
             exit 1
           fi
+
+      - name: Upload metrics artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: metrics
+          path: metrics.json
+          retention-days: 90
