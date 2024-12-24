@@ -1,4 +1,8 @@
 import React from 'react'
+import { Button } from '../components/ui/Button'
+import { Card } from '../components/ui/Card'
+import { Grid } from '../components/layout/Grid'
+import { StatCard } from '../components/ui/StatCard'
 
 export default function Stats() {
   const stats = {
@@ -23,41 +27,52 @@ export default function Stats() {
       </div>
 
       {/* Stats Overview */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 md:mb-8">
-        <div className="bg-dark-100 rounded-xl p-4 md:p-6">
-          <h3 className="text-sm md:text-base text-gray-400 mb-2">Titles Played</h3>
-          <p className="text-xl md:text-2xl font-bold text-white">{stats.titlesPlayed}</p>
-        </div>
-
-        <div className="bg-dark-100 rounded-xl p-4 md:p-6">
-          <h3 className="text-sm md:text-base text-gray-400 mb-2">Average Score</h3>
-          <p className="text-xl md:text-2xl font-bold text-white">
-            {stats.averageScore.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="bg-dark-100 rounded-xl p-4 md:p-6">
-          <h3 className="text-sm md:text-base text-gray-400 mb-2">Best Score</h3>
-          <p className="text-xl md:text-2xl font-bold text-white">
-            {stats.bestScore.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="bg-dark-100 rounded-xl p-4 md:p-6">
-          <h3 className="text-sm md:text-base text-gray-400 mb-2">Hours Played</h3>
-          <p className="text-xl md:text-2xl font-bold text-white">{stats.hoursPlayed}</p>
-        </div>
-      </div>
+      <Grid cols={4} gap={4} className="mb-6 md:mb-8">
+        <StatCard
+          title="Titles Played"
+          value={stats.titlesPlayed}
+          icon={
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          }
+        />
+        <StatCard
+          title="Average Score"
+          value={stats.averageScore.toLocaleString()}
+          icon={
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          }
+        />
+        <StatCard
+          title="Best Score"
+          value={stats.bestScore.toLocaleString()}
+          icon={
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+          }
+        />
+        <StatCard
+          title="Hours Played"
+          value={stats.hoursPlayed}
+          icon={
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          }
+        />
+      </Grid>
 
       {/* Score History */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <Grid cols={2} gap={6} className="grid-cols-1 lg:grid-cols-2">
         {/* Recent Scores */}
-        <div className="bg-dark-100 rounded-xl p-4 md:p-6">
+        <Card>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg md:text-xl font-semibold text-white">Recent Scores</h2>
-            <button className="text-sm text-[#333e48] hover:text-[#4a5761] transition-colors">
-              View All
-            </button>
+            <Button variant="secondary">View All</Button>
           </div>
           <div className="space-y-4">
             {recentScores.map((score, index) => (
@@ -66,7 +81,7 @@ export default function Stats() {
                 className="flex items-center justify-between p-3 bg-dark-200 rounded-lg"
               >
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-[#333e48] flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-[#2d3339] flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">{score.score}</span>
                   </div>
                   <div>
@@ -77,29 +92,23 @@ export default function Stats() {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
 
         {/* Performance Chart */}
-        <div className="bg-dark-100 rounded-xl p-4 md:p-6">
-          <div className="flex justify-between items-center mb-4">
+        <Card>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 space-y-3 sm:space-y-0">
             <h2 className="text-lg md:text-xl font-semibold text-white">Score Trends</h2>
-            <div className="flex space-x-2">
-              <button className="text-sm px-3 py-1 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors">
-                Week
-              </button>
-              <button className="text-sm px-3 py-1 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-                Month
-              </button>
-              <button className="text-sm px-3 py-1 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-                Year
-              </button>
+            <div className="flex w-full sm:w-auto space-x-2">
+              <Button variant="primary" size="sm" className="flex-1 sm:flex-none">Week</Button>
+              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">Month</Button>
+              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">Year</Button>
             </div>
           </div>
           <div className="h-64 flex items-center justify-center text-gray-400">
             Chart Component Here
           </div>
-        </div>
-      </div>
+        </Card>
+      </Grid>
     </div>
   )
 }
