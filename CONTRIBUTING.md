@@ -42,19 +42,23 @@ We use several tools to ensure code quality and security. Here's what happens wh
 ## How to Make Changes
 
 1. **Start Fresh**
+
    ```bash
    git checkout main
    git pull origin main
    git checkout -b your-branch-name
    ```
+
    Example: `git checkout -b fix/login-button`
 
 2. **Make Your Changes**
+
    * Write your code
    * Test it locally
    * Add comments to explain complex parts
 
 3. **Check Your Work**
+
    ```bash
    npm run lint        # Check for code problems
    npm run format      # Fix code formatting
@@ -63,31 +67,38 @@ We use several tools to ensure code quality and security. Here's what happens wh
    ```
 
 4. **Commit Your Changes**
+
    ```bash
    git add .
    git commit -m "type: short description"
    ```
+
    Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
 5. **Push and Create PR**
+
    ```bash
    git push origin your-branch-name
    ```
+
    Then go to GitHub and create a Pull Request
 
 ## What Happens Next?
 
 1. **Automatic Checks** (about 5-10 minutes)
+
    * Green check = Good to go
    * Red X = Something needs fixing
    * Yellow dot = Still running
 
 2. **Code Review**
+
    * At least one team member will review
    * They might suggest changes
    * Make changes if needed
 
 3. **Merging**
+
    * All checks must pass
    * Need at least one approval
    * PR will be merged to main
@@ -104,24 +115,28 @@ We use several tools to ensure code quality and security. Here's what happens wh
 ### "Merge Conflicts"
 
 1. Get the latest main:
+
    ```bash
    git checkout main
    git pull origin main
    git checkout your-branch
    git merge main
    ```
+
 2. Fix any conflicts
 3. Push your changes
 
 ### "Branch Out of Date"
 
-```bash
-git checkout main
-git pull origin main
-git checkout your-branch
-git merge main
-git push origin your-branch
-```
+1. Update your branch:
+
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git merge main
+   git push origin your-branch
+   ```
 
 ## Need Help?
 
@@ -134,11 +149,13 @@ Remember: It's okay to make mistakes! The CI/CD pipeline is here to help catch p
 ## Development Setup
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Set up pre-commit hooks:
+
    ```bash
    npm run prepare
    ```
