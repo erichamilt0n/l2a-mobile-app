@@ -24,9 +24,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@v4.3.0
         env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
           HTTP_CONNECT_TIMEOUT: 60000
           HTTP_READ_TIMEOUT: 60000
         with:
@@ -35,7 +45,7 @@ jobs:
           format: sarif
           gh-code-scanning-compat: true
           max-allowed-issues: 2147483647
-          tool: ["eslint", "remark-lint", "tsc"]
+          tool: eslint,remark-lint,typescript
           verbose: true
           upload: true
           max-retries: 3
