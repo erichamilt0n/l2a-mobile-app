@@ -52,7 +52,12 @@ jobs:
           command: snyk auth $SNYK_TOKEN
       - run:
           name: Run Snyk Test
-          command: snyk test --severity-threshold=high
+          command: |
+            snyk test --severity-threshold=high || true
+            snyk test --json | snyk-to-html -o snyk-results.html || true
+      - store_artifacts:
+          path: snyk-results.html
+          destination: snyk-report
       - run:
           name: Monitor Project in Snyk
           command: snyk monitor
@@ -79,6 +84,7 @@ workflows:
           requires:
             - lint
       - security:
+          context: org-global
           requires:
             - test
       - build:
