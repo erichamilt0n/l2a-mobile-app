@@ -3,9 +3,7 @@ name: GitHub Pages
 on:
   push:
     branches: [main]
-  # Remove pull_request trigger to only deploy from main
-  # pull_request:
-  #   branches: [main]
+  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
