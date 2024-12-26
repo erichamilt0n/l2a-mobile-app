@@ -1,0 +1,62 @@
+name: Branch Protection Rules
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  enforce-branch-protection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name format
+        if: github.event_name == 'pull_request'
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [[ ! $BRANCH_NAME =~ ^(feature|fix|refactor|docs|chore)/.+ ]]; then
+            echo "Branch name must start with feature/, fix/, refactor/, docs/, or chore/"
+            exit 1
+          fi
+
+      - name: Verify commit messages
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          COMMITS=$(git log --format=%B origin/${{ github.base_ref }}..HEAD)
+          while IFS= read -r commit; do
+            if [[ ! $commit =~ ^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?!?:.+ ]]; then
+              echo "Invalid commit message format: $commit"
+              echo "Commit messages must follow conventional commits format"
+              exit 1
+            fi
+          done <<< "$COMMITS"
+
+      - name: Check file size
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          MAX_SIZE=5242880  # 5MB
+          git diff --name-only origin/${{ github.base_ref }}..HEAD | while read file; do
+            if [ -f "$file" ]; then
+              size=$(stat -f%z "$file")
+              if [ $size -gt $MAX_SIZE ]; then
+                echo "File $file is larger than 5MB"
+                exit 1
+              fi
+            fi
+          done
+
+      - name: Enforce review requirements
+        if: github.event_name == 'pull_request'
+        env:
+          MIN_REVIEWERS: 1
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          reviews=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" | \
+            jq '[.[] | select(.state == "APPROVED")] | length')
+          if [ $reviews -lt $MIN_REVIEWERS ]; then
+            echo "At least $MIN_REVIEWERS approved review(s) required"
+            exit 1
+          fi
