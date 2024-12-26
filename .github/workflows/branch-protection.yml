@@ -35,7 +35,11 @@ jobs:
           git fetch origin ${{ github.base_ref }}
           commits=$(git log --format=%s origin/${{ github.base_ref }}..HEAD)
           echo "$commits" | while IFS= read -r commit; do
-            if [[ ! "$commit" =~ ^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?!?:.+ ]]; then
+            # Skip merge commits
+            if [[ "$commit" =~ ^Merge ]]; then
+              continue
+            fi
+            if [[ ! "$commit" =~ ^(feat|fix|docs|style|refactor|test|chore|ci)(\(.+\))?!?:.+ ]]; then
               echo "Invalid commit message format: $commit"
               echo "Commit messages must follow conventional commits format"
               exit 1
