@@ -20,20 +20,23 @@ jobs:
 
       - name: Check branch name format
         if: github.event_name == 'pull_request'
+        env:
+          HEAD_REF: ${{ github.head_ref }}
         shell: bash
         run: |
-          BRANCH_NAME=${{ github.head_ref }}
-          if [[ ! "$BRANCH_NAME" =~ ^(feature|fix|refactor|docs|chore)/.+ ]]; then
+          if [[ ! "$HEAD_REF" =~ ^(feature|fix|refactor|docs|chore)/.+ ]]; then
             echo "Branch name must start with feature/, fix/, refactor/, docs/, or chore/"
             exit 1
           fi
 
       - name: Verify commit messages
         if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
         shell: bash
         run: |
-          git fetch origin ${{ github.base_ref }}
-          commits=$(git log --format=%s origin/${{ github.base_ref }}..HEAD)
+          git fetch origin "$BASE_REF"
+          commits=$(git log --format=%s "origin/$BASE_REF"..HEAD)
           echo "$commits" | while IFS= read -r commit; do
             # Skip merge commits
             if [[ "$commit" =~ ^Merge ]]; then
@@ -48,11 +51,13 @@ jobs:
 
       - name: Check file size
         if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
         shell: bash
         run: |
           MAX_SIZE=5242880  # 5MB
-          git fetch origin ${{ github.base_ref }}
-          git diff --name-only origin/${{ github.base_ref }}..HEAD | while read -r file; do
+          git fetch origin "$BASE_REF"
+          git diff --name-only "origin/$BASE_REF"..HEAD | while read -r file; do
             if [ -f "$file" ]; then
               size=$(stat -f%z "$file" || stat -c%s "$file")
               if [ "$size" -gt $MAX_SIZE ]; then
@@ -65,9 +70,12 @@ jobs:
       - name: Check owner status
         if: github.event_name == 'pull_request'
         id: check-owner
+        env:
+          REPO_OWNER: ${{ github.repository_owner }}
+          PR_USER: ${{ github.event.pull_request.user.login }}
         shell: bash
         run: |
-          if [ "${{ github.event.pull_request.user.login }}" = "${{ github.repository_owner }}" ]; then
+          if [ "$PR_USER" = "$REPO_OWNER" ]; then
             echo "is_owner=true" >> $GITHUB_OUTPUT
           else
             echo "is_owner=false" >> $GITHUB_OUTPUT
