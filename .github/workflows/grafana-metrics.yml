@@ -2,25 +2,73 @@ name: Grafana Metrics
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   metrics:
     runs-on: ubuntu-24.04
+    # Skip on PR if it's from a fork for security
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
     steps:
       - uses: actions/checkout@v4
       
-      - name: Verify metrics file
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build project
+        run: npm run build
+        
+      - name: Generate metrics
+        run: |
+          # Get bundle size
+          BUNDLE_SIZE=$(find dist -type f -name "*.js" -exec stat -f%z {} + | awk '{sum += $1} END {print sum}')
+          
+          # Create metrics file
+          cat > metrics.json << EOL
+          {
+            "metrics": [
+              {
+                "name": "build_success",
+                "value": 1,
+                "timestamp": $(date +%s000),
+                "labels": {
+                  "environment": "production",
+                  "version": "1.0.0",
+                  "branch": "${GITHUB_REF#refs/heads/}"
+                }
+              },
+              {
+                "name": "bundle_size",
+                "value": $BUNDLE_SIZE,
+                "timestamp": $(date +%s000),
+                "labels": {
+                  "environment": "production",
+                  "type": "javascript",
+                  "branch": "${GITHUB_REF#refs/heads/}"
+                }
+              }
+            ]
+          }
+          EOL
+          
+      - name: Send metrics
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}
+          GRAFANA_API_URL: https://api.grafana.com/metrics/v1/push
         run: |
           if [ ! -f metrics.json ]; then
             echo "Error: metrics.json file not found"
             exit 1
           fi
           
-      - name: Send metrics
-        env:
-          GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}
-          GRAFANA_API_URL: https://api.grafana.com/metrics/v1/push
-        run: |
           response=$(curl -w "\n%{http_code}" -X POST \
             -H "Authorization: Bearer $GRAFANA_API_KEY" \
             -H "Content-Type: application/json" \

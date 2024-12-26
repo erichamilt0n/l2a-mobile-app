@@ -1,4 +1,7 @@
 import React from 'react'
+import { Button } from '../components/ui/Button'
+import { Card } from '../components/ui/Card'
+import { Grid } from '../components/layout/Grid'
 
 interface Event {
   id: string
@@ -7,7 +10,7 @@ interface Event {
   time: string
   type: string
   spots: number
-  registered: boolean
+  status: string
 }
 
 export default function Events() {
@@ -19,7 +22,7 @@ export default function Events() {
       time: '2:00 PM',
       type: 'Tournament',
       spots: 8,
-      registered: false,
+      status: 'open',
     },
     {
       id: '2',
@@ -28,7 +31,7 @@ export default function Events() {
       time: '10:00 AM',
       type: 'Training',
       spots: 4,
-      registered: true,
+      status: 'waitlist',
     },
     {
       id: '3',
@@ -37,7 +40,7 @@ export default function Events() {
       time: '1:00 PM',
       type: 'Social',
       spots: 12,
-      registered: false,
+      status: 'open',
     },
   ]
 
@@ -50,24 +53,26 @@ export default function Events() {
 
       {/* Event Categories */}
       <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
-        <button className="px-4 py-2 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors">
-          All Events
-        </button>
-        <button className="px-4 py-2 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-          Tournaments
-        </button>
-        <button className="px-4 py-2 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-          Training
-        </button>
-        <button className="px-4 py-2 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-          Social
-        </button>
+        <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
+          <Button variant="primary" className="flex-1 sm:flex-none">
+            All Events
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Tournaments
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Training
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Social
+          </Button>
+        </div>
       </div>
 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Grid cols={1} mdCols={2} lgCols={3} gap={6}>
         {events.map(event => (
-          <div key={event.id} className="bg-dark-100 rounded-xl p-4 md:p-6">
+          <Card key={event.id} className="flex flex-col p-4 md:p-6">
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h3 className="text-lg md:text-xl font-semibold text-white mb-1">{event.title}</h3>
@@ -88,7 +93,7 @@ export default function Events() {
               </span>
             </div>
 
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center mb-4">
               <div className="flex items-center space-x-2">
                 <svg
                   className="w-5 h-5 text-gray-400"
@@ -107,22 +112,24 @@ export default function Events() {
               </div>
             </div>
 
-            <button
-              className={`w-full py-2 px-4 rounded-lg transition-colors ${
-                event.registered
-                  ? 'bg-green-600 text-white hover:bg-green-700'
-                  : 'bg-[#333e48] text-white hover:bg-[#4a5761]'
-              }`}
-            >
-              {event.registered ? 'Registered' : 'Register Now'}
-            </button>
-          </div>
+            <div className="mt-auto">
+              {event.status === 'open' ? (
+                <Button variant="primary" className="w-full">
+                  Register Now
+                </Button>
+              ) : (
+                <Button variant="secondary" className="w-full">
+                  Waitlist
+                </Button>
+              )}
+            </div>
+          </Card>
         ))}
-      </div>
+      </Grid>
 
       {/* Calendar View Button */}
       <div className="mt-8 text-center">
-        <button className="inline-flex items-center px-6 py-3 bg-dark-200 text-white rounded-lg hover:bg-[#333e48] transition-colors">
+        <Button variant="secondary" className="inline-flex items-center">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
@@ -132,7 +139,7 @@ export default function Events() {
             />
           </svg>
           View Calendar
-        </button>
+        </Button>
       </div>
     </div>
   )

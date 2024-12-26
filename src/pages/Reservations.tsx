@@ -1,4 +1,6 @@
 import React from 'react'
+import { Button } from '../components/ui/Button'
+import { BayIcon, TableIcon } from '../components/icons'
 
 interface TimeSlot {
   id: string
@@ -6,7 +8,7 @@ interface TimeSlot {
   available: boolean
 }
 
-export default function Reservation() {
+export default function Reservations() {
   const timeSlots: TimeSlot[] = [
     { id: '1', time: '9:00 AM', available: true },
     { id: '2', time: '10:00 AM', available: false },
@@ -24,102 +26,84 @@ export default function Reservation() {
       </div>
 
       {/* Reservation Type Selection */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 md:mb-8">
-        <button className="p-4 md:p-6 bg-[#333e48] text-white rounded-xl hover:bg-[#4a5761] transition-colors flex items-center justify-center">
-          <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            />
-          </svg>
+      <div className="grid grid-cols-1 gap-4 mb-6 md:mb-8">
+        <Button variant="primary" icon={<BayIcon />} fullWidth>
           Bay Reservation
-        </button>
-        <button className="p-4 md:p-6 bg-dark-200 text-gray-400 rounded-xl hover:bg-[#4a5761] hover:text-white transition-colors flex items-center justify-center">
-          <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-            />
-          </svg>
+        </Button>
+        <Button variant="secondary" icon={<TableIcon />} fullWidth>
           Table Reservation
-        </button>
+        </Button>
       </div>
 
       {/* Date Selection */}
-      <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-[#1e2327] rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Select Date</h2>
         <div className="grid grid-cols-3 md:grid-cols-7 gap-2">
           {Array.from({ length: 7 }).map((_, index) => {
-            const date = new Date('2024-12-16T16:56:15-05:00')
+            const date = new Date()
             date.setDate(date.getDate() + index)
             return (
-              <button
-                key={index}
-                className={`p-3 rounded-lg text-center ${
-                  index === 0
-                    ? 'bg-[#333e48] text-white'
-                    : 'bg-dark-200 text-gray-400 hover:bg-[#4a5761] hover:text-white'
-                } transition-colors`}
-              >
-                <div className="text-sm font-medium">
-                  {date.toLocaleDateString('en-US', { weekday: 'short' })}
+              <Button key={index} variant={index === 0 ? 'primary' : 'secondary'} fullWidth>
+                <div className="flex flex-col items-center space-y-1">
+                  <div className="text-sm font-medium">
+                    {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                  </div>
+                  <div className="text-lg font-bold">{date.getDate()}</div>
                 </div>
-                <div className="text-lg font-bold">{date.getDate()}</div>
-              </button>
+              </Button>
             )
           })}
         </div>
       </div>
 
       {/* Time Selection */}
-      <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-[#1e2327] rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Select Time</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-3">
           {timeSlots.map(slot => (
-            <button
+            <Button
               key={slot.id}
+              variant={slot.available ? 'primary' : 'secondary'}
               disabled={!slot.available}
-              className={`p-3 rounded-lg text-center transition-colors ${
-                slot.available
-                  ? 'bg-dark-200 text-gray-400 hover:bg-[#4a5761] hover:text-white'
-                  : 'bg-gray-800 text-gray-600 cursor-not-allowed'
-              }`}
+              fullWidth
             >
               {slot.time}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
       {/* Guest Count */}
-      <div className="bg-dark-100 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+      <div className="bg-[#1e2327] rounded-xl p-4 md:p-6 mb-6 md:mb-8">
         <h2 className="text-lg md:text-xl font-semibold text-white mb-4">Number of Guests</h2>
         <div className="flex items-center space-x-4">
-          <button className="p-2 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-            </svg>
-          </button>
+          <Button
+            variant="secondary"
+            icon={
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+              </svg>
+            }
+          />
           <span className="text-xl font-bold text-white">4</span>
-          <button className="p-2 bg-dark-200 text-gray-400 rounded-lg hover:bg-[#4a5761] hover:text-white transition-colors">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-          </button>
+          <Button
+            variant="secondary"
+            icon={
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            }
+          />
         </div>
       </div>
 
       {/* Submit Button */}
-      <button className="w-full md:w-auto px-8 py-3 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors flex items-center justify-center">
+      <Button variant="primary" fullWidth>
         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
@@ -129,7 +113,7 @@ export default function Reservation() {
           />
         </svg>
         Complete Reservation
-      </button>
+      </Button>
     </div>
   )
 }

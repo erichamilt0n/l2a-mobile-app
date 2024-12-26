@@ -1,5 +1,7 @@
 # Lodge2A Mobile App
 
+[![Known Vulnerabilities](https://snyk.io/test/github/erichamilt0n/l2a-mobile-app/badge.svg)](https://snyk.io/test/github/erichamilt0n/l2a-mobile-app)
+
 A modern, responsive web application for Lodge2A club management for members. Built with React, TypeScript, and Vite.
 
 ## Features

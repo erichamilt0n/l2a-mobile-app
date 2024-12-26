@@ -39,6 +39,29 @@ jobs:
           name: Run Tests
           command: npm test
 
+  security:
+    executor: default
+    steps:
+      - checkout
+      - install_dependencies
+      - run:
+          name: Install Snyk
+          command: sudo npm install -g snyk
+      - run:
+          name: Authenticate with Snyk
+          command: snyk auth $SNYK_TOKEN
+      - run:
+          name: Run Snyk Test
+          command: |
+            snyk test --severity-threshold=high || true
+            snyk test --json | snyk-to-html -o snyk-results.html || true
+      - store_artifacts:
+          path: snyk-results.html
+          destination: snyk-report
+      - run:
+          name: Monitor Project in Snyk
+          command: snyk monitor
+
   build:
     executor: default
     steps:
@@ -56,16 +79,14 @@ workflows:
   version: 2
   build_test_deploy:
     jobs:
-      - lint:
-          name: "ci/circleci: lint"
-          context: org-global
+      - lint
       - test:
-          name: "ci/circleci: test"
+          requires:
+            - lint
+      - security:
           context: org-global
           requires:
-            - "ci/circleci: lint"
+            - test
       - build:
-          name: "ci/circleci: build"
-          context: org-global
           requires:
-            - "ci/circleci: test"
+            - security

@@ -1,0 +1,66 @@
+name: Snyk Security
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * 1'  # Run weekly on Mondays
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: read
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    # Skip on PR if no SNYK_TOKEN is available
+    if: github.event_name != 'pull_request' || secrets.SNYK_TOKEN != ''
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Snyk CLI and HTML reporter
+        run: |
+          npm install -g snyk
+          npm install -g snyk-to-html
+        
+      - name: Authenticate with Snyk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+        
+      - name: Run Snyk test and generate reports
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          mkdir -p reports
+          # Generate HTML report
+          snyk test --all-projects --json | snyk-to-html -o reports/security-report.html || true
+          # Generate SARIF file
+          snyk test --all-projects --sarif-file-output=reports/snyk.sarif || true
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: reports/snyk.sarif
+          
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-report
+          path: reports/security-report.html
+          retention-days: 30

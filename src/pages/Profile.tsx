@@ -1,5 +1,8 @@
 import React from 'react'
-import SettingsLayout from '../components/SettingsLayout'
+import { Button } from '../components/ui/Button'
+import { Card } from '../components/ui/Card'
+import { Grid } from '../components/layout/Grid'
+import { StatCard } from '../components/ui/StatCard'
 
 interface PaymentHistory {
   id: string
@@ -49,118 +52,124 @@ export default function Profile() {
         return 'bg-yellow-100 text-yellow-800'
       case 'failed':
         return 'bg-red-100 text-red-800'
-      default:
-        return 'bg-gray-100 text-gray-800'
     }
   }
 
   return (
-    <SettingsLayout
-      title="Profile Dashboard"
-      description="Manage your account settings and preferences"
-    >
-      {/* Personal Information */}
-      <div className="bg-white rounded-xl p-4 md:p-8 mb-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-          <div className="mb-4 md:mb-0">
-            <h2 className="text-lg md:text-xl font-semibold text-gray-900">Personal Information</h2>
-            <p className="text-sm text-gray-500">Update your personal details</p>
-          </div>
-          <button className="w-full md:w-auto px-4 py-2 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors flex items-center justify-center">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              />
-            </svg>
-            Edit Profile
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Email</label>
-            <div className="text-gray-900">john.doe@example.com</div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Phone</label>
-            <div className="text-gray-900">+1 (555) 123-4567</div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Address</label>
-            <div className="text-gray-900">123 Main Street</div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">City</label>
-            <div className="text-gray-900">San Francisco</div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">State</label>
-            <div className="text-gray-900">CA</div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Zip</label>
-            <div className="text-gray-900">94105</div>
-          </div>
-        </div>
+    <div className="container mx-auto px-4 py-6 md:py-8">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Profile</h1>
+        <p className="text-gray-400">Manage your account and preferences</p>
       </div>
 
-      {/* Payment History */}
-      <div className="bg-white rounded-xl p-4 md:p-8">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-          <div className="mb-4 md:mb-0">
-            <h2 className="text-lg md:text-xl font-semibold text-gray-900">Payment History</h2>
-            <p className="text-sm text-gray-500">View and manage your billing information</p>
+      <Grid cols={1} gap={6}>
+        {/* Profile Information */}
+        <Card>
+          <div className="flex items-center space-x-4">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#2d3339] flex items-center justify-center">
+              <span className="text-2xl md:text-3xl font-bold text-white">JD</span>
+            </div>
+            <div>
+              <h2 className="text-xl md:text-2xl font-bold text-white">John Doe</h2>
+              <p className="text-gray-400">john.doe@example.com</p>
+              <p className="text-gray-400">Member since Dec 2024</p>
+            </div>
           </div>
-          <div className="flex flex-col md:flex-row w-full md:w-auto space-y-3 md:space-y-0 md:space-x-3">
-            <button className="w-full md:w-auto px-4 py-2 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors flex items-center justify-center">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        </Card>
+
+        {/* Quick Stats */}
+        <Grid cols={1} mdCols={2} lgCols={4} gap={4}>
+          <StatCard
+            title="Total Spent"
+            value="$450.98"
+            icon={
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              Edit Billing
-            </button>
-            <button className="w-full md:w-auto px-4 py-2 bg-[#333e48] text-white rounded-lg hover:bg-[#4a5761] transition-colors">
-              View All
-            </button>
-          </div>
-        </div>
+            }
+          />
+          <StatCard
+            title="Reservations"
+            value="12"
+            icon={
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            }
+          />
+          <StatCard
+            title="Events Attended"
+            value="5"
+            icon={
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            }
+          />
+          <StatCard
+            title="Pro Shop Points"
+            value="1,250"
+            icon={
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+            }
+          />
+        </Grid>
 
-        <div className="space-y-4">
-          {paymentHistory.map(payment => (
-            <div
-              key={payment.id}
-              className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border border-gray-100 rounded-lg"
-            >
-              <div className="mb-3 md:mb-0">
-                <h3 className="font-medium text-gray-900">{payment.description}</h3>
-                <p className="text-sm text-gray-500">{payment.date}</p>
+        {/* Payment History */}
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg md:text-xl font-semibold text-white">Payment History</h2>
+            <Button variant="secondary">View All</Button>
+          </div>
+          <div className="space-y-4">
+            {paymentHistory.map(payment => (
+              <div
+                key={payment.id}
+                className="flex items-center justify-between p-3 bg-dark-200 rounded-lg"
+              >
+                <div>
+                  <p className="text-sm md:text-base text-white font-medium">
+                    {payment.description}
+                  </p>
+                  <p className="text-xs md:text-sm text-gray-400">{payment.date}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm md:text-base text-white font-medium">
+                    ${payment.amount.toFixed(2)}
+                  </p>
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${getStatusColor(payment.status)}`}
+                  >
+                    {payment.status}
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-4">
-                <span className="text-lg font-medium text-gray-900">
-                  ${payment.amount.toFixed(2)}
-                </span>
-                <span
-                  className={`px-3 py-1 rounded-full text-sm ${getStatusColor(payment.status)}`}
-                >
-                  {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </SettingsLayout>
+            ))}
+          </div>
+        </Card>
+      </Grid>
+    </div>
   )
 }
