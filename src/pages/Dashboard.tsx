@@ -16,7 +16,7 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Stats */}
-      <Grid cols={4} gap={4} className="mb-6 md:mb-8">
+      <Grid cols={1} mdCols={2} lgCols={4} gap={6}>
         <StatCard
           title="Upcoming Reservations"
           value="3"

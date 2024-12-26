@@ -78,7 +78,7 @@ export default function Profile() {
         </Card>
 
         {/* Quick Stats */}
-        <Grid cols={4} gap={4}>
+        <Grid cols={1} mdCols={2} lgCols={4} gap={4}>
           <StatCard
             title="Total Spent"
             value="$450.98"

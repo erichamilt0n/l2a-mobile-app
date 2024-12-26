@@ -27,7 +27,7 @@ export default function Stats() {
       </div>
 
       {/* Stats Overview */}
-      <Grid cols={4} gap={4} className="mb-6 md:mb-8">
+      <Grid cols={1} mdCols={2} lgCols={4} gap={6} className="mb-6 md:mb-8">
         <StatCard
           title="Titles Played"
           value={stats.titlesPlayed}
