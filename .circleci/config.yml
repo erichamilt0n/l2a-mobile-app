@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1.0
+  snyk: snyk/snyk@2.0.2
 
 executors:
   default:
@@ -44,23 +45,31 @@ jobs:
     steps:
       - checkout
       - install_dependencies
+      - snyk/scan:
+          severity-threshold: high
+          fail-on-issues: false
+          monitor-on-build: true
+          token-variable: SNYK_TOKEN
       - run:
-          name: Install Snyk
-          command: sudo npm install -g snyk
-      - run:
-          name: Authenticate with Snyk
-          command: snyk auth $SNYK_TOKEN
-      - run:
-          name: Run Snyk Test
+          name: Generate Snyk HTML Report
           command: |
-            snyk test --severity-threshold=high || true
-            snyk test --json | snyk-to-html -o snyk-results.html || true
+            mkdir -p reports
+            # Install snyk-to-html
+            npm install -g snyk-to-html
+            # Generate HTML report
+            snyk test --json | snyk-to-html -o reports/snyk-results.html || true
+            # Generate SARIF report
+            snyk test --sarif-file-output=reports/snyk.sarif || true
       - store_artifacts:
-          path: snyk-results.html
-          destination: snyk-report
-      - run:
-          name: Monitor Project in Snyk
-          command: snyk monitor
+          path: reports/snyk-results.html
+          destination: snyk-report.html
+      - store_artifacts:
+          path: reports/snyk.sarif
+          destination: snyk.sarif
+      - persist_to_workspace:
+          root: .
+          paths:
+            - reports/snyk.sarif
 
   build:
     executor: default
@@ -75,6 +84,39 @@ jobs:
           paths:
             - dist
 
+  upload_sarif:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install GitHub CLI
+          command: |
+            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+            sudo apt update
+            sudo apt install gh
+      - run:
+          name: Upload SARIF to GitHub
+          command: |
+            if [ -f "reports/snyk.sarif" ]; then
+              gh auth login --with-token <<< "$GITHUB_TOKEN"
+              gh api \
+                --method POST \
+                -H "Accept: application/vnd.github+json" \
+                "/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/code-scanning/sarifs" \
+                -f commit_sha="$CIRCLE_SHA1" \
+                -f ref="$CIRCLE_BRANCH" \
+                -f sarif="$(cat reports/snyk.sarif)" \
+                -f tool_name="snyk" \
+                -f category="snyk"
+            else
+              echo "No SARIF file found"
+              exit 1
+            fi
+
 workflows:
   version: 2
   build_test_deploy:
@@ -87,6 +129,10 @@ workflows:
           context: org-global
           requires:
             - test
-      - build:
+      - upload_sarif:
+          context: org-global
           requires:
             - security
+      - build:
+          requires:
+            - upload_sarif
