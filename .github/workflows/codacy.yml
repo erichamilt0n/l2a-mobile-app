@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           node-version: '18'
           cache: 'npm'
@@ -37,7 +37,7 @@ jobs:
         run: rm -f results.sarif || true
 
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@v4.3.0
+        uses: codacy/codacy-analysis-cli-action@33d455949345bddd288c52f056dba02b800fa6f3 # v4.3.0
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         with:
@@ -49,7 +49,7 @@ jobs:
           verbose: true
 
       - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@cdcdbb579706841c47f7063dda365e292e5cad7a # v2.13.4
+        uses: github/codeql-action/upload-sarif@012739e5082ff0c22ca6d6ab32e07c36df03c4a4 # v3.22.12
         with:
           sarif_file: results.sarif
           category: codacy
