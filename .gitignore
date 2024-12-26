@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 .vercel
 .npmrc
+
+# Coverage directory used by tools like istanbul
+coverage
