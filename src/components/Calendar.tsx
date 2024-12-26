@@ -51,7 +51,8 @@ export default function Calendar({
     const today = new Date()
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentYear, currentMonth, i)
-      const isDisabled = (minDate && date < minDate) ?? (maxDate && date > maxDate)
+      const isDisabled =
+        (minDate && date < minDate) || (maxDate && date > maxDate)
 
       days.push({
         day: i,
@@ -115,6 +116,7 @@ export default function Calendar({
         <button
           onClick={handlePreviousMonth}
           className="p-2 hover:bg-dark-200 rounded-xl text-white transition-colors"
+          aria-label="previous-month"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -132,6 +134,7 @@ export default function Calendar({
               setCurrentMonth(parseInt(e.target.value))
             }}
             className="bg-dark-200 text-black px-3 py-1 rounded-xl"
+            aria-label="select-month"
           >
             {months.map((month, index) => (
               <option key={month} value={index} className="text-black">
@@ -145,6 +148,7 @@ export default function Calendar({
               setCurrentYear(parseInt(e.target.value))
             }}
             className="bg-dark-200 text-black px-3 py-1 rounded-xl"
+            aria-label="select-year"
           >
             {Array.from({ length: 10 }, (_, i) => currentYear - 5 + i).map(year => (
               <option key={year} value={year} className="text-black">
@@ -156,6 +160,7 @@ export default function Calendar({
         <button
           onClick={handleNextMonth}
           className="p-2 hover:bg-dark-200 rounded-xl text-white transition-colors"
+          aria-label="next-month"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -178,7 +183,7 @@ export default function Calendar({
             onClick={() => {
               handleDateClick(day.day, day.isCurrentMonth)
             }}
-            disabled={day.isDisabled}
+            disabled={day.isDisabled || !day.isCurrentMonth}
             className={`
               p-2 rounded-xl text-center transition-colors
               ${
@@ -190,7 +195,7 @@ export default function Calendar({
                       : 'text-white hover:bg-dark-200'
                   : 'text-gray-600'
               }
-              ${day.isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+              ${(day.isDisabled || !day.isCurrentMonth) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
             `}
           >
             {day.day}

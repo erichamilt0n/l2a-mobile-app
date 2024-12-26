@@ -117,6 +117,7 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       {/* Overlay */}
       {isOpen && (
         <div
+          data-testid="navigation-overlay"
           className="fixed inset-0 bg-black bg-opacity-50 z-20 tablet:hidden"
           onClick={onClose}
         />
@@ -124,6 +125,7 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
 
       {/* Sidebar */}
       <div
+        data-testid="navigation-sidebar"
         style={{ backgroundColor: '#7d622d' }}
         className={`fixed top-0 right-0 h-screen transform transition-transform ease-in-out z-30 
           ${isOpen ? 'translate-x-0' : 'translate-x-full tablet:translate-x-0'}
@@ -153,6 +155,7 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
                 }
                 tablet:px-2 tablet:group-hover:px-3 px-3 py-3
                 tablet:justify-center tablet:group-hover:justify-start`}
+              data-testid={`navigation-link-${item.name}`}
             >
               <div className="flex items-center justify-center w-6 h-6 tablet:mx-auto tablet:group-hover:mx-0">
                 {item.icon}
@@ -175,6 +178,7 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
               text-white hover:bg-white/10
               tablet:px-2 tablet:group-hover:px-3 px-3 py-3
               tablet:justify-center tablet:group-hover:justify-start w-full`}
+            data-testid="navigation-logout-button"
           >
             <div className="flex items-center justify-center w-6 h-6 tablet:mx-auto tablet:group-hover:mx-0">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,6 +207,7 @@ export function MobileMenuButton({ onClick }: { onClick: () => void }) {
     <button
       onClick={onClick}
       className="fixed top-4 right-4 p-2 rounded-xl bg-dark-100 text-gray-400 hover:text-white tablet:hidden z-50"
+      data-testid="mobile-menu-button"
     >
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
