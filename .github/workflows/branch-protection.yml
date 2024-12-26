@@ -10,7 +10,7 @@ jobs:
   enforce-branch-protection:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: read
+      pull-requests: write
       contents: read
     
     steps:
@@ -67,39 +67,35 @@ jobs:
             fi
           done
 
-      - name: Check owner status
+      - name: Check owner status and auto-approve
         if: github.event_name == 'pull_request'
-        id: check-owner
+        uses: actions/github-script@v7
         env:
           REPO_OWNER: ${{ github.repository_owner }}
           PR_USER: ${{ github.event.pull_request.user.login }}
-        shell: bash
-        run: |
-          if [ "$PR_USER" = "$REPO_OWNER" ]; then
-            echo "is_owner=true" >> $GITHUB_OUTPUT
-          else
-            echo "is_owner=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Skip checks for owner
-        if: steps.check-owner.outputs.is_owner == 'true'
-        shell: bash
-        run: |
-          echo "Repository owner detected - skipping review requirements"
-          exit 0
-
-      - name: Check reviews
-        if: github.event_name == 'pull_request' && steps.check-owner.outputs.is_owner != 'true'
-        uses: actions/github-script@v7
         with:
           script: |
-            const { data: reviews } = await github.rest.pulls.listReviews({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
+            const isOwner = process.env.PR_USER === process.env.REPO_OWNER;
             
-            const approvedReviews = reviews.filter(review => review.state === 'APPROVED');
-            if (approvedReviews.length < 1) {
-              core.setFailed('At least one approved review is required');
+            if (isOwner) {
+              console.log('Repository owner detected - auto-approving PR');
+              await github.rest.pulls.createReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                event: 'APPROVE',
+                body: 'Auto-approved for repository owner'
+              });
+            } else {
+              console.log('Not repository owner - checking for reviews');
+              const { data: reviews } = await github.rest.pulls.listReviews({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number
+              });
+              
+              const approvedReviews = reviews.filter(review => review.state === 'APPROVED');
+              if (approvedReviews.length < 1) {
+                core.setFailed('At least one approved review is required');
+              }
             }
