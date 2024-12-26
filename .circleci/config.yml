@@ -18,6 +18,13 @@ commands:
           cache-path: ~/project/node_modules
           override-ci-command: npm install
 
+  install_deepsource_cli:
+    steps:
+      - run:
+          name: Install DeepSource CLI
+          command: |
+            curl https://deepsource.io/cli | sh
+
 jobs:
   lint:
     executor: default
@@ -37,8 +44,15 @@ jobs:
       - checkout
       - install_dependencies
       - run:
-          name: Run Tests
-          command: npm test
+          name: Run Tests with Coverage
+          command: npm run test:coverage
+      - store_artifacts:
+          path: coverage
+          destination: coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage
 
   security:
     executor: default
@@ -70,6 +84,23 @@ jobs:
           root: .
           paths:
             - reports/snyk.sarif
+
+  deepsource:
+    executor: default
+    steps:
+      - checkout
+      - install_deepsource_cli
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run DeepSource Analysis
+          command: |
+            # Report coverage
+            if [ -d "coverage" ]; then
+              deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/coverage-final.json
+            fi
+            # Run analysis
+            deepsource analyze
 
   build:
     executor: default
@@ -129,6 +160,10 @@ workflows:
           context: org-global
           requires:
             - test
+      - deepsource:
+          context: org-global
+          requires:
+            - test
       - upload_sarif:
           context: org-global
           requires:
@@ -136,3 +171,4 @@ workflows:
       - build:
           requires:
             - upload_sarif
+            - deepsource
