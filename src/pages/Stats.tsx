@@ -92,7 +92,9 @@ export default function Stats() {
         <Card>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg md:text-xl font-semibold text-white">Recent Scores</h2>
-            <Button variant="secondary">View All</Button>
+            <Button variant="secondary" className="flex-1 sm:flex-none">
+              View All
+            </Button>
           </div>
           <div className="space-y-4">
             {recentScores.map((score, index) => (
@@ -119,13 +121,13 @@ export default function Stats() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 space-y-3 sm:space-y-0">
             <h2 className="text-lg md:text-xl font-semibold text-white">Score Trends</h2>
             <div className="flex w-full sm:w-auto space-x-2">
-              <Button variant="primary" size="sm" className="flex-1 sm:flex-none">
+              <Button variant="primary" className="flex-1 sm:flex-none">
                 Week
               </Button>
-              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">
+              <Button variant="secondary" className="flex-1 sm:flex-none">
                 Month
               </Button>
-              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">
+              <Button variant="secondary" className="flex-1 sm:flex-none">
                 Year
               </Button>
             </div>
