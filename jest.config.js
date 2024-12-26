@@ -1,5 +1,5 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
@@ -32,4 +32,4 @@ module.exports = {
   testEnvironmentOptions: {
     customExportConditions: ['node'],
   },
-}
+};
