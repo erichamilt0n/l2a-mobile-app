@@ -54,10 +54,18 @@ export default function Events() {
       {/* Event Categories */}
       <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
         <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
-          <Button variant="primary" className="flex-1 sm:flex-none">All Events</Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">Tournaments</Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">Training</Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">Social</Button>
+          <Button variant="primary" className="flex-1 sm:flex-none">
+            All Events
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Tournaments
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Training
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Social
+          </Button>
         </div>
       </div>
 
@@ -105,10 +113,7 @@ export default function Events() {
             </div>
 
             <div className="mt-auto">
-              <Button
-                variant={event.registered ? 'success' : 'primary'}
-                className="w-full"
-              >
+              <Button variant={event.registered ? 'success' : 'primary'} className="w-full">
                 {event.registered ? 'Registered' : 'Register Now'}
               </Button>
             </div>

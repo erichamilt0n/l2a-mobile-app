@@ -7,21 +7,9 @@ type StatCardProps = Omit<ComponentPropsWithRef<'div'>, 'children'> & {
   icon?: ReactNode
 }
 
-export const StatCard = ({
-  title,
-  value,
-  icon,
-  onClick,
-  className,
-  ...props
-}: StatCardProps) => {
+export const StatCard = ({ title, value, icon, onClick, className, ...props }: StatCardProps) => {
   return (
-    <Card
-      hover={!!onClick}
-      className={className}
-      onClick={onClick}
-      {...props}
-    >
+    <Card hover={!!onClick} className={className} onClick={onClick} {...props}>
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-sm md:text-base text-gray-400">{title}</h3>
         {icon && <div className="text-[#2d3339]">{icon}</div>}

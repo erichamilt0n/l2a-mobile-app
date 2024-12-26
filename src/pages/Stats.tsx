@@ -33,7 +33,12 @@ export default function Stats() {
           value={stats.titlesPlayed}
           icon={
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           }
         />
@@ -42,7 +47,12 @@ export default function Stats() {
           value={stats.averageScore.toLocaleString()}
           icon={
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+              />
             </svg>
           }
         />
@@ -51,7 +61,12 @@ export default function Stats() {
           value={stats.bestScore.toLocaleString()}
           icon={
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+              />
             </svg>
           }
         />
@@ -60,7 +75,12 @@ export default function Stats() {
           value={stats.hoursPlayed}
           icon={
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           }
         />
@@ -99,9 +119,15 @@ export default function Stats() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 space-y-3 sm:space-y-0">
             <h2 className="text-lg md:text-xl font-semibold text-white">Score Trends</h2>
             <div className="flex w-full sm:w-auto space-x-2">
-              <Button variant="primary" size="sm" className="flex-1 sm:flex-none">Week</Button>
-              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">Month</Button>
-              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">Year</Button>
+              <Button variant="primary" size="sm" className="flex-1 sm:flex-none">
+                Week
+              </Button>
+              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">
+                Month
+              </Button>
+              <Button variant="secondary" size="sm" className="flex-1 sm:flex-none">
+                Year
+              </Button>
             </div>
           </div>
           <div className="h-64 flex items-center justify-center text-gray-400">
