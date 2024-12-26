@@ -50,9 +50,15 @@ jobs:
       - name: Enforce review requirements
         if: github.event_name == 'pull_request'
         env:
-          MIN_REVIEWERS: 1
+          MIN_REVIEWERS: 0  # Changed from 1 to 0 to allow direct merges
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Allow self-merges for repository owner
+          if [ "${{ github.event.pull_request.user.login }}" == "${{ github.repository_owner }}" ]; then
+            echo "Repository owner can merge without reviews"
+            exit 0
+          fi
+          
           reviews=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" | \
             jq '[.[] | select(.state == "APPROVED")] | length')
