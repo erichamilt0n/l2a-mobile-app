@@ -10,7 +10,7 @@ interface Event {
   time: string
   type: string
   spots: number
-  registered: boolean
+  status: string
 }
 
 export default function Events() {
@@ -22,7 +22,7 @@ export default function Events() {
       time: '2:00 PM',
       type: 'Tournament',
       spots: 8,
-      registered: false,
+      status: 'open',
     },
     {
       id: '2',
@@ -31,7 +31,7 @@ export default function Events() {
       time: '10:00 AM',
       type: 'Training',
       spots: 4,
-      registered: true,
+      status: 'waitlist',
     },
     {
       id: '3',
@@ -40,7 +40,7 @@ export default function Events() {
       time: '1:00 PM',
       type: 'Social',
       spots: 12,
-      registered: false,
+      status: 'open',
     },
   ]
 
@@ -54,15 +54,23 @@ export default function Events() {
       {/* Event Categories */}
       <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
         <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2">
-          <Button variant="primary" className="flex-1 sm:flex-none">All Events</Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">Tournaments</Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">Training</Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">Social</Button>
+          <Button variant="primary" className="flex-1 sm:flex-none">
+            All Events
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Tournaments
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Training
+          </Button>
+          <Button variant="secondary" className="flex-1 sm:flex-none">
+            Social
+          </Button>
         </div>
       </div>
 
       {/* Events Grid */}
-      <Grid cols={{ base: 1, md: 2, lg: 3 }} gap={6}>
+      <Grid cols={1} mdCols={2} lgCols={3} gap={6}>
         {events.map(event => (
           <Card key={event.id} className="flex flex-col p-4 md:p-6">
             <div className="flex justify-between items-start mb-4">
@@ -105,12 +113,15 @@ export default function Events() {
             </div>
 
             <div className="mt-auto">
-              <Button
-                variant={event.registered ? 'success' : 'primary'}
-                className="w-full"
-              >
-                {event.registered ? 'Registered' : 'Register Now'}
-              </Button>
+              {event.status === 'open' ? (
+                <Button variant="primary" className="w-full">
+                  Register Now
+                </Button>
+              ) : (
+                <Button variant="secondary" className="w-full">
+                  Waitlist
+                </Button>
+              )}
             </div>
           </Card>
         ))}

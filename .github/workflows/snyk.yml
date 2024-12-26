@@ -16,11 +16,14 @@ permissions:
 jobs:
   security:
     runs-on: ubuntu-latest
+    # Skip on PR if no SNYK_TOKEN is available
+    if: github.event_name != 'pull_request' || secrets.SNYK_TOKEN != ''
+    
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@v4
       
       - name: Set up Node.js
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
@@ -28,34 +31,36 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@b98d498629f1c368650224d6d212bf7dfa89e4bf # v0.4.0
-        continue-on-error: true
+      - name: Install Snyk CLI and HTML reporter
+        run: |
+          npm install -g snyk
+          npm install -g snyk-to-html
+        
+      - name: Authenticate with Snyk
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --all-projects --sarif
-
-      - name: Generate SARIF file
-        if: always()
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+        
+      - name: Run Snyk test and generate reports
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
-          npm install -g snyk
-          snyk auth ${{ secrets.SNYK_TOKEN }}
-          snyk test --all-projects --sarif > snyk.sarif || true
+          mkdir -p reports
+          # Generate HTML report
+          snyk test --all-projects --json | snyk-to-html -o reports/security-report.html || true
+          # Generate SARIF file
+          snyk test --all-projects --sarif-file-output=reports/snyk.sarif || true
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
-          sarif_file: snyk.sarif
-
-      - name: Monitor project in Snyk
-        uses: snyk/actions/node@b98d498629f1c368650224d6d212bf7dfa89e4bf # v0.4.0
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        if: github.event_name != 'pull_request'  # Only monitor on push to main
+          sarif_file: reports/snyk.sarif
+          
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        if: always()
         with:
-          command: monitor
+          name: security-report
+          path: reports/security-report.html
+          retention-days: 30

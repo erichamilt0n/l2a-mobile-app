@@ -28,6 +28,12 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Start preview server
+        run: |
+          npm run preview -- --host &
+          echo "Waiting for server to start..."
+          sleep 10
+
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
         with:
@@ -36,5 +42,5 @@ jobs:
           temporaryPublicStorage: true
           runs: 3
           urls: |
-            ${{ github.event.pull_request.head.repo.html_url }}/preview/
+            http://localhost:4173
           budgetPath: ./budget.json
