@@ -32,4 +32,4 @@ export default {
   testEnvironmentOptions: {
     customExportConditions: ['node'],
   },
-};
+}
