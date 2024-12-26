@@ -51,8 +51,7 @@ export default function Calendar({
     const today = new Date()
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentYear, currentMonth, i)
-      const isDisabled =
-        (minDate && date < minDate) || (maxDate && date > maxDate)
+      const isDisabled = (minDate && date < minDate) || (maxDate && date > maxDate)
 
       days.push({
         day: i,
@@ -195,7 +194,7 @@ export default function Calendar({
                       : 'text-white hover:bg-dark-200'
                   : 'text-gray-600'
               }
-              ${(day.isDisabled || !day.isCurrentMonth) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+              ${day.isDisabled || !day.isCurrentMonth ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
             `}
           >
             {day.day}
