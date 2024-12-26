@@ -37,7 +37,7 @@ jobs:
         run: rm -f results.sarif || true
 
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@5cc542e0fc8ba8974ff91556eb96c1ee25d9bbc2 # v4.3.0
+        uses: codacy/codacy-analysis-cli-action@v4.3.0
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         with:
