@@ -81,6 +81,13 @@ jobs:
             echo "is_owner=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Skip checks for owner
+        if: steps.check-owner.outputs.is_owner == 'true'
+        shell: bash
+        run: |
+          echo "Repository owner detected - skipping review requirements"
+          exit 0
+
       - name: Check reviews
         if: github.event_name == 'pull_request' && steps.check-owner.outputs.is_owner != 'true'
         uses: actions/github-script@v7
