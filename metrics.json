@@ -1,0 +1,31 @@
+{
+  "metrics": [
+    {
+      "name": "build_success",
+      "value": 1,
+      "timestamp": null,
+      "labels": {
+        "environment": "production",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "name": "test_coverage",
+      "value": 85,
+      "timestamp": null,
+      "labels": {
+        "environment": "production",
+        "type": "unit"
+      }
+    },
+    {
+      "name": "bundle_size",
+      "value": 0,
+      "timestamp": null,
+      "labels": {
+        "environment": "production",
+        "type": "javascript"
+      }
+    }
+  ]
+}
