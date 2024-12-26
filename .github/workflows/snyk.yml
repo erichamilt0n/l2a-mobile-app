@@ -20,10 +20,13 @@ jobs:
     if: github.event_name != 'pull_request' || secrets.SNYK_TOKEN != ''
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
       
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           node-version: '20'
           cache: 'npm'
@@ -33,32 +36,40 @@ jobs:
         
       - name: Install Snyk CLI and HTML reporter
         run: |
-          npm install -g snyk
-          npm install -g snyk-to-html
+          npm install -g snyk@latest
+          npm install -g snyk-to-html@latest
         
       - name: Authenticate with Snyk
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+        run: |
+          if [ -z "$SNYK_TOKEN" ]; then
+            echo "::error::SNYK_TOKEN is not set"
+            exit 1
+          fi
+          snyk config set api="$SNYK_TOKEN"
         
       - name: Run Snyk test and generate reports
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           mkdir -p reports
+          echo "Running Snyk test and generating HTML report..."
           # Generate HTML report
           snyk test --all-projects --json | snyk-to-html -o reports/security-report.html || true
+          echo "Generating SARIF file..."
           # Generate SARIF file
           snyk test --all-projects --sarif-file-output=reports/snyk.sarif || true
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@012739e5082ff0c22ca6d6ab32e07c36df03c4a4 # v3.22.12
         if: always()
         with:
           sarif_file: reports/snyk.sarif
+          category: snyk
           
       - name: Upload Security Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
         if: always()
         with:
           name: security-report
