@@ -21,7 +21,7 @@ describe('ProShop', () => {
   it('renders all category filter buttons', () => {
     renderProShop()
     expect(screen.getByText('All Products')).toBeInTheDocument()
-    
+
     // Check for categories in the filter buttons
     const filterButtons = screen.getAllByRole('button', { name: /^(Firearms|Accessories|Optics)$/ })
     expect(filterButtons).toHaveLength(3)
@@ -32,20 +32,20 @@ describe('ProShop', () => {
 
   it('renders all products with correct information', () => {
     renderProShop()
-    
+
     // Check for specific products
     expect(screen.getByText('Sim Pistol')).toBeInTheDocument()
     expect(screen.getByText('$499.99')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Premium Ammunition')).toBeInTheDocument()
     expect(screen.getByText('$49.99')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Lodge2A Hat')).toBeInTheDocument()
     expect(screen.getByText('$24.99')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Trijicon Rental')).toBeInTheDocument()
     expect(screen.getByText('$79.99')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Holosun Optic')).toBeInTheDocument()
     expect(screen.getByText('$299.99')).toBeInTheDocument()
   })
@@ -53,7 +53,7 @@ describe('ProShop', () => {
   it('renders product categories correctly', () => {
     renderProShop()
     expect(screen.getByText('All Products')).toBeInTheDocument()
-    
+
     // Check for categories in the filter buttons
     const filterButtons = screen.getAllByRole('button')
     expect(filterButtons.some(button => button.textContent === 'Firearms')).toBe(true)
@@ -72,6 +72,6 @@ describe('ProShop', () => {
     // The shopping cart button is identified by its SVG, so we'll look for its container
     const cartButton = screen.getByRole('button', { name: '' }) // The floating cart button has no text
     expect(cartButton).toBeInTheDocument()
-    expect(cartButton).toHaveClass("p-4 bg-[#333e48] text-white rounded-full")
+    expect(cartButton).toHaveClass('p-4 bg-[#333e48] text-white rounded-full')
   })
 })
