@@ -161,7 +161,9 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
                 {item.icon}
               </div>
               <span
-                className={"ml-3 tablet:hidden tablet:group-hover:inline-block transition-all duration-200"}
+                className={
+                  'ml-3 tablet:hidden tablet:group-hover:inline-block transition-all duration-200'
+                }
               >
                 {item.name}
               </span>
@@ -170,7 +172,9 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
         </nav>
 
         <div
-          className={"absolute bottom-8 tablet:left-2 tablet:right-2 tablet:group-hover:left-4 tablet:group-hover:right-4 left-4 right-4 transition-all duration-200"}
+          className={
+            'absolute bottom-8 tablet:left-2 tablet:right-2 tablet:group-hover:left-4 tablet:group-hover:right-4 left-4 right-4 transition-all duration-200'
+          }
         >
           <button
             onClick={handleLogout}
@@ -191,7 +195,9 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
               </svg>
             </div>
             <span
-              className={"ml-3 tablet:hidden tablet:group-hover:inline-block transition-all duration-200"}
+              className={
+                'ml-3 tablet:hidden tablet:group-hover:inline-block transition-all duration-200'
+              }
             >
               Logout
             </span>
