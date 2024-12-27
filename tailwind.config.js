@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -15,13 +12,13 @@ export default {
         },
         menu: {
           DEFAULT: '#616e70',
-        }
+        },
       },
       screens: {
-        'tablet': '1024px',
+        tablet: '1024px',
       },
       maxWidth: {
-        'tablet': '1024px',
+        tablet: '1024px',
       },
     },
   },

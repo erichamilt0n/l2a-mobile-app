@@ -20,7 +20,7 @@ export const Button = ({
   const variantStyles = {
     primary: 'bg-[#2d3339] hover:bg-[#3a424a] text-white',
     secondary: 'bg-[#1e2327] hover:bg-[#2d3339] text-gray-400',
-    link: 'text-blue-500 hover:text-blue-600 underline bg-transparent'
+    link: 'text-blue-500 hover:text-blue-600 underline bg-transparent',
   }
 
   return (

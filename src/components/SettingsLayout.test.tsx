@@ -41,9 +41,7 @@ describe('SettingsLayout', () => {
     const links = screen.getAllByRole('link')
     expect(links.length).toBeGreaterThan(0)
     // Check that at least one link has the active class
-    const hasActiveLink = links.some(link => 
-      link.className.includes('bg-dark-100')
-    )
+    const hasActiveLink = links.some(link => link.className.includes('bg-dark-100'))
     expect(hasActiveLink).toBeTruthy()
   })
 })

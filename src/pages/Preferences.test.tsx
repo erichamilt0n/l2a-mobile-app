@@ -32,7 +32,7 @@ describe('Preferences', () => {
 
   it('renders all preference settings', () => {
     renderPreferences()
-    
+
     // Check for all preference titles
     expect(screen.getByText('Dark Mode')).toBeInTheDocument()
     expect(screen.getByText('Auto Booking')).toBeInTheDocument()
@@ -46,7 +46,7 @@ describe('Preferences', () => {
 
   it('renders toggle buttons with correct initial states', () => {
     renderPreferences()
-    
+
     const toggleButtons = screen.getAllByRole('button')
     expect(toggleButtons).toHaveLength(3)
 
@@ -58,7 +58,7 @@ describe('Preferences', () => {
 
   it('toggles preference settings when clicked', () => {
     renderPreferences()
-    
+
     const toggleButtons = screen.getAllByRole('button')
 
     // Toggle Dark Mode (initially enabled)
@@ -76,7 +76,7 @@ describe('Preferences', () => {
 
   it('updates toggle button appearance when clicked', () => {
     renderPreferences()
-    
+
     const toggleButtons = screen.getAllByRole('button')
     const firstToggle = toggleButtons[0]
 
@@ -94,7 +94,7 @@ describe('Preferences', () => {
 
   it('maintains other preferences state when toggling one preference', () => {
     renderPreferences()
-    
+
     const toggleButtons = screen.getAllByRole('button')
 
     // Initial states

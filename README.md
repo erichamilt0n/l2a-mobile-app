@@ -30,12 +30,14 @@ A modern, responsive web application for Lodge2A club management for members. Bu
 ## Getting Started
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/l2a-mobile-app.git
 cd l2a-mobile-app
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -43,6 +45,7 @@ yarn install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 # or

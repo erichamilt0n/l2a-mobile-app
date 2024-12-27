@@ -34,11 +34,13 @@ When you report a vulnerability, you can expect:
 This project implements several security measures:
 
 1. **Automated Security Scanning**
+
    - Snyk for dependency vulnerability scanning
    - CodeQL for code analysis
    - Regular dependency updates via Dependabot
 
 2. **Code Review Process**
+
    - All changes require review
    - Security-critical changes require additional review
    - Automated CI/CD checks
@@ -51,6 +53,7 @@ This project implements several security measures:
 ## Security-Related Configuration
 
 1. **Environment Variables**
+
    - Never commit sensitive data
    - Use `.env` files (listed in `.gitignore`)
    - Document required environment variables

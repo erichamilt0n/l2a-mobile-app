@@ -80,7 +80,7 @@ describe('Dashboard', () => {
     // Check activity entries
     const recentActivitySection = screen.getByText('Recent Activity').closest('div')?.parentElement
     expect(recentActivitySection).toBeInTheDocument()
-    
+
     // Check bay reservations within the recent activity section
     expect(within(recentActivitySection!).getAllByText(/Bay Reservation/)).toHaveLength(3)
     expect(within(recentActivitySection!).getAllByText(/2 hours - Bay/)).toHaveLength(3)
@@ -102,11 +102,13 @@ describe('Dashboard', () => {
     // Check event entries
     const upcomingEventsSection = screen.getByText('Upcoming Events').closest('div')?.parentElement
     expect(upcomingEventsSection).toBeInTheDocument()
-    
+
     // Check tournament entries within the upcoming events section
-    within(upcomingEventsSection!).getAllByText(/Tournament/).forEach((element, index) => {
-      expect(element).toHaveTextContent(`Tournament ${index + 1}`)
-    })
+    within(upcomingEventsSection!)
+      .getAllByText(/Tournament/)
+      .forEach((element, index) => {
+        expect(element).toHaveTextContent(`Tournament ${index + 1}`)
+      })
     expect(within(upcomingEventsSection!).getAllByText('18 holes - Singles')).toHaveLength(3)
     expect(within(upcomingEventsSection!).getByText('Dec 10, 2024')).toBeInTheDocument()
     expect(within(upcomingEventsSection!).getByText('Dec 20, 2024')).toBeInTheDocument()
