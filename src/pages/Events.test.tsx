@@ -20,7 +20,7 @@ describe('Events', () => {
 
   it('renders all events with correct information', () => {
     render(<Events />)
-    
+
     // Check for event titles
     expect(screen.getByText('Winter Tournament')).toBeInTheDocument()
     expect(screen.getByText('Pro Training Session')).toBeInTheDocument()
@@ -39,10 +39,10 @@ describe('Events', () => {
 
   it('renders correct button text based on event status', () => {
     render(<Events />)
-    
+
     const registerButtons = screen.getAllByText('Register Now')
     expect(registerButtons).toHaveLength(2) // Two events are 'open'
-    
+
     const waitlistButtons = screen.getAllByText('Waitlist')
     expect(waitlistButtons).toHaveLength(1) // One event is 'waitlist'
   })
@@ -55,12 +55,12 @@ describe('Events', () => {
 
   it('applies correct styling for different event types', () => {
     render(<Events />)
-    
+
     // Find all event type badges (spans) that contain the type text
-    const eventTypes = screen.getAllByText(/Tournament|Training|Social/).filter(
-      element => element.tagName.toLowerCase() === 'span'
-    )
-    
+    const eventTypes = screen
+      .getAllByText(/Tournament|Training|Social/)
+      .filter(element => element.tagName.toLowerCase() === 'span')
+
     const tournamentType = eventTypes.find(type => type.textContent === 'Tournament')
     const socialType = eventTypes.find(type => type.textContent === 'Social')
     const trainingType = eventTypes.find(type => type.textContent === 'Training')
