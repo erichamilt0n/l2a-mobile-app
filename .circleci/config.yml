@@ -133,7 +133,7 @@ jobs:
           name: Upload SARIF to GitHub
           command: |
             if [ -f "reports/snyk.sarif" ]; then
-              gh auth login --with-token <<< "$GITHUB_TOKEN"
+              echo "$GITHUB_TOKEN" | gh auth login --with-token
               gh api \
                 --method POST \
                 -H "Accept: application/vnd.github+json" \
