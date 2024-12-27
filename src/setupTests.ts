@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 import { configure } from '@testing-library/react';
-import type { Config } from '@jest/types';
 
 // Configure React Testing Library
 configure({
