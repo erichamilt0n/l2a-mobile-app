@@ -1,11 +1,13 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
+import { describe, it, expect, vi } from 'vitest'
 import Reservations from './Reservations'
 
-jest.mock('../components/icons', () => ({
+vi.mock('../components/icons', () => ({
   BayIcon: () => <div data-testid="bay-icon">Bay Icon</div>,
-  TableIcon: () => <div data-testid="table-icon">Table Icon</div>,
+  TableIcon: () => <div data-testid="table-icon">Table Icon</div>
 }))
 
 describe('Reservations', () => {
@@ -101,17 +103,27 @@ describe('Reservations', () => {
     it('renders guest count section', () => {
       renderReservations()
       expect(screen.getByText('Number of Guests')).toBeInTheDocument()
-      expect(screen.getByText('4')).toBeInTheDocument() // Default guest count
     })
 
-    it('renders increment and decrement buttons', () => {
+    it('allows guest count selection', async () => {
+      const user = userEvent.setup()
       renderReservations()
-      const buttons = screen.getAllByRole('button')
-      const decrementButton = buttons.find(button => button.innerHTML.includes('M20 12H4'))
-      const incrementButton = buttons.find(button => button.innerHTML.includes('M12 4v16m8-8H4'))
-      
-      expect(decrementButton).toBeInTheDocument()
-      expect(incrementButton).toBeInTheDocument()
+      const decrementButton = screen.getByLabelText('Decrease guest count')
+      const incrementButton = screen.getByLabelText('Increase guest count')
+      const guestCount = screen.getByLabelText('Guest count')
+
+      expect(guestCount).toHaveTextContent('1')
+      expect(decrementButton).toBeDisabled() // Can't go below 1
+
+      // Increment guest count
+      await user.click(incrementButton)
+      expect(guestCount).toHaveTextContent('2')
+      expect(decrementButton).not.toBeDisabled()
+
+      // Decrement guest count
+      await user.click(decrementButton)
+      expect(guestCount).toHaveTextContent('1')
+      expect(decrementButton).toBeDisabled()
     })
   })
 

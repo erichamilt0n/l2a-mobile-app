@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '../components/ui/Button'
 import { BayIcon, TableIcon } from '../components/icons'
 
@@ -9,6 +9,7 @@ interface TimeSlot {
 }
 
 export default function Reservations() {
+  const [guestCount, setGuestCount] = useState(1)
   const timeSlots: TimeSlot[] = [
     { id: '1', time: '9:00 AM', available: true },
     { id: '2', time: '10:00 AM', available: false },
@@ -79,15 +80,23 @@ export default function Reservations() {
         <div className="flex items-center space-x-4">
           <Button
             variant="secondary"
+            onClick={() => setGuestCount(prev => Math.max(1, prev - 1))}
+            disabled={guestCount <= 1}
+            aria-label="Decrease guest count"
             icon={
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
               </svg>
             }
           />
-          <span className="text-xl font-bold text-white">4</span>
+          <span className="text-xl font-bold text-white" aria-label="Guest count" role="status">
+            {guestCount}
+          </span>
           <Button
             variant="secondary"
+            onClick={() => setGuestCount(prev => Math.min(8, prev + 1))}
+            disabled={guestCount >= 8}
+            aria-label="Increase guest count"
             icon={
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
