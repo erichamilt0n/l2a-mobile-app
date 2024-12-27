@@ -65,8 +65,8 @@ describe('Events', () => {
     const socialType = eventTypes.find(type => type.textContent === 'Social')
     const trainingType = eventTypes.find(type => type.textContent === 'Training')
 
-    expect(tournamentType).toHaveClass('bg-blue-100', 'text-blue-800')
-    expect(socialType).toHaveClass('bg-red-100', 'text-red-800')
-    expect(trainingType).toHaveClass('bg-purple-100', 'text-purple-800')
+    expect(tournamentType).toHaveClass('bg-blue-100 text-blue-800')
+    expect(socialType).toHaveClass('bg-red-100 text-red-800')
+    expect(trainingType).toHaveClass('bg-purple-100 text-purple-800')
   })
 })

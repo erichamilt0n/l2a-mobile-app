@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Grid } from '../components/layout/Grid'
 import { StatCard } from '../components/ui/StatCard'
 
 export default function Stats() {
+  const [selectedPeriod, setSelectedPeriod] = useState('30')
+  const [showAchievementDetails, setShowAchievementDetails] = useState(false)
+  const [selectedAchievement, setSelectedAchievement] = useState(null)
+  const [showPeriodDropdown, setShowPeriodDropdown] = useState(false)
+
   const stats = {
     titlesPlayed: 24,
     averageScore: 714,
@@ -18,6 +23,21 @@ export default function Stats() {
     { date: 'Dec 5, 2024', score: 79, course: 'Lodge2A Main Course' },
     { date: 'Nov 30, 2024', score: 81, course: 'Lodge2A Main Course' },
   ]
+
+  const achievements = [
+    { id: 1, name: 'Achievement 1', description: 'Description 1' },
+    { id: 2, name: 'Achievement 2', description: 'Description 2' },
+    { id: 3, name: 'Achievement 3', description: 'Description 3' },
+  ]
+
+  const handlePeriodChange = (period: string) => {
+    setSelectedPeriod(period)
+  }
+
+  const handleAchievementClick = (achievement: any) => {
+    setSelectedAchievement(achievement)
+    setShowAchievementDetails(true)
+  }
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8">
@@ -137,6 +157,64 @@ export default function Stats() {
           </div>
         </Card>
       </Grid>
+
+      {/* Score Distribution */}
+      <Card className="mb-6 md:mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-white">Score Distribution</h2>
+          <div className="relative">
+            <Button
+              variant="secondary"
+              onClick={() => setShowPeriodDropdown(!showPeriodDropdown)}
+            >
+              {`Last ${selectedPeriod} Days`}
+            </Button>
+            {showPeriodDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10">
+                {['7', '30', '90', 'all'].map((period) => (
+                  <button
+                    key={period}
+                    className="block w-full px-4 py-2 text-left text-white hover:bg-gray-700"
+                    onClick={() => handlePeriodChange(period)}
+                  >
+                    {period === 'all' ? 'All Time' : `Last ${period} Days`}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div data-testid="score-distribution-chart" data-period={selectedPeriod}>
+          {/* Chart implementation */}
+        </div>
+      </Card>
+
+      {/* Achievements section */}
+      <div className="mb-6 md:mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-white">Achievements</h2>
+          <Button variant="link">View All</Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {achievements.map((achievement, index) => (
+            <div
+              key={index}
+              data-testid="achievement-card"
+              className="cursor-pointer"
+              onClick={() => handleAchievementClick(achievement)}
+            >
+              {/* Achievement card content */}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Achievement details modal */}
+      {showAchievementDetails && (
+        <div data-testid="achievement-details">
+          {/* Achievement details content */}
+        </div>
+      )}
     </div>
   )
 }

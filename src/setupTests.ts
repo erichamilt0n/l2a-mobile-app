@@ -1,47 +1,66 @@
-import '@testing-library/jest-dom'
-import { configure } from '@testing-library/react'
+import '@testing-library/jest-dom';
+import { TextEncoder, TextDecoder } from 'util';
+import { configure } from '@testing-library/react';
+import type { Config } from '@jest/types';
 
-// Increase the default timeout
-jest.setTimeout(10000)
-
-// Configure testing-library
+// Configure React Testing Library
 configure({
   testIdAttribute: 'data-testid',
-  asyncUtilTimeout: 2000,
-  computedStyleSupportsPseudoElements: false,
-})
+});
 
-// Suppress React 18 console errors/warnings
-const originalError = console.error
-const originalWarn = console.warn
+// Mock IntersectionObserver
+class MockIntersectionObserver {
+  observe = jest.fn();
+  disconnect = jest.fn();
+  unobserve = jest.fn();
+}
+
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: MockIntersectionObserver,
+});
+
+// Mock console methods to suppress React 18 console errors/warnings
+const originalConsoleError = console.error;
+const originalConsoleWarn = console.warn;
 
 beforeAll(() => {
   console.error = (...args: any[]) => {
+    const message = args.join(' ');
     if (
-      /Warning: ReactDOM.render is no longer supported in React 18/.test(args[0]) ||
-      /Warning: React.createFactory/.test(args[0]) ||
-      /Warning: Using UNSAFE_componentWillMount/.test(args[0]) ||
-      /Warning: Using UNSAFE_componentWillReceiveProps/.test(args[0]) ||
-      /Warning: Using UNSAFE_componentWillUpdate/.test(args[0]) ||
-      /Warning: Legacy context API/.test(args[0])
+      message.includes('ReactDOM.render is no longer supported') ||
+      message.includes('Use createRoot instead') ||
+      message.includes('StrictMode')
     ) {
-      return
+      return;
     }
-    originalError.call(console, ...args)
-  }
+    originalConsoleError.apply(console, args);
+  };
 
   console.warn = (...args: any[]) => {
-    if (
-      /Warning: React Router Future Flag/.test(args[0]) ||
-      /Warning: The `punycode` module is deprecated/.test(args[0])
-    ) {
-      return
+    const message = args.join(' ');
+    if (message.includes('StrictMode')) {
+      return;
     }
-    originalWarn.call(console, ...args)
-  }
-})
+    originalConsoleWarn.apply(console, args);
+  };
+});
 
 afterAll(() => {
-  console.error = originalError
-  console.warn = originalWarn
-})
+  console.error = originalConsoleError;
+  console.warn = originalConsoleWarn;
+});
+
+// Add TextEncoder and TextDecoder to global scope
+Object.assign(global, { TextDecoder, TextEncoder });
+
+// Add Jest DOM matchers
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeInTheDocument(): R;
+      toHaveStyle(style: Record<string, any>): R;
+    }
+  }
+}

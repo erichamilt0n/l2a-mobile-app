@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -102,17 +102,15 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -120,8 +118,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">337x</span>
+<span class="cline-any cline-yes">337x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">337x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,7 +158,7 @@ import type { ComponentPropsWithRef, ReactNode } from 'react'
 import clsx from 'clsx'
 &nbsp;
 type ButtonProps = ComponentPropsWithRef&lt;'button'&gt; &amp; {
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'link'
   icon?: ReactNode
   fullWidth?: boolean
 }
@@ -159,13 +171,19 @@ export const Button = ({
   className,
   ...props
 }: ButtonProps) =&gt; {
+  const baseStyles = 'p-4 md:p-6 rounded-xl transition-colors'
+  const variantStyles = {
+    primary: 'bg-[#2d3339] hover:bg-[#3a424a] text-white',
+    secondary: 'bg-[#1e2327] hover:bg-[#2d3339] text-gray-400',
+    link: 'text-blue-500 hover:text-blue-600 underline bg-transparent'
+  }
+&nbsp;
   return (
     &lt;button
       className={clsx(
-        'p-4 md:p-6 rounded-xl transition-colors',
+        baseStyles,
+        variantStyles[variant],
         {
-          'bg-[#2d3339] hover:bg-[#3a424a] text-white': variant === 'primary',
-          'bg-[#1e2327] hover:bg-[#2d3339] text-gray-400': variant === 'secondary',
           'w-full': fullWidth,
           'opacity-50 cursor-not-allowed': props.disabled,
         },
@@ -174,7 +192,7 @@ export const Button = ({
       {...props}
     &gt;
       &lt;div className="flex items-center justify-center"&gt;
-        {icon &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span className="mr-2"&gt;{icon}&lt;/span&gt;}</span>
+        {icon &amp;&amp; &lt;span className="mr-2"&gt;{icon}&lt;/span&gt;}
         {children}
       &lt;/div&gt;
     &lt;/button&gt;
@@ -187,7 +205,7 @@ export const Button = ({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-26T20:41:30.989Z
+                at 2024-12-27T02:52:50.810Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -119,6 +119,8 @@ describe('Reservations', () => {
     renderReservations()
     const completeButton = screen.getByText('Complete Reservation')
     expect(completeButton).toBeInTheDocument()
-    expect(completeButton.closest('button')).toHaveClass('p-4', 'md:p-6', 'rounded-xl', 'transition-colors', 'bg-[#2d3339]', 'hover:bg-[#3a424a]', 'text-white', 'w-full')
+    expect(completeButton.closest('button')).toHaveClass(
+      'p-4 md:p-6 rounded-xl transition-colors bg-[#2d3339] hover:bg-[#3a424a] text-white w-full'
+    )
   })
 })

@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ReactNode } from 'react'
 import clsx from 'clsx'
 
 type ButtonProps = ComponentPropsWithRef<'button'> & {
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'link'
   icon?: ReactNode
   fullWidth?: boolean
 }
@@ -16,13 +16,19 @@ export const Button = ({
   className,
   ...props
 }: ButtonProps) => {
+  const baseStyles = 'p-4 md:p-6 rounded-xl transition-colors'
+  const variantStyles = {
+    primary: 'bg-[#2d3339] hover:bg-[#3a424a] text-white',
+    secondary: 'bg-[#1e2327] hover:bg-[#2d3339] text-gray-400',
+    link: 'text-blue-500 hover:text-blue-600 underline bg-transparent'
+  }
+
   return (
     <button
       className={clsx(
-        'p-4 md:p-6 rounded-xl transition-colors',
+        baseStyles,
+        variantStyles[variant],
         {
-          'bg-[#2d3339] hover:bg-[#3a424a] text-white': variant === 'primary',
-          'bg-[#1e2327] hover:bg-[#2d3339] text-gray-400': variant === 'secondary',
           'w-full': fullWidth,
           'opacity-50 cursor-not-allowed': props.disabled,
         },

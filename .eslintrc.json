@@ -2,13 +2,17 @@
   "root": true,
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,7 +24,10 @@
   },
   "plugins": [
     "react",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "react-hooks",
+    "jest",
+    "testing-library"
   ],
   "settings": {
     "react": {
@@ -29,6 +36,27 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
-  }
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-undef": "error",
+    "jest/globals": "off",
+    "jest/expect-expect": "off",
+    "testing-library/no-render-in-setup": "off",
+    "testing-library/no-wait-for-empty-callback": "off",
+    "testing-library/prefer-presence-queries": "off",
+    "testing-library/prefer-screen-queries": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "src/setupTests.ts"],
+      "env": {
+        "jest": true
+      },
+      "extends": ["plugin:jest/recommended"],
+      "rules": {
+        "jest/globals": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-undef": "off"
+      }
+    }
+  ]
 }
