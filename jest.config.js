@@ -4,8 +4,17 @@ export default {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/__mocks__/fileMock.js',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  maxWorkers: '50%',
+  testTimeout: 10000,
+  maxConcurrency: 5,
+  detectOpenHandles: true,
+  forceExit: true,
+  cache: true,
+  cacheDirectory: '.jest-cache',
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
@@ -14,6 +23,9 @@ export default {
       },
     ],
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@react-native|react-native|react-native-vector-icons)/)'
+  ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
