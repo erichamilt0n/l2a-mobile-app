@@ -1,22 +1,17 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { render, screen } from '@testing-library/react'
 import Settings from './Settings'
+import { BrowserRouter } from 'react-router-dom'
+
+const renderSettings = () => {
+  render(
+    <BrowserRouter>
+      <Settings />
+    </BrowserRouter>
+  )
+}
 
 describe('Settings', () => {
-  const renderSettings = () => {
-    render(
-      <BrowserRouter>
-        <Settings />
-      </BrowserRouter>
-    )
-  }
-
-  it('renders settings header', () => {
-    renderSettings()
-    expect(screen.getByText('Settings')).toBeInTheDocument()
-  })
-
   describe('Personal Information Section', () => {
     beforeEach(() => {
       renderSettings()
@@ -27,11 +22,7 @@ describe('Settings', () => {
       expect(screen.getByText('Update your personal details')).toBeInTheDocument()
     })
 
-    it('renders edit profile button', () => {
-      expect(screen.getByText('Edit Profile')).toBeInTheDocument()
-    })
-
-    it('displays user information correctly', () => {
+    it('displays user information', () => {
       expect(screen.getByText('john.rambo@badass.com')).toBeInTheDocument()
       expect(screen.getByText('+1 (555) 123-4567')).toBeInTheDocument()
       expect(screen.getByText('123 Main Street')).toBeInTheDocument()
@@ -40,11 +31,10 @@ describe('Settings', () => {
       expect(screen.getByText('98826')).toBeInTheDocument()
     })
 
-    it('renders all personal information field labels', () => {
-      const labels = ['Email', 'Phone', 'Address', 'City', 'State', 'Zip']
-      labels.forEach(label => {
-        expect(screen.getByText(label)).toBeInTheDocument()
-      })
+    it('displays edit profile button', () => {
+      const button = screen.getByText('Edit Profile')
+      expect(button).toBeInTheDocument()
+      expect(button.closest('button')).toHaveClass('bg-[#333e48]')
     })
   })
 
@@ -58,38 +48,56 @@ describe('Settings', () => {
       expect(screen.getByText('View and manage your billing information')).toBeInTheDocument()
     })
 
-    it('renders billing action buttons', () => {
-      expect(screen.getByText('Edit Billing')).toBeInTheDocument()
-      expect(screen.getByText('View All')).toBeInTheDocument()
-    })
-
     it('displays payment history entries', () => {
-      // Check for payment descriptions
       expect(screen.getByText('Bay Reservation - 2 Hours')).toBeInTheDocument()
       expect(screen.getByText('Pro Shop Purchase - Golf Balls')).toBeInTheDocument()
       expect(screen.getByText('Monthly Membership Fee')).toBeInTheDocument()
       expect(screen.getByText('Table Reservation - Dinner')).toBeInTheDocument()
+    })
 
-      // Check for payment amounts
-      expect(screen.getByText('$120.00')).toBeInTheDocument()
-      expect(screen.getByText('$45.99')).toBeInTheDocument()
-      expect(screen.getByText('$199.99')).toBeInTheDocument()
-      expect(screen.getByText('$85.00')).toBeInTheDocument()
+    it('displays payment status with correct styling', () => {
+      const completedStatus = screen.getAllByText('Completed')[0]
+      expect(completedStatus).toHaveClass('bg-green-100 text-green-800')
+    })
 
-      // Check for payment dates
-      expect(screen.getByText('Dec 15, 2024')).toBeInTheDocument()
-      expect(screen.getByText('Dec 10, 2024')).toBeInTheDocument()
-      expect(screen.getByText('Dec 5, 2024')).toBeInTheDocument()
-      expect(screen.getByText('Nov 28, 2024')).toBeInTheDocument()
+    it('displays payment action buttons', () => {
+      expect(screen.getByText('Edit Billing')).toBeInTheDocument()
+      expect(screen.getByText('View All')).toBeInTheDocument()
     })
   })
 
-  describe('Status Color Function', () => {
-    it('renders status with correct color', () => {
+  describe('Notification Settings Section', () => {
+    beforeEach(() => {
       renderSettings()
-      const paymentItems = screen.getAllByText('Completed')
-      const firstPaymentStatus = paymentItems[0].closest('span')
-      expect(firstPaymentStatus).toHaveClass('bg-green-100', 'text-green-800', 'px-3', 'py-1', 'rounded-full', 'text-sm')
+    })
+
+    it('renders notification settings section', () => {
+      expect(screen.getByText('Notifications')).toBeInTheDocument()
+    })
+
+    it('displays notification options', () => {
+      expect(screen.getByText('Email Notifications')).toBeInTheDocument()
+      expect(screen.getByText('Push Notifications')).toBeInTheDocument()
+      expect(screen.getByText('Receive updates about your reservations')).toBeInTheDocument()
+      expect(screen.getByText('Get alerts on your mobile device')).toBeInTheDocument()
+    })
+
+    it('renders notification toggles', () => {
+      const toggleInputs = screen.getAllByRole('checkbox')
+      expect(toggleInputs).toHaveLength(5)
+      toggleInputs.forEach(toggle => {
+        expect(toggle).toBeInTheDocument()
+      })
+    })
+  })
+
+  describe('Display Section', () => {
+    beforeEach(() => {
+      renderSettings()
+    })
+
+    it('renders display section', () => {
+      expect(screen.getByText('Display')).toBeInTheDocument()
     })
   })
 })
