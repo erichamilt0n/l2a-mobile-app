@@ -72,6 +72,6 @@ describe('ProShop', () => {
     // The shopping cart button is identified by its SVG, so we'll look for its container
     const cartButton = screen.getByRole('button', { name: '' }) // The floating cart button has no text
     expect(cartButton).toBeInTheDocument()
-    expect(cartButton).toHaveClass('p-4 bg-[#333e48] text-white rounded-full')
+    expect(cartButton).toHaveClass("p-4 bg-[#333e48] text-white rounded-full")
   })
 })
