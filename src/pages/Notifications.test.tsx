@@ -32,7 +32,7 @@ describe('Notifications', () => {
 
   it('renders all notification settings', () => {
     renderNotifications()
-    
+
     // Check for all notification titles
     expect(screen.getByText('Email Notifications')).toBeInTheDocument()
     expect(screen.getByText('SMS Notifications')).toBeInTheDocument()
@@ -48,7 +48,7 @@ describe('Notifications', () => {
 
   it('renders toggle buttons with correct initial states', () => {
     renderNotifications()
-    
+
     const toggleButtons = screen.getAllByRole('button')
     expect(toggleButtons).toHaveLength(4)
 
@@ -61,7 +61,7 @@ describe('Notifications', () => {
 
   it('toggles notification settings when clicked', () => {
     renderNotifications()
-    
+
     const toggleButtons = screen.getAllByRole('button')
 
     // Toggle email notifications (initially enabled)
@@ -83,7 +83,7 @@ describe('Notifications', () => {
 
   it('updates toggle button appearance when clicked', () => {
     renderNotifications()
-    
+
     const toggleButtons = screen.getAllByRole('button')
     const firstToggle = toggleButtons[0]
 

@@ -43,9 +43,9 @@ describe('Stats', () => {
   it('displays achievements section', () => {
     renderStats()
     expect(screen.getByText('Achievements')).toBeInTheDocument()
-    const viewAllButton = screen.getAllByText('View All').find(el => 
-      el.closest('button')?.className.includes('text-blue-500')
-    )
+    const viewAllButton = screen
+      .getAllByText('View All')
+      .find(el => el.closest('button')?.className.includes('text-blue-500'))
     expect(viewAllButton).toBeInTheDocument()
   })
 

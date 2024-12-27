@@ -24,7 +24,7 @@ export default {
     ],
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!(@react-native|react-native|react-native-vector-icons)/)'
+    '/node_modules/(?!(@react-native|react-native|react-native-vector-icons)/)',
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

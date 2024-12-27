@@ -43,15 +43,15 @@ describe('Reservations', () => {
       renderReservations()
       const today = new Date()
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-      
+
       // Get all date buttons
       const dateButtons = screen.getAllByRole('button').filter(button => {
         const text = button.textContent
         return dayNames.some(day => text?.includes(day))
       })
-      
+
       expect(dateButtons).toHaveLength(7)
-      
+
       // Check if first date is today
       const todayShort = today.toLocaleDateString('en-US', { weekday: 'short' })
       const todayDate = today.getDate().toString()
@@ -80,7 +80,7 @@ describe('Reservations', () => {
       renderReservations()
       const tenAMSlot = screen.getByText('10:00 AM').closest('button')
       const onePMSlot = screen.getByText('1:00 PM').closest('button')
-      
+
       expect(tenAMSlot).toBeDisabled()
       expect(onePMSlot).toBeDisabled()
     })
@@ -90,7 +90,7 @@ describe('Reservations', () => {
       const nineAMSlot = screen.getByText('9:00 AM').closest('button')
       const elevenAMSlot = screen.getByText('11:00 AM').closest('button')
       const twoPMSlot = screen.getByText('2:00 PM').closest('button')
-      
+
       expect(nineAMSlot).not.toBeDisabled()
       expect(elevenAMSlot).not.toBeDisabled()
       expect(twoPMSlot).not.toBeDisabled()
@@ -109,7 +109,7 @@ describe('Reservations', () => {
       const buttons = screen.getAllByRole('button')
       const decrementButton = buttons.find(button => button.innerHTML.includes('M20 12H4'))
       const incrementButton = buttons.find(button => button.innerHTML.includes('M12 4v16m8-8H4'))
-      
+
       expect(decrementButton).toBeInTheDocument()
       expect(incrementButton).toBeInTheDocument()
     })
