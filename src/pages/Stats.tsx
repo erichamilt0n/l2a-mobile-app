@@ -7,7 +7,7 @@ import { StatCard } from '../components/ui/StatCard'
 export default function Stats() {
   const [selectedPeriod, setSelectedPeriod] = useState('30')
   const [showAchievementDetails, setShowAchievementDetails] = useState(false)
-  const [selectedAchievement, setSelectedAchievement] = useState(null)
+  const [_selectedAchievement, setSelectedAchievement] = useState(null)
   const [showPeriodDropdown, setShowPeriodDropdown] = useState(false)
 
   const stats = {
