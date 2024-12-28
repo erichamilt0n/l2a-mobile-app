@@ -1,34 +1,23 @@
 {
-  "root": true,
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true,
-    "jest": true
+    "node": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jest/recommended",
-    "plugin:testing-library/react"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+  "globals": {
+    "describe": "readonly",
+    "it": "readonly",
+    "expect": "readonly",
+    "vi": "readonly",
+    "beforeEach": "readonly",
+    "afterEach": "readonly"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "react-hooks",
-    "jest",
-    "testing-library"
-  ],
   "settings": {
     "react": {
       "version": "detect"
@@ -36,27 +25,6 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "no-undef": "error",
-    "jest/globals": "off",
-    "jest/expect-expect": "off",
-    "testing-library/no-render-in-setup": "off",
-    "testing-library/no-wait-for-empty-callback": "off",
-    "testing-library/prefer-presence-queries": "off",
-    "testing-library/prefer-screen-queries": "off"
-  },
-  "overrides": [
-    {
-      "files": ["**/*.test.ts", "**/*.test.tsx", "src/setupTests.ts"],
-      "env": {
-        "jest": true
-      },
-      "extends": ["plugin:jest/recommended"],
-      "rules": {
-        "jest/globals": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "no-undef": "off"
-      }
-    }
-  ]
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+  }
 }
