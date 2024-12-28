@@ -1,5 +1,5 @@
 {
-  "buildCommand": "nx build",
+  "buildCommand": "npm install --legacy-peer-deps && nx build",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
