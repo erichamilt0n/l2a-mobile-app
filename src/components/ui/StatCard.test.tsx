@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { StatCard } from './StatCard'
 
@@ -10,7 +11,6 @@ describe('StatCard', () => {
 
   it('applies custom className', () => {
     render(<StatCard title="Test" value="42" className="custom-class" />)
-    const card = screen.getByText('Test').parentElement?.parentElement
-    expect(card).toHaveClass('custom-class')
+    expect(screen.getByText('Test')).toHaveClass('custom-class')
   })
 })
