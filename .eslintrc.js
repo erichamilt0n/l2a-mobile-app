@@ -13,22 +13,33 @@ module.exports = {
   ],
   overrides: [
     {
-      // For test files only
-      files: ['**/*.test.ts', '**/*.test.tsx', 'src/setupTests.ts'],
+      files: [
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        'src/setupTests.ts',
+        'src/test-utils.tsx'
+      ],
       env: {
-        jest: true // Enables jest globals
+        jest: true,
+        node: true
       },
       globals: {
-        vi: true,
-        describe: true,
-        it: true,
-        expect: true,
-        beforeEach: true,
-        beforeAll: true,
-        afterAll: true,
-        afterEach: true,
-      },
-    },
+        React: 'readonly',
+        JSX: 'readonly',
+        vi: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        afterEach: 'readonly',
+        jest: 'readonly',
+        Window: 'readonly',
+        console: 'readonly',
+        global: 'readonly'
+      }
+    }
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -40,11 +51,13 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    'react/react-in-jsx-scope': 'off', // Not needed in React 17+
+    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { 
       argsIgnorePattern: '^_',
       varsIgnorePattern: '^_',
     }],
+    'react-refresh/only-export-components': 'off',
+    'no-undef': 'error'
   },
   settings: {
     react: {

@@ -24,5 +24,17 @@ export default defineConfig({
       reportsDirectory: './coverage'
     },
     css: true
+  },
+  build: {
+    rollupOptions: {
+      // Exclude test files from production build
+      exclude: [
+        '**/*.test.tsx',
+        '**/*.test.ts',
+        '**/setupTests.ts',
+        '**/test-utils.tsx',
+        '**/__mocks__/**'
+      ]
+    }
   }
 })
