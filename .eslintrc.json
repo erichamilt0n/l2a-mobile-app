@@ -34,6 +34,8 @@
     "expect": true,
     "vi": true,
     "beforeEach": true,
-    "afterEach": true
+    "afterEach": true,
+    "MediaQueryList": true,
+    "MediaQueryListEvent": true
   }
 }
