@@ -1,9 +1,15 @@
+import { describe, it, expect } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import Stats from './Stats'
 
 describe('Stats', () => {
   const renderStats = () => {
-    return render(<Stats />)
+    return render(
+      <BrowserRouter>
+        <Stats />
+      </BrowserRouter>
+    )
   }
 
   it('renders the stats overview section', () => {
@@ -43,9 +49,9 @@ describe('Stats', () => {
   it('displays achievements section', () => {
     renderStats()
     expect(screen.getByText('Achievements')).toBeInTheDocument()
-    const viewAllButton = screen.getAllByText('View All').find(el => 
-      el.closest('button')?.className.includes('text-blue-500')
-    )
+    const viewAllButton = screen
+      .getAllByText('View All')
+      .find(el => el.closest('button')?.className.includes('text-blue-500'))
     expect(viewAllButton).toBeInTheDocument()
   })
 
