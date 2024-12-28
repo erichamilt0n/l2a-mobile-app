@@ -16,7 +16,7 @@ module.exports = {
       // For test files only
       files: ['**/*.test.ts', '**/*.test.tsx', 'src/setupTests.ts'],
       env: {
-        jest: true // Enables jest globals
+        jest: true, // Enables jest globals
       },
       globals: {
         vi: true,
@@ -41,14 +41,17 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react'],
   rules: {
     'react/react-in-jsx-scope': 'off', // Not needed in React 17+
-    '@typescript-eslint/no-unused-vars': ['error', { 
-      argsIgnorePattern: '^_',
-      varsIgnorePattern: '^_',
-    }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
   settings: {
     react: {
       version: 'detect',
     },
   },
-}; 
+}
