@@ -27,13 +27,13 @@
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react-refresh/only-export-components": "warn"
   },
-  "overrides": [
-    {
-      "files": ["**/*.test.ts", "**/*.test.tsx"],
-      "env": {
-        "vitest": true,
-        "jest": true
-      }
-    }
-  ]
+  "globals": {
+    "React": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "vi": true,
+    "beforeEach": true,
+    "afterEach": true
+  }
 }
