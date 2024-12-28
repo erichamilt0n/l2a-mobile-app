@@ -1,5 +1,5 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import Profile from './Profile'
 
@@ -14,11 +14,11 @@ describe('Profile', () => {
 
   it('renders profile information', () => {
     renderProfile()
-    
+
     // Check for profile header
     expect(screen.getByText('Profile')).toBeInTheDocument()
     expect(screen.getByText('Manage your account and preferences')).toBeInTheDocument()
-    
+
     // Check for user information
     expect(screen.getByText('JD')).toBeInTheDocument()
     expect(screen.getByText('John Doe')).toBeInTheDocument()
@@ -28,28 +28,28 @@ describe('Profile', () => {
 
   it('renders stat cards with correct information', () => {
     renderProfile()
-    
+
     // Check stat cards
     expect(screen.getByText('Total Spent')).toBeInTheDocument()
     expect(screen.getByText('$450.98')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Reservations')).toBeInTheDocument()
     expect(screen.getByText('12')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Events Attended')).toBeInTheDocument()
     expect(screen.getByText('5')).toBeInTheDocument()
-    
+
     expect(screen.getByText('Pro Shop Points')).toBeInTheDocument()
     expect(screen.getByText('1,250')).toBeInTheDocument()
   })
 
   it('renders payment history section', () => {
     renderProfile()
-    
+
     // Check payment history header
     expect(screen.getByText('Payment History')).toBeInTheDocument()
     expect(screen.getByText('View All')).toBeInTheDocument()
-    
+
     // Check payment history entries
     expect(screen.getByText('Bay Reservation - 2 Hours')).toBeInTheDocument()
     expect(screen.getByText('Pro Shop Purchase - Golf Balls')).toBeInTheDocument()
@@ -59,7 +59,7 @@ describe('Profile', () => {
 
   it('applies correct status color classes', () => {
     renderProfile()
-    
+
     // All statuses in the mock data are 'completed', so we should find green status indicators
     const statusElements = screen.getAllByText('completed')
     statusElements.forEach(element => {
@@ -69,7 +69,7 @@ describe('Profile', () => {
 
   it('displays payment status with correct styling', () => {
     renderProfile()
-    
+
     // Check completed status
     const completedStatus = screen.getAllByText('completed')[0]
     expect(completedStatus).toHaveClass('bg-green-100 text-green-800')
