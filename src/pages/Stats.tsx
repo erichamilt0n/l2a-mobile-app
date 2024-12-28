@@ -163,15 +163,12 @@ export default function Stats() {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-white">Score Distribution</h2>
           <div className="relative">
-            <Button
-              variant="secondary"
-              onClick={() => setShowPeriodDropdown(!showPeriodDropdown)}
-            >
+            <Button variant="secondary" onClick={() => setShowPeriodDropdown(!showPeriodDropdown)}>
               {`Last ${selectedPeriod} Days`}
             </Button>
             {showPeriodDropdown && (
               <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10">
-                {['7', '30', '90', 'all'].map((period) => (
+                {['7', '30', '90', 'all'].map(period => (
                   <button
                     key={period}
                     className="block w-full px-4 py-2 text-left text-white hover:bg-gray-700"
@@ -211,9 +208,7 @@ export default function Stats() {
 
       {/* Achievement details modal */}
       {showAchievementDetails && (
-        <div data-testid="achievement-details">
-          {/* Achievement details content */}
-        </div>
+        <div data-testid="achievement-details">{/* Achievement details content */}</div>
       )}
     </div>
   )
