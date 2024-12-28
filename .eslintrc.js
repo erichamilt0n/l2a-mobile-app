@@ -13,15 +13,10 @@ module.exports = {
   ],
   overrides: [
     {
-      files: [
-        '**/*.test.ts',
-        '**/*.test.tsx',
-        'src/setupTests.ts',
-        'src/test-utils.tsx'
-      ],
+      files: ['**/*.test.ts', '**/*.test.tsx', 'src/setupTests.ts', 'src/test-utils.tsx'],
       env: {
         jest: true,
-        node: true
+        node: true,
       },
       globals: {
         React: 'readonly',
@@ -37,9 +32,9 @@ module.exports = {
         jest: 'readonly',
         Window: 'readonly',
         console: 'readonly',
-        global: 'readonly'
-      }
-    }
+        global: 'readonly',
+      },
+    },
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -52,16 +47,19 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react'],
   rules: {
     'react/react-in-jsx-scope': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { 
-      argsIgnorePattern: '^_',
-      varsIgnorePattern: '^_',
-    }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
     'react-refresh/only-export-components': 'off',
-    'no-undef': 'error'
+    'no-undef': 'error',
   },
   settings: {
     react: {
       version: 'detect',
     },
   },
-}; 
+}
