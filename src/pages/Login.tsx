@@ -45,7 +45,12 @@ export default function Login() {
             {error}
           </div>
         )}
-        <form className="mt-12 space-y-8" onSubmit={handleSubmit}>
+        <form 
+          className="mt-12 space-y-8"
+          role="form"
+          aria-label="login"
+          onSubmit={handleSubmit}
+        >
           <div className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-lg font-medium text-gray-200 mb-2">
