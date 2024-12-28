@@ -10,8 +10,8 @@ export default defineConfig({
   base: '/',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   test: {
     globals: true,
@@ -21,8 +21,8 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      reportsDirectory: './coverage'
+      reportsDirectory: './coverage',
     },
-    css: true
-  }
+    css: true,
+  },
 })
