@@ -1,14 +1,11 @@
 {
-  "buildCommand": "npm run vercel-build",
-  "installCommand": "npm install --legacy-peer-deps",
-  "framework": "vite",
+  "buildCommand": "nx build",
   "outputDirectory": "dist",
-  "git": {
-    "deploymentEnabled": {
-      "main": true,
-      "fix/eslint-errors": true,
-      "development": false,
-      "*": false
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  }
+  ]
 }
