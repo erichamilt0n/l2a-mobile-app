@@ -1,5 +1,7 @@
 import { useState, type FormEvent, type ChangeEvent } from 'react'
 
+type InputChangeEvent = ChangeEvent<HTMLInputElement>
+
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,18 +19,18 @@ export default function Login() {
 
   /**
    * Handles email input changes
-   * @param {ChangeEvent<HTMLInputElement>} e - Input change event
+   * @param {InputChangeEvent} e - Input change event
    */
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: InputChangeEvent) => {
     setEmail(e.target.value)
     setError(null)
   }
 
   /**
    * Handles password input changes
-   * @param {ChangeEvent<HTMLInputElement>} e - Input change event
+   * @param {InputChangeEvent} e - Input change event
    */
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: InputChangeEvent) => {
     setPassword(e.target.value)
     setError(null)
   }
