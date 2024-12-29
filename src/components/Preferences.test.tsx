@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import Preferences from '@/pages/Preferences';
+import { describe, it, expect, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import Preferences from '@/pages/Preferences'
 
 vi.mock('@/components/SettingsLayout', () => {
   return {
@@ -10,13 +10,13 @@ vi.mock('@/components/SettingsLayout', () => {
         <p>{description}</p>
         {children}
       </div>
-    )
-  };
-});
+    ),
+  }
+})
 
 describe('Preferences', () => {
   it('renders preferences page', () => {
-    render(<Preferences />);
-    expect(screen.getByTestId('mock-settings-layout')).toBeInTheDocument();
-  });
-}); 
+    render(<Preferences />)
+    expect(screen.getByTestId('mock-settings-layout')).toBeInTheDocument()
+  })
+})
