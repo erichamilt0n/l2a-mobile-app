@@ -21,9 +21,9 @@ interface StatCardProps {
 export function StatCard({ title, value, className = '', icon, onClick }: StatCardProps) {
   /**
    * Handles keyboard events for accessibility
-   * @param {KeyboardEvent<HTMLDivElement>} event - The keyboard event
+   * @param {KeyboardEvent} event - The keyboard event
    */
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
       onClick?.()
