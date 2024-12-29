@@ -52,15 +52,11 @@ export default function Stats() {
    * @returns {JSX.Element} Button component for period selection
    */
   const renderPeriodButton = useCallback(
-    (period: string) => {
-      const handleClick = useCallback(() => handlePeriodChange(period), [period])
-
-      return (
-        <Button key={period} variant="link" onClick={handleClick}>
-          {period} Days
-        </Button>
-      )
-    },
+    (period: string) => (
+      <Button key={period} variant="link" onClick={() => handlePeriodChange(period)}>
+        {period} Days
+      </Button>
+    ),
     [handlePeriodChange]
   )
 
