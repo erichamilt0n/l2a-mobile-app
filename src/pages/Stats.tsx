@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Grid } from '../components/layout/Grid'
@@ -34,30 +34,35 @@ export default function Stats() {
    * Updates the selected time period
    * @param {string} period - The period to set (in days)
    */
-  function handlePeriodChange(period: string) {
+  const handlePeriodChange = useCallback((period: string) => {
     setSelectedPeriod(period)
     setShowPeriodDropdown(false)
-  }
+  }, [])
 
   /**
    * Toggles the period selection dropdown
    */
-  function handlePeriodDropdownToggle() {
+  const handlePeriodDropdownToggle = useCallback(() => {
     setShowPeriodDropdown(prev => !prev)
-  }
+  }, [])
 
   /**
    * Renders a button for period selection
    * @param {string} period - The period value to display
    * @returns {JSX.Element} Button component for period selection
    */
-  function renderPeriodButton(period: string) {
-    return (
-      <Button key={period} variant="link" onClick={() => handlePeriodChange(period)}>
-        {period} Days
-      </Button>
-    )
-  }
+  const renderPeriodButton = useCallback(
+    (period: string) => {
+      const handleClick = useCallback(() => handlePeriodChange(period), [period])
+
+      return (
+        <Button key={period} variant="link" onClick={handleClick}>
+          {period} Days
+        </Button>
+      )
+    },
+    [handlePeriodChange]
+  )
 
   const handleAchievementClick = (achievement: any) => {
     setSelectedAchievement(achievement)

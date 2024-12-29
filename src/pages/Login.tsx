@@ -1,4 +1,10 @@
-import { useState, type FormEvent, type ChangeEvent, type HTMLInputElement } from 'react'
+import {
+  useState,
+  useCallback,
+  type FormEvent,
+  type ChangeEvent,
+  type HTMLInputElement,
+} from 'react'
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement>
 
@@ -7,33 +13,21 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
 
-  /**
-   * Handles form submission
-   * @param {FormEvent} e - Form submission event
-   */
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault()
     setError(null)
     // handle form submission
-  }
+  }, [])
 
-  /**
-   * Handles email input changes
-   * @param {InputChangeEvent} e - Input change event
-   */
-  const handleEmailChange = (e: InputChangeEvent) => {
+  const handleEmailChange = useCallback((e: InputChangeEvent) => {
     setEmail(e.target.value)
     setError(null)
-  }
+  }, [])
 
-  /**
-   * Handles password input changes
-   * @param {InputChangeEvent} e - Input change event
-   */
-  const handlePasswordChange = (e: InputChangeEvent) => {
+  const handlePasswordChange = useCallback((e: InputChangeEvent) => {
     setPassword(e.target.value)
     setError(null)
-  }
+  }, [])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">

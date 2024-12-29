@@ -1,4 +1,4 @@
-import React from 'react'
+import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { StatCard } from '../components/ui/StatCard'
 
@@ -85,15 +85,15 @@ function WelcomeHeader() {
 
 /**
  * Grid of stat cards displaying user information
- * @param {Object} props - Component props
- * @param {(route: string) => void} props.onCardClick - Handler for card clicks
  * @returns {JSX.Element} Grid of stat cards
  */
-function StatCards({ onCardClick }: { onCardClick: (route: string) => void }) {
-  const handleScoreClick = () => onCardClick('/scores')
-  const handleHandicapClick = () => onCardClick('/handicap')
-  const handleReservationsClick = () => onCardClick('/reservations')
-  const handleEventsClick = () => onCardClick('/events')
+function StatCards() {
+  const navigate = useNavigate()
+
+  const handleScoreClick = useCallback(() => navigate('/scores'), [navigate])
+  const handleHandicapClick = useCallback(() => navigate('/handicap'), [navigate])
+  const handleReservationsClick = useCallback(() => navigate('/reservations'), [navigate])
+  const handleEventsClick = useCallback(() => navigate('/events'), [navigate])
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -120,20 +120,10 @@ function StatCards({ onCardClick }: { onCardClick: (route: string) => void }) {
  * @returns {JSX.Element} Dashboard page
  */
 export default function Dashboard() {
-  const navigate = useNavigate()
-
-  /**
-   * Handles navigation when a card is clicked
-   * @param {string} route - The route to navigate to
-   */
-  function handleCardClick(route: string) {
-    navigate(route)
-  }
-
   return (
     <main data-testid="dashboard" className="container mx-auto px-4 py-6 md:py-8">
       <WelcomeHeader />
-      <StatCards onCardClick={handleCardClick} />
+      <StatCards />
     </main>
   )
 }
