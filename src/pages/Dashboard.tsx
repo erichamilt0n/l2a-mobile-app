@@ -9,7 +9,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
 
   return (
-    <div className="container mx-auto px-4 py-6 md:py-8">
+    <div data-testid="dashboard" className="container mx-auto px-4 py-6 md:py-8">
       <div className="mb-6 md:mb-8">
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Welcome Back, John</h1>
         <p className="text-gray-400">Here's what's happening at Lodge2A</p>
