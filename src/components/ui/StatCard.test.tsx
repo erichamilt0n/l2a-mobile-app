@@ -11,6 +11,6 @@ describe('StatCard', () => {
 
   it('applies custom className', () => {
     render(<StatCard title="Test" value="42" className="custom-class" />)
-    expect(screen.getByText('Test')).toHaveClass('custom-class')
+    expect(screen.getByTestId('stat-card')).toHaveClass('custom-class')
   })
 })

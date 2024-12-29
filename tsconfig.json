@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vitest/globals", "@testing-library/jest-dom", "node"],
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

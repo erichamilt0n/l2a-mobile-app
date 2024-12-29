@@ -211,7 +211,7 @@ export default function Settings() {
               </div>
               <div>
                 <h3 className="text-white font-medium mb-2">Text Size</h3>
-                <select 
+                <select
                   defaultValue="Medium"
                   className="w-full bg-dark-200 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#333e48]"
                 >

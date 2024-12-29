@@ -1,71 +1,51 @@
-import { type FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback, type FormEvent, type ChangeEvent } from 'react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const navigate = useNavigate()
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault()
     setError(null)
+    // handle form submission
+  }, [])
 
-    // Check credentials
-    if (email === 'member@email.com' && password === 'password') {
-      navigate('/dashboard')
-    } else {
-      setError('Invalid email or password')
-    }
-  }
+  const handleEmailChange = useCallback((e: ChangeEvent<any>) => {
+    setEmail(e.target.value)
+    setError(null)
+  }, [])
+
+  const handlePasswordChange = useCallback((e: ChangeEvent<any>) => {
+    setPassword(e.target.value)
+    setError(null)
+  }, [])
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-      <div className="w-full max-w-2xl bg-dark-100 p-12 rounded-2xl shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         <div>
-          <div className="w-24 h-24 mx-auto">
-            <svg
-              className="w-full h-full text-[#333e48]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              />
-            </svg>
-          </div>
-          <h2 className="mt-8 text-center text-4xl font-bold text-white">Welcome Back</h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+            Sign in to your account
+          </h2>
         </div>
-        {error !== null && (
-          <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-xl text-red-200">
-            {error}
-          </div>
-        )}
-        <form 
-          className="mt-12 space-y-8"
-          role="form"
-          aria-label="login"
-          onSubmit={handleSubmit}
-        >
+        {error && <div className="rounded-md bg-red-50 p-4">{error}</div>}
+        <form className="mt-12 space-y-8" aria-label="login" onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-lg font-medium text-gray-200 mb-2">
-                Email
+                Email address
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
+                autoComplete="email"
                 required
-                className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
-                placeholder="member@email.com"
                 value={email}
-                onChange={e => {
-                  setEmail(e.target.value)
-                }}
+                onChange={handleEmailChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Enter your email"
               />
             </div>
             <div>
@@ -74,46 +54,24 @@ export default function Login() {
               </label>
               <input
                 id="password"
+                name="password"
                 type="password"
+                autoComplete="current-password"
                 required
-                className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
-                placeholder="Enter your password"
                 value={password}
-                onChange={e => {
-                  setPassword(e.target.value)
-                }}
+                onChange={handlePasswordChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Enter your password"
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-end">
-            <div className="text-lg">
-              <a href="#" className="font-medium text-[#333e48] hover:text-[#3f4b57]">
-                Forgot Password?
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="w-full bg-[#333e48] text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-[#3f4b57] transition-colors"
-            >
-              Sign In
-            </button>
-          </div>
-
-          <div className="text-center text-lg">
-            <span className="text-gray-400">Don't have an account? </span>
-            <a href="#" className="font-medium text-[#333e48] hover:text-[#3f4b57]">
-              Sign Up
-            </a>
-          </div>
-          <div className="mt-4 text-center text-gray-400">
-            <p>Demo credentials:</p>
-            <p>Email: member@email.com</p>
-            <p>Password: password</p>
-          </div>
+          <button
+            type="submit"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Sign in
+          </button>
         </form>
       </div>
     </div>

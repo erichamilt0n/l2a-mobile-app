@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import Notifications from './Notifications';
+import { describe, it, expect, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import Notifications from './Notifications'
 
 vi.mock('../components/SettingsLayout', () => ({
   default: ({ children, title, description }: any) => (
@@ -9,12 +9,12 @@ vi.mock('../components/SettingsLayout', () => ({
       <p>{description}</p>
       {children}
     </div>
-  )
-}));
+  ),
+}))
 
 describe('Notifications', () => {
   it('renders notifications page', () => {
-    render(<Notifications />);
-    expect(screen.getByTestId('mock-settings-layout')).toBeInTheDocument();
-  });
-});
+    render(<Notifications />)
+    expect(screen.getByTestId('mock-settings-layout')).toBeInTheDocument()
+  })
+})
