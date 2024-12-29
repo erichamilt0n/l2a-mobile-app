@@ -1,6 +1,6 @@
 import { useState, useCallback, type FormEvent, type ChangeEvent } from 'react'
 
-type InputChangeEvent = ChangeEvent<HTMLInputElement>
+type InputChangeEvent = ChangeEvent<Element>
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -14,12 +14,14 @@ export default function Login() {
   }, [])
 
   const handleEmailChange = useCallback((e: InputChangeEvent) => {
-    setEmail(e.target.value)
+    const target = e.target as HTMLInputElement
+    setEmail(target.value)
     setError(null)
   }, [])
 
   const handlePasswordChange = useCallback((e: InputChangeEvent) => {
-    setPassword(e.target.value)
+    const target = e.target as HTMLInputElement
+    setPassword(target.value)
     setError(null)
   }, [])
 
