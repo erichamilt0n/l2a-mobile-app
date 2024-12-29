@@ -1,11 +1,10 @@
-import type { ComponentPropsWithRef, ReactNode } from 'react'
-import { Card } from './Card'
+import { ReactNode } from 'react'
 
 interface StatCardProps {
   title: string
   value: string | number
   className?: string
-  icon?: React.ReactNode
+  icon?: ReactNode
 }
 
 export function StatCard({ title, value, className = '', icon }: StatCardProps) {
