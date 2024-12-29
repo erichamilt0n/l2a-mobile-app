@@ -1,7 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../components/ui/Button'
-import { Card } from '../components/ui/Card'
 import { StatCard } from '../components/ui/StatCard'
 
 /**

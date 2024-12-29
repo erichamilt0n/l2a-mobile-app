@@ -1,4 +1,4 @@
-import { ReactNode, KeyboardEvent, HTMLAttributes } from 'react'
+import { ReactNode, KeyboardEvent } from 'react'
 
 interface StatCardProps {
   /** The title text to display in the card */
@@ -23,22 +23,18 @@ export function StatCard({ title, value, className = '', icon, onClick }: StatCa
    * Handles keyboard events for accessibility
    * @param {KeyboardEvent<HTMLDivElement>} event - The keyboard event
    */
-  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
       onClick?.()
     }
   }
 
-  const handleClick = () => {
-    onClick?.()
-  }
-
   return (
     <div
       data-testid="stat-card"
       className={`bg-[#1e2327] rounded-xl p-4 md:p-6 ${className} cursor-pointer`}
-      onClick={handleClick}
+      onClick={onClick}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}

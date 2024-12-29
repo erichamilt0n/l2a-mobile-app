@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, type FormEvent, type ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 
@@ -10,9 +10,9 @@ export default function Login() {
 
   /**
    * Handles form submission
-   * @param {React.FormEvent} e - Form submission event
+   * @param {FormEvent<HTMLFormElement>} e - Form submission event
    */
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(null)
     // ... implementation
@@ -20,17 +20,17 @@ export default function Login() {
 
   /**
    * Handles email input changes
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
+   * @param {ChangeEvent<HTMLInputElement>} e - Input change event
    */
-  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
   /**
    * Handles password input changes
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
+   * @param {ChangeEvent<HTMLInputElement>} e - Input change event
    */
-  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
