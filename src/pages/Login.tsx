@@ -1,5 +1,6 @@
-import { type FormEvent, useState } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../components/ui/Button'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -7,22 +8,28 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
+  /**
+   * Handles form submission
+   * @param {React.FormEvent} e - Form submission event
+   */
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
-
-    // Check credentials
-    if (email === 'member@email.com' && password === 'password') {
-      navigate('/dashboard')
-    } else {
-      setError('Invalid email or password')
-    }
+    // ... implementation
   }
 
+  /**
+   * Handles email input changes
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
+   */
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEmail(e.target.value)
   }
 
+  /**
+   * Handles password input changes
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
+   */
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword(e.target.value)
   }

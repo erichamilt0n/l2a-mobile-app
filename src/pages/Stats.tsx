@@ -30,24 +30,30 @@ export default function Stats() {
     { id: 3, name: 'Achievement 3', description: 'Description 3' },
   ]
 
+  /**
+   * Updates the selected time period
+   * @param {string} period - The period to set (in days)
+   */
   function handlePeriodChange(period: string) {
     setSelectedPeriod(period)
     setShowPeriodDropdown(false)
   }
 
+  /**
+   * Toggles the period selection dropdown
+   */
   function handlePeriodDropdownToggle() {
     setShowPeriodDropdown(prev => !prev)
   }
 
+  /**
+   * Renders a button for period selection
+   * @param {string} period - The period value to display
+   * @returns {JSX.Element} Button component for period selection
+   */
   function renderPeriodButton(period: string) {
     return (
-      <Button
-        key={period}
-        variant="link"
-        onClick={function () {
-          handlePeriodChange(period)
-        }}
-      >
+      <Button key={period} variant="link" onClick={() => handlePeriodChange(period)}>
         {period} Days
       </Button>
     )

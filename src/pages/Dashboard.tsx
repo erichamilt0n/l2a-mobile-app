@@ -2,9 +2,12 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
-import { Grid } from '../components/layout/Grid'
 import { StatCard } from '../components/ui/StatCard'
 
+/**
+ * Icon component for the score card
+ * @returns {JSX.Element} Score icon SVG
+ */
 function ScoreIcon() {
   return (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -18,6 +21,10 @@ function ScoreIcon() {
   )
 }
 
+/**
+ * Icon component for the handicap card
+ * @returns {JSX.Element} Handicap icon SVG
+ */
 function HandicapIcon() {
   return (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,6 +38,10 @@ function HandicapIcon() {
   )
 }
 
+/**
+ * Icon component for the reservations card
+ * @returns {JSX.Element} Reservations icon SVG
+ */
 function ReservationsIcon() {
   return (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,6 +55,10 @@ function ReservationsIcon() {
   )
 }
 
+/**
+ * Icon component for the events card
+ * @returns {JSX.Element} Events icon SVG
+ */
 function EventsIcon() {
   return (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,6 +72,10 @@ function EventsIcon() {
   )
 }
 
+/**
+ * Header component displaying welcome message
+ * @returns {JSX.Element} Welcome header section
+ */
 function WelcomeHeader() {
   return (
     <header className="mb-6 md:mb-8">
@@ -66,40 +85,49 @@ function WelcomeHeader() {
   )
 }
 
+/**
+ * Grid of stat cards displaying user information
+ * @param {Object} props - Component props
+ * @param {(route: string) => void} props.onCardClick - Handler for card clicks
+ * @returns {JSX.Element} Grid of stat cards
+ */
 function StatCards({ onCardClick }: { onCardClick: (route: string) => void }) {
+  const handleScoreClick = () => onCardClick('/scores')
+  const handleHandicapClick = () => onCardClick('/handicap')
+  const handleReservationsClick = () => onCardClick('/reservations')
+  const handleEventsClick = () => onCardClick('/events')
+
   return (
-    <Grid cols={1} mdCols={2} lgCols={4} gap={6} className="mb-6">
-      <StatCard
-        title="Recent Score"
-        value="82"
-        onClick={() => onCardClick('/scores')}
-        icon={<ScoreIcon />}
-      />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <StatCard title="Recent Score" value="82" onClick={handleScoreClick} icon={<ScoreIcon />} />
       <StatCard
         title="Handicap"
         value="14.2"
-        onClick={() => onCardClick('/handicap')}
+        onClick={handleHandicapClick}
         icon={<HandicapIcon />}
       />
       <StatCard
         title="Reservations"
         value="2"
-        onClick={() => onCardClick('/reservations')}
+        onClick={handleReservationsClick}
         icon={<ReservationsIcon />}
       />
-      <StatCard
-        title="Events"
-        value="3"
-        onClick={() => onCardClick('/events')}
-        icon={<EventsIcon />}
-      />
-    </Grid>
+      <StatCard title="Events" value="3" onClick={handleEventsClick} icon={<EventsIcon />} />
+    </div>
   )
 }
 
+/**
+ * Main dashboard component
+ * @returns {JSX.Element} Dashboard page
+ */
 export default function Dashboard() {
   const navigate = useNavigate()
 
+  /**
+   * Handles navigation when a card is clicked
+   * @param {string} route - The route to navigate to
+   */
   function handleCardClick(route: string) {
     navigate(route)
   }
