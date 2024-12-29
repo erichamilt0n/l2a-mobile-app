@@ -6,7 +6,7 @@ import Events from './Events'
 describe('Events Component', () => {
   it('renders without crashing', () => {
     render(<Events />, { wrapper: BrowserRouter })
-    expect(screen.getByText(/Events/i)).toBeInTheDocument()
+    expect(screen.getByText('Upcoming Events')).toBeInTheDocument()
   })
   // ... rest of tests
 })

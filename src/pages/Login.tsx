@@ -7,7 +7,7 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  const handleSubmit = (e: FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
 
@@ -17,6 +17,14 @@ export default function Login() {
     } else {
       setError('Invalid email or password')
     }
+  }
+
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(e.target.value)
+  }
+
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPassword(e.target.value)
   }
 
   return (
@@ -45,7 +53,7 @@ export default function Login() {
             {error}
           </div>
         )}
-        <form className="mt-12 space-y-8" role="form" aria-label="login" onSubmit={handleSubmit}>
+        <form className="mt-12 space-y-8" aria-label="login" onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-lg font-medium text-gray-200 mb-2">
@@ -58,9 +66,7 @@ export default function Login() {
                 className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
                 placeholder="member@email.com"
                 value={email}
-                onChange={e => {
-                  setEmail(e.target.value)
-                }}
+                onChange={handleEmailChange}
               />
             </div>
             <div>
@@ -74,9 +80,7 @@ export default function Login() {
                 className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
                 placeholder="Enter your password"
                 value={password}
-                onChange={e => {
-                  setPassword(e.target.value)
-                }}
+                onChange={handlePasswordChange}
               />
             </div>
           </div>

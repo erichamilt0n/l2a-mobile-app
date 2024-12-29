@@ -30,8 +30,27 @@ export default function Stats() {
     { id: 3, name: 'Achievement 3', description: 'Description 3' },
   ]
 
-  const handlePeriodChange = (period: string) => {
+  function handlePeriodChange(period: string) {
     setSelectedPeriod(period)
+    setShowPeriodDropdown(false)
+  }
+
+  function handlePeriodDropdownToggle() {
+    setShowPeriodDropdown(prev => !prev)
+  }
+
+  function renderPeriodButton(period: string) {
+    return (
+      <Button
+        key={period}
+        variant="link"
+        onClick={function () {
+          handlePeriodChange(period)
+        }}
+      >
+        {period} Days
+      </Button>
+    )
   }
 
   const handleAchievementClick = (achievement: any) => {
@@ -163,20 +182,12 @@ export default function Stats() {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-white">Score Distribution</h2>
           <div className="relative">
-            <Button variant="secondary" onClick={() => setShowPeriodDropdown(!showPeriodDropdown)}>
+            <Button variant="secondary" onClick={handlePeriodDropdownToggle}>
               {`Last ${selectedPeriod} Days`}
             </Button>
             {showPeriodDropdown && (
               <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10">
-                {['7', '30', '90', 'all'].map(period => (
-                  <button
-                    key={period}
-                    className="block w-full px-4 py-2 text-left text-white hover:bg-gray-700"
-                    onClick={() => handlePeriodChange(period)}
-                  >
-                    {period === 'all' ? 'All Time' : `Last ${period} Days`}
-                  </button>
-                ))}
+                {['7', '30', '90'].map(renderPeriodButton)}
               </div>
             )}
           </div>
