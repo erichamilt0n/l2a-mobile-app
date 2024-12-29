@@ -1,10 +1,4 @@
-import {
-  useState,
-  useCallback,
-  type FormEvent,
-  type ChangeEvent,
-  type HTMLInputElement,
-} from 'react'
+import { useState, useCallback, type FormEvent, type ChangeEvent } from 'react'
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement>
 
