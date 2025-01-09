@@ -1,0 +1,117 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@7.0.0
+  cypress: cypress-io/cypress@3.4.2
+
+executors:
+  default:
+    docker:
+      - image: cimg/node:18.19
+    resource_class: medium
+
+commands:
+  install_dependencies:
+    steps:
+      - node/install-packages:
+          pkg-manager: npm
+          cache-path: node_modules
+          override-ci-command: npm ci
+
+  install_deepsource_cli:
+    steps:
+      - run:
+          name: Install DeepSource CLI
+          command: curl https://deepsource.io/cli | sh
+
+jobs:
+  lint:
+    executor: default
+    steps:
+      - checkout
+      - install_dependencies
+      - run:
+          name: Lint Code
+          command: npm run lint
+
+  test:
+    executor: default
+    steps:
+      - checkout
+      - install_dependencies
+      - run:
+          name: Run Tests
+          command: npm run test:coverage
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage
+          destination: coverage-report
+
+  build:
+    executor: default
+    steps:
+      - checkout
+      - install_dependencies
+      - run:
+          name: Build Application
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  cypress:
+    executor: cypress/default
+    steps:
+      - checkout
+      - cypress/install
+      - run:
+          name: Run Cypress Tests
+          command: npm run cypress:run
+
+  lighthouse:
+    executor: default
+    steps:
+      - checkout
+      - install_dependencies
+      - run:
+          name: Install Lighthouse CI
+          command: npm install -g @lhci/cli@0.13.x
+      - run:
+          name: Build for Lighthouse
+          command: npm run build
+      - run:
+          name: Run Lighthouse CI
+          command: lhci autorun
+
+  deepsource:
+    executor: default
+    steps:
+      - checkout
+      - install_deepsource_cli
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run DeepSource Analysis
+          command: |
+            if [ -d "coverage" ]; then
+              deepsource report --analyzer test-coverage --key javascript --value-file ./coverage/coverage-final.json
+            fi
+            deepsource analyze
+
+workflows:
+  build_test_analyze:
+    jobs:
+      - lint
+      - test
+      - build
+      - cypress:
+          requires:
+            - build
+      - lighthouse:
+          requires:
+            - build
+      - deepsource:
+          requires:
+            - test
