@@ -10,6 +10,6 @@ describe('Button', () => {
 
   it('applies custom className', () => {
     render(<Button className="custom-class">Click me</Button>)
-    expect(screen.getByText('Click me')).toHaveClass('custom-class')
+    expect(screen.getByRole('button')).toHaveClass('custom-class')
   })
 })

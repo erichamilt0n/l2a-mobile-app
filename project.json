@@ -7,12 +7,40 @@
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "vitest run"
-        ],
+        "commands": ["vitest run"],
         "cwd": "."
       },
       "outputs": ["{projectRoot}/coverage"]
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "l2a-mobile-app:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "l2a-mobile-app:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "l2a-mobile-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "cypress.config.ts",
+        "devServerTarget": "l2a-mobile-app:serve:development",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "l2a-mobile-app:serve:production"
+        }
+      }
     }
   }
-} 
+}
