@@ -1,121 +1,317 @@
-import { type FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+/// <reference lib="dom" />
+/// <reference lib="dom.iterable" />
 
-export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const navigate = useNavigate()
+import {
+  useState,
+  useCallback,
+  type FormEvent,
+  type SyntheticEvent,
+  useEffect,
+} from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    setError(null)
+interface FormInputProps {
+  id: string;
+  type: string;
+  value: string;
+  onChange: (value: string) => void;
+  disabled: boolean;
+  placeholder: string;
+  label: string;
+  forgotPassword?: boolean;
+}
 
-    // Check credentials
-    if (email === 'member@email.com' && password === 'password') {
-      navigate('/dashboard')
-    } else {
-      setError('Invalid email or password')
-    }
+/**
+ * Reusable form input component with label and optional forgot password link
+ * @param props FormInputProps - Component properties
+ * @returns Form input element with label
+ */
+const FormInput = ({
+  id,
+  type,
+  value,
+  onChange,
+  disabled,
+  placeholder,
+  label,
+  forgotPassword,
+}: FormInputProps) => {
+  const handleChange = useCallback(
+    (e: SyntheticEvent) => {
+      const input = e.target as unknown as { value: string };
+      onChange(input.value);
+    },
+    [onChange],
+  );
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-2">
+        <label htmlFor={id} className="text-sm text-white">
+          {label}
+        </label>
+        {forgotPassword && (
+          <a
+            href="/forgot-password"
+            className="text-sm text-[#4A4A4A] hover:text-gray-300"
+          >
+            Forgot Password?
+          </a>
+        )}
+      </div>
+      <input
+        type={type}
+        id={id}
+        value={value}
+        onChange={handleChange}
+        required
+        disabled={disabled}
+        placeholder={placeholder}
+        className="w-full p-3 bg-white rounded-md text-black 
+                 placeholder-gray-500 focus:outline-none"
+      />
+    </div>
+  );
+};
+
+interface LoginFormProps {
+  error: string;
+  email: string;
+  password: string;
+  isLoading: boolean;
+  onEmailChange: (value: string) => void;
+  onPasswordChange: (value: string) => void;
+  onSubmit: (e: FormEvent) => void;
+}
+
+/**
+ * Login form component containing email and password inputs
+ * @param props LoginFormProps - Component properties
+ * @returns Login form with inputs and submit button
+ */
+const LoginForm = ({
+  email,
+  password,
+  isLoading,
+  onEmailChange,
+  onPasswordChange,
+  onSubmit,
+}: LoginFormProps) => (
+  <form onSubmit={onSubmit} className="space-y-6">
+    <FormInput
+      id="email"
+      type="email"
+      value={email}
+      onChange={onEmailChange}
+      disabled={isLoading}
+      placeholder="member@email.com"
+      label="Email"
+    />
+    <FormInput
+      id="password"
+      type="password"
+      value={password}
+      onChange={onPasswordChange}
+      disabled={isLoading}
+      placeholder="Enter your password"
+      label="Password"
+      forgotPassword
+    />
+    <button
+      type="submit"
+      disabled={isLoading}
+      className="w-full py-3 bg-[#2A2A2A] text-white rounded-md
+               hover:bg-[#3A3A3A] focus:outline-none transition-colors"
+    >
+      {isLoading ? "Signing in..." : "Sign In"}
+    </button>
+  </form>
+);
+
+interface ImageWithFallbackProps {
+  src: string;
+  alt: string;
+  className: string;
+  onLoad?: () => void;
+}
+
+/**
+ * A component that handles image loading states and fallbacks
+ * @param props - Component properties
+ * @param props.src - Source URL of the image
+ * @param props.alt - Alternative text for the image
+ * @param props.className - CSS classes to apply to the image
+ * @param props.onLoad - Callback function when image loads successfully
+ * @returns React component with loading states and error handling
+ */
+const ImageWithFallback = ({
+  src,
+  alt,
+  className,
+  onLoad,
+}: ImageWithFallbackProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const imgElement = new window.Image();
+    imgElement.src = src;
+    imgElement.onload = () => {
+      setIsLoading(false);
+      onLoad?.();
+    };
+    imgElement.onerror = () => {
+      setIsLoading(false);
+      setError(true);
+    };
+  }, [src, onLoad]);
+
+  if (error) {
+    return null;
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-      <div className="w-full max-w-2xl bg-dark-100 p-12 rounded-2xl shadow-2xl">
-        <div>
-          <div className="w-24 h-24 mx-auto">
-            <svg
-              className="w-full h-full text-[#333e48]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              />
-            </svg>
-          </div>
-          <h2 className="mt-8 text-center text-4xl font-bold text-white">Welcome Back</h2>
-        </div>
-        {error !== null && (
-          <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-xl text-red-200">
-            {error}
-          </div>
-        )}
-        <form 
-          className="mt-12 space-y-8"
-          role="form"
-          aria-label="login"
-          onSubmit={handleSubmit}
-        >
-          <div className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-lg font-medium text-gray-200 mb-2">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
-                placeholder="member@email.com"
-                value={email}
-                onChange={e => {
-                  setEmail(e.target.value)
-                }}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-lg font-medium text-gray-200 mb-2">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                required
-                className="w-full p-4 bg-white rounded-xl text-black focus:ring-2 focus:ring-[#333e48] focus:outline-none"
-                placeholder="Enter your password"
-                value={password}
-                onChange={e => {
-                  setPassword(e.target.value)
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end">
-            <div className="text-lg">
-              <a href="#" className="font-medium text-[#333e48] hover:text-[#3f4b57]">
-                Forgot Password?
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="w-full bg-[#333e48] text-white py-3 px-6 rounded-lg text-lg font-medium hover:bg-[#3f4b57] transition-colors"
-            >
-              Sign In
-            </button>
-          </div>
-
-          <div className="text-center text-lg">
-            <span className="text-gray-400">Don't have an account? </span>
-            <a href="#" className="font-medium text-[#333e48] hover:text-[#3f4b57]">
-              Sign Up
-            </a>
-          </div>
-          <div className="mt-4 text-center text-gray-400">
-            <p>Demo credentials:</p>
-            <p>Email: member@email.com</p>
-            <p>Password: password</p>
-          </div>
-        </form>
-      </div>
+    <div className={`relative ${isLoading ? "animate-pulse" : ""}`}>
+      <img
+        src={src}
+        alt={alt}
+        className={`
+          transition-opacity duration-300 ease-in-out
+          ${isLoading ? "opacity-0" : "opacity-100"}
+          ${className}
+        `}
+      />
+      {isLoading && <div className="absolute inset-0 bg-gray-700 rounded" />}
     </div>
-  )
-}
+  );
+};
+
+/**
+ * Header component for the login page
+ * @returns Login page header with logo and title
+ */
+const LoginHeader = () => {
+  const [logoLoaded, setLogoLoaded] = useState(false);
+  const [logotypeLoaded, setLogotypeLoaded] = useState(false);
+
+  const handleLogoLoad = useCallback(() => {
+    setLogoLoaded(true);
+  }, []);
+
+  const handleLogotypeLoad = useCallback(() => {
+    setLogotypeLoaded(true);
+  }, []);
+
+  return (
+    <header className="text-center mb-8 space-y-4">
+      <div className="transform transition-all duration-500 ease-out">
+        <ImageWithFallback
+          src="/l2a-logo.svg"
+          alt="Lodge 2A Logo"
+          className="w-24 h-auto mx-auto md:w-32 lg:w-40
+                   transform transition-all duration-500
+                   hover:scale-105"
+          onLoad={handleLogoLoad}
+        />
+      </div>
+
+      <div
+        className={`
+        transform transition-all duration-500 ease-out
+        ${logoLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+      `}
+      >
+        <ImageWithFallback
+          src="/l2a-logotype.svg"
+          alt="Lodge 2A"
+          className="h-6 w-auto mx-auto md:h-8 lg:h-10
+                   transform transition-all duration-500
+                   hover:scale-105"
+          onLoad={handleLogotypeLoad}
+        />
+      </div>
+
+      <p
+        className={`
+        text-[#4A4A4A] mt-2 text-sm md:text-base
+        transform transition-all duration-500 ease-out
+        ${logotypeLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+      `}
+      >
+        Sign in to continue
+      </p>
+    </header>
+  );
+};
+
+/**
+ * Footer component for the login page
+ * @returns Login page footer with sign up link and demo credentials
+ */
+const LoginFooter = () => (
+  <footer className="mt-6 text-center">
+    {import.meta.env.DEV && (
+      <div className="mt-8 text-xs text-[#4A4A4A]">
+        <p>Demo credentials:</p>
+        <p>Email: member@email.com</p>
+        <p>Password: password</p>
+      </div>
+    )}
+  </footer>
+);
+
+/**
+ * Login page component for user authentication
+ * @returns Complete login page with form and authentication handling
+ */
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+      setError("");
+      setIsLoading(true);
+
+      try {
+        await login(email, password);
+        navigate("/dashboard");
+      } catch (err) {
+        setError("Invalid email or password");
+        if (import.meta.env.DEV) {
+          window.console.error("Login error:", err);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [email, password, login, navigate],
+  );
+
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-black p-4">
+      <section className="w-full max-w-md p-8 bg-[#1A1A1A] rounded-lg">
+        <LoginHeader />
+        {error && <div className="mb-6 text-red-400 text-center">{error}</div>}
+        <LoginForm
+          error={error}
+          email={email}
+          password={password}
+          isLoading={isLoading}
+          onEmailChange={setEmail}
+          onPasswordChange={setPassword}
+          onSubmit={handleSubmit}
+        />
+        <LoginFooter />
+      </section>
+    </main>
+  );
+};
+
+export default Login;
