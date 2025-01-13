@@ -1,30 +1,32 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Image from "./ui/Image";
 
 interface NavigationProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function Navigation({ isOpen, onClose }: NavigationProps) {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleMouseEnter = () => {}
-
-  const handleMouseLeave = () => {
-    onClose()
-  }
+  const handleMouseLeave = onClose;
 
   const handleLogout = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   const menuItems = [
     {
-      name: 'Dashboard',
-      path: '/dashboard',
+      name: "Dashboard",
+      path: "/dashboard",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -35,10 +37,15 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       ),
     },
     {
-      name: 'Reservations',
-      path: '/reservations',
+      name: "Reservations",
+      path: "/reservations",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -49,10 +56,15 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       ),
     },
     {
-      name: 'Events',
-      path: '/events',
+      name: "Events",
+      path: "/events",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -63,10 +75,15 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       ),
     },
     {
-      name: 'Stats',
-      path: '/stats',
+      name: "Stats",
+      path: "/stats",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -77,10 +94,15 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       ),
     },
     {
-      name: 'Pro Shop',
-      path: '/pro-shop',
+      name: "Pro Shop",
+      path: "/pro-shop",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -91,10 +113,15 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       ),
     },
     {
-      name: 'Settings',
-      path: '/settings',
+      name: "Settings",
+      path: "/settings",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -110,7 +137,7 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
         </svg>
       ),
     },
-  ]
+  ];
 
   return (
     <>
@@ -126,23 +153,29 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
       {/* Sidebar */}
       <div
         data-testid="navigation-sidebar"
-        style={{ backgroundColor: '#7d622d' }}
+        style={{ backgroundColor: "#7d622d" }}
         className={`fixed top-0 right-0 h-screen transform transition-transform ease-in-out z-30 
-          ${isOpen ? 'translate-x-0' : 'translate-x-full tablet:translate-x-0'}
+          ${isOpen ? "translate-x-0" : "translate-x-full tablet:translate-x-0"}
           group tablet:hover:w-64 tablet:w-16 w-64
           tablet:hover:p-4 tablet:p-2 p-4
           duration-200`}
-        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <div
-          className={`flex justify-between items-center mb-8 tablet:opacity-0 tablet:group-hover:opacity-100 transition-opacity duration-200 ${!isOpen && 'hidden tablet:flex'}`}
+          className={`flex justify-center items-center mb-8 tablet:opacity-0 tablet:group-hover:opacity-100 transition-opacity duration-200 ${!isOpen && "hidden tablet:flex"}`}
         >
-          <h2 className="text-2xl font-bold text-white">Lodge2A</h2>
+          <Image
+            src="/l2a-l2a-color-1.svg"
+            alt="Lodge 2A Logo"
+            width={120}
+            height={40}
+            priority
+            className="w-auto h-8"
+          />
         </div>
 
         <nav className="space-y-2">
-          {menuItems.map(item => (
+          {menuItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
@@ -150,8 +183,8 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
               className={`flex items-center rounded-xl transition-all duration-200 
                 ${
                   location.pathname === item.path
-                    ? 'bg-white/20 text-white'
-                    : 'text-white hover:bg-white/10'
+                    ? "bg-white/20 text-white"
+                    : "text-white hover:bg-white/10"
                 }
                 tablet:px-2 tablet:group-hover:px-3 px-3 py-3
                 tablet:justify-center tablet:group-hover:justify-start`}
@@ -181,7 +214,12 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
             data-testid="navigation-logout-button"
           >
             <div className="flex items-center justify-center w-6 h-6 tablet:mx-auto tablet:group-hover:mx-0">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -199,7 +237,7 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export function MobileMenuButton({ onClick }: { onClick: () => void }) {
@@ -209,7 +247,12 @@ export function MobileMenuButton({ onClick }: { onClick: () => void }) {
       className="fixed top-4 right-4 p-2 rounded-xl bg-dark-100 text-gray-400 hover:text-white tablet:hidden z-50"
       data-testid="mobile-menu-button"
     >
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        className="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -218,5 +261,5 @@ export function MobileMenuButton({ onClick }: { onClick: () => void }) {
         />
       </svg>
     </button>
-  )
+  );
 }

@@ -1,25 +1,31 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import Stats from './pages/Stats'
-import Login from './pages/Login'
-import Events from './pages/Events'
-import Reservations from './pages/Reservations'
-import Dashboard from './pages/Dashboard'
-import ProShop from './pages/ProShop'
-import Settings from './pages/Settings'
-import Notifications from './pages/Notifications'
-import Preferences from './pages/Preferences'
-import Profile from './pages/Profile'
-import Navigation, { MobileMenuButton } from './components/Navigation'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { useState } from "react";
+import { AuthProvider } from "./contexts/AuthProvider";
+import Stats from "./pages/Stats";
+import Login from "./pages/Login";
+import Events from "./pages/Events";
+import Reservations from "./pages/Reservations";
+import Dashboard from "./pages/Dashboard";
+import ProShop from "./pages/ProShop";
+import Settings from "./pages/Settings";
+import Notifications from "./pages/Notifications";
+import Preferences from "./pages/Preferences";
+import Profile from "./pages/Profile";
+import Navigation, { MobileMenuButton } from "./components/Navigation";
 
 function AppContent() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const location = useLocation()
-  const isLoginPage = location.pathname === '/'
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/";
 
   const handleMenuClose = () => {
-    setIsMobileMenuOpen(false)
-  }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-dark">
@@ -28,7 +34,7 @@ function AppContent() {
           <Navigation isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
           <MobileMenuButton
             onClick={() => {
-              setIsMobileMenuOpen(true)
+              setIsMobileMenuOpen(true);
             }}
           />
           <div className="tablet:ml-16 tablet:group-hover:ml-64 transition-[margin] duration-200 ease-in-out">
@@ -54,20 +60,17 @@ function AppContent() {
         </Routes>
       )}
     </div>
-  )
+  );
 }
 
 function App() {
   return (
-    <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true
-      }}
-    >
-      <AppContent />
-    </Router>
-  )
+    <AuthProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
