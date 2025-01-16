@@ -1,9 +1,17 @@
-import { useState, type ReactNode } from "react";
-import { AuthContext } from "./authContext";
-import type { User } from "@/types/auth";
+import { createContext, useState, type ReactNode } from "react";
 
-interface AuthProviderProps {
-  children: ReactNode;
+// Move types inline since @/types/auth can't be found
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  isAuthenticated: boolean;
 }
 
 /**
@@ -20,6 +28,12 @@ const mockAuthCall = async (
     name: "Test User",
   };
 };
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
 /**
  * Auth provider component for managing user authentication
@@ -58,3 +72,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
+// Export context and types for use in hook file
+export { AuthContext };
+export type { User, AuthContextType };

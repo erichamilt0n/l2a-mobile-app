@@ -63,7 +63,7 @@ The application will be available at `http://localhost:5173` (or another port if
 
 ## Project Structure
 
-```
+```text
 l2a-mobile-app/
 ├── src/
 │   ├── components/     # Reusable components
