@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeProvider";
-import { AuthProvider } from "@/contexts/AuthProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 interface TestWrapperProps {
   children: ReactNode;

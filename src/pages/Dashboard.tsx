@@ -1,5 +1,6 @@
 import { type ReactElement, type ReactNode } from "react";
 import { StatCard } from "../components/ui/StatCard";
+import { EventCarousel } from "../components/EventCarousel";
 
 interface ActivitySectionProps {
   title: string;
@@ -71,10 +72,21 @@ const ActivitiesGrid = (): ReactElement => (
  */
 export default function Dashboard(): ReactElement {
   return (
-    <div className="min-h-screen bg-dark">
-      <div className="p-6 lg:p-8 pt-20">
+    <div className="min-h-screen bg-black">
+      <div className="p-6 lg:p-8">
         <DashboardHeader name="John" />
         <StatsGrid />
+
+        {/* Event Carousel Section */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">
+            Upcoming Events
+          </h2>
+          <div className="w-full overflow-hidden">
+            <EventCarousel />
+          </div>
+        </section>
+
         <ActivitiesGrid />
       </div>
     </div>
