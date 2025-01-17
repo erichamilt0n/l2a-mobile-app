@@ -20,7 +20,6 @@ interface EventImage {
   category: string;
 }
 
-// Test data with working image URLs
 const images: EventImage[] = [
   {
     id: 1,
@@ -39,54 +38,47 @@ const images: EventImage[] = [
   },
 ];
 
-/**
- * A carousel component that displays event images with smooth scrolling animation
- * @returns The rendered carousel component
- */
 export function EventCarousel(): ReactElement {
   const containerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimationControls();
   const [singleSetWidth, setSingleSetWidth] = useState(0);
+  const isAnimatingRef = useRef(true);
+
+  const updateWidth = useCallback((): void => {
+    if (!containerRef.current) return;
+    const width = containerRef.current.scrollWidth;
+    setSingleSetWidth(width / 3);
+  }, []);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    /**
-     * Updates the width of the carousel container
-     */
-    function updateWidth(): void {
-      if (!containerRef.current) return;
-      const width = containerRef.current.scrollWidth;
-      setSingleSetWidth(width / 2);
-    }
-
-    // Initial width calculation
     updateWidth();
-
-    // Add resize listener
     window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, [updateWidth]);
 
-    // Cleanup
-    window.addEventListener("resize", updateWidth);
-    window.removeEventListener("resize", updateWidth);
-  });
-
-  // Separate useEffect for animation
   useEffect(() => {
     if (singleSetWidth === 0) return;
 
-    controls
-      .start({
-        x: -singleSetWidth,
-        transition: {
-          duration: 20,
-          ease: "linear",
-          repeat: Infinity,
-        },
-      })
-      .catch((error: Error) => {
-        console.error(error);
-      });
+    const animate = async () => {
+      while (isAnimatingRef.current) {
+        await controls.start({
+          x: -singleSetWidth,
+          transition: {
+            duration: 20,
+            ease: "linear",
+          },
+        });
+
+        await controls.set({ x: 0 });
+      }
+    };
+
+    animate().catch(console.error);
+
+    // Cleanup function to stop animation
+    return () => {
+      isAnimatingRef.current = false;
+    };
   }, [controls, singleSetWidth]);
 
   const handleImageError = useCallback(
@@ -97,7 +89,25 @@ export function EventCarousel(): ReactElement {
   );
 
   return (
-    <div className="w-full overflow-hidden bg-black">
+    <div className="relative w-full overflow-hidden bg-black">
+      {/* Left fade gradient */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)",
+        }}
+      />
+
+      {/* Right fade gradient */}
+      <div
+        className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to left, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%)",
+        }}
+      />
+
       <motion.div
         ref={containerRef}
         className="flex"
@@ -107,7 +117,7 @@ export function EventCarousel(): ReactElement {
           minHeight: "400px",
         }}
       >
-        {[...images, ...images].map((image, index) => {
+        {[...images, ...images, ...images].map((image, index) => {
           const uniqueKey = `event-${image.id}-${image.category}-${index}`;
           return (
             <div
