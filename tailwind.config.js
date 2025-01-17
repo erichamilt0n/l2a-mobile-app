@@ -15,9 +15,11 @@ export default {
         },
       },
       screens: {
+        phone: "480px",
         tablet: "1024px",
       },
       maxWidth: {
+        phone: "480px",
         tablet: "1024px",
       },
       animation: {

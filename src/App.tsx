@@ -17,6 +17,7 @@ import Notifications from "./pages/Notifications";
 import Preferences from "./pages/Preferences";
 import Profile from "./pages/Profile";
 import Navigation, { MobileMenuButton } from "./components/Navigation";
+import { FloatingMenu } from "./components/FloatingMenu";
 
 /**
  * Main content component handling routing and mobile menu state
@@ -47,6 +48,7 @@ function AppContent() {
         <>
           <Navigation isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
           <MobileMenuButton onClick={handleMenuOpen} />
+          <FloatingMenu />
           <div className="tablet:ml-16 tablet:group-hover:ml-64 transition-[margin] duration-200 ease-in-out">
             <div className="max-w-[1920px] w-full mx-auto px-4 tablet:px-8 py-6 tablet:py-10">
               <Routes>
