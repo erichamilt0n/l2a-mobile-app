@@ -9,7 +9,7 @@ import { debug } from "../utils/debug";
 // Environment variable validation
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const dataset = import.meta.env.VITE_SANITY_DATASET;
-const token = import.meta.env.VITE_SANITY_TOKEN;
+const token = import.meta.env.VITE_SANITY_TOKEN; // Now optional
 
 // Validation checks are good practice and implemented correctly
 if (!projectId) {
@@ -18,25 +18,22 @@ if (!projectId) {
 if (!dataset) {
   throw new Error("Missing VITE_SANITY_DATASET");
 }
-if (!token) {
-  throw new Error("Missing VITE_SANITY_TOKEN");
-}
 
 // Debugging configuration is helpful for development
 debug.log("Sanity Config:", {
   projectId,
   dataset,
-  apiVersion: "2025-01-19",
-  token: "(token provided)",
+  apiVersion: "2023-05-03",
+  token: token ? "(token provided)" : "(no token)",
 });
 
 // Client configuration
 export const client = createClient({
   projectId,
   dataset,
-  apiVersion: "2025-01-19", // Consider updating to a more recent API version
+  apiVersion: "2023-05-03",
   useCdn: true,
-  token,
+  token: token || undefined, // Make token optional
   // In v3, perspective and stega options might be useful additions
   perspective: "published",
   // Only set withCredentials if you need CORS with credentials
