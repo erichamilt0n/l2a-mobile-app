@@ -35,9 +35,7 @@ export const client = createClient({
   token,
   useCdn: false,
   withCredentials: false,
-  cors: {
-    credentials: false,
-  },
+  apiHost: "https://api.sanity.io",
 });
 
 const builder = imageUrlBuilder(client);
