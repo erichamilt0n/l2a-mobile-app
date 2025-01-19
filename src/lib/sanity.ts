@@ -35,6 +35,9 @@ export const client = createClient({
   token,
   useCdn: false,
   withCredentials: false,
+  cors: {
+    credentials: false,
+  },
 });
 
 const builder = imageUrlBuilder(client);
