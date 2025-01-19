@@ -29,11 +29,11 @@ debug.log("Sanity Config:", {
 });
 
 export const client = createClient({
-  projectId: "your-project-id",
-  dataset: "production",
-  apiVersion: "2024-01-01",
+  projectId,
+  dataset,
+  apiVersion: "2023-05-03",
   useCdn: true,
-  apiHost: "https://api.sanity.io",
+  token,
 });
 
 const builder = imageUrlBuilder(client);
