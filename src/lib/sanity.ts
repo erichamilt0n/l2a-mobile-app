@@ -2,7 +2,7 @@
 
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { ImageUrlBuilder } from "@sanity/image-url/lib/types/builder";
 import { debug } from "../utils/debug";
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
@@ -31,14 +31,21 @@ debug.log("Sanity Config:", {
 export const client = createClient({
   projectId,
   dataset,
-  useCdn: false,
   apiVersion: "2023-05-03",
   token,
-  withCredentials: true,
+  useCdn: true,
+  withCredentials: false,
 });
 
 const builder = imageUrlBuilder(client);
 
-export function urlFor(source: SanityImageSource) {
+/**
+ * Creates a URL builder for Sanity image assets
+ * @param {Record<string, unknown>} source - The Sanity image reference object
+ * @returns {ImageUrlBuilder} A builder object for constructing image URLs
+ * @example
+ * urlFor(event.mainImage).width(300).height(400).url()
+ */
+export const urlFor = (source: Record<string, unknown>): ImageUrlBuilder => {
   return builder.image(source);
-}
+};
