@@ -89,7 +89,7 @@ export function EventCarousel(): ReactElement {
         setError(
           err instanceof Error
             ? `Failed to load events: ${err.message}`
-            : "Failed to load events: Unknown error",
+            : "Failed to load events: Unknown error"
         );
       } finally {
         setIsLoading(false);
