@@ -33,7 +33,7 @@ export const client = createClient({
   dataset,
   apiVersion: "2023-05-03",
   token,
-  useCdn: true,
+  useCdn: false,
   withCredentials: false,
 });
 
