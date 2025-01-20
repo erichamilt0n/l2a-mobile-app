@@ -72,7 +72,7 @@ const ActivitiesGrid = (): ReactElement => (
  */
 export default function Dashboard(): ReactElement {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen pb-20 tablet:pb-0">
       <div className="p-6 lg:p-8">
         <DashboardHeader name="John" />
         <StatsGrid />
