@@ -3,30 +3,45 @@
 /// <reference types="react" />
 /// <reference types="react-dom" />
 
-import { expect, afterEach, vi } from 'vitest';
-import { cleanup } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
+import { expect, afterEach, vi } from "vitest";
+import { cleanup } from "@testing-library/react";
+import {
+  toBeInTheDocument,
+  toHaveAttribute,
+  toHaveClass,
+  toHaveStyle,
+  toBeVisible,
+  toHaveTextContent,
+} from "@testing-library/jest-dom/matchers";
 
-expect.extend(matchers);
+declare module "vitest" {
+  interface AsymmetricMatchersContaining {
+    toBeInTheDocument(): boolean;
+    toHaveAttribute(attr: string, value?: string): boolean;
+    toHaveClass(className: string): boolean;
+    toHaveStyle(style: Record<string, unknown>): boolean;
+    toBeVisible(): boolean;
+    toHaveTextContent(text: string): boolean;
+  }
+}
 
+// Extend expect with testing-library matchers
+expect.extend({
+  toBeInTheDocument,
+  toHaveAttribute,
+  toHaveClass,
+  toHaveStyle,
+  toBeVisible,
+  toHaveTextContent,
+});
+
+// Cleanup after each test
 afterEach(() => {
   cleanup();
 });
 
-// Define the mock media query list type
-type MockMediaQueryList = {
-  matches: boolean;
-  media: string;
-  onchange: null;
-  addListener: ReturnType<typeof vi.fn>;
-  removeListener: ReturnType<typeof vi.fn>;
-  addEventListener: ReturnType<typeof vi.fn>;
-  removeEventListener: ReturnType<typeof vi.fn>;
-  dispatchEvent: ReturnType<typeof vi.fn>;
-};
-
 // Mock window.matchMedia
-const mockMatchMedia = vi.fn().mockImplementation((query: string): MockMediaQueryList => ({
+const mockMatchMedia = vi.fn().mockImplementation((query: string) => ({
   matches: false,
   media: query,
   onchange: null,
@@ -37,8 +52,10 @@ const mockMatchMedia = vi.fn().mockImplementation((query: string): MockMediaQuer
   dispatchEvent: vi.fn(),
 }));
 
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: mockMatchMedia,
 });
 
+// Import our IntersectionObserver mock
+import "./test/setup";
