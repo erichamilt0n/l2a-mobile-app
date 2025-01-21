@@ -162,7 +162,10 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
         onMouseLeave={handleMouseLeave}
       >
         <div
-          className={`flex justify-center items-center mb-8 tablet:opacity-0 tablet:group-hover:opacity-100 transition-opacity duration-200 ${!isOpen && "hidden tablet:flex"}`}
+          className={`flex justify-center items-center mb-8 transition-all duration-200
+            tablet:group-hover:opacity-100 tablet:group-hover:scale-100 
+            tablet:scale-75 tablet:opacity-80
+            ${!isOpen && "hidden tablet:flex"}`}
         >
           <Image
             src="/l2a-l2a-color-1.svg"
@@ -170,7 +173,9 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
             width={120}
             height={40}
             priority
-            className="w-auto h-8"
+            className="w-auto transition-all duration-200
+              tablet:group-hover:h-8 tablet:h-7
+              tablet:max-w-[3rem] tablet:group-hover:max-w-none"
           />
         </div>
 
@@ -240,11 +245,18 @@ export default function Navigation({ isOpen, onClose }: NavigationProps) {
   );
 }
 
-export function MobileMenuButton({ onClick }: { onClick: () => void }) {
+export function MobileMenuButton({
+  onClick,
+  isOpen,
+}: {
+  onClick: () => void;
+  isOpen: boolean;
+}) {
   return (
     <button
       onClick={onClick}
-      className="fixed top-4 right-4 p-2 rounded-xl bg-dark-100 text-gray-400 hover:text-white tablet:hidden z-50"
+      className={`fixed top-4 right-4 p-2 rounded-xl bg-dark-100 text-gray-400 hover:text-white tablet:hidden z-50
+        transition-opacity duration-200 ${isOpen ? "opacity-30" : "opacity-100"}`}
       data-testid="mobile-menu-button"
     >
       <svg
@@ -253,12 +265,21 @@ export function MobileMenuButton({ onClick }: { onClick: () => void }) {
         stroke="currentColor"
         viewBox="0 0 24 24"
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M4 6h16M4 12h16M4 18h16"
-        />
+        {isOpen ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        )}
       </svg>
     </button>
   );
