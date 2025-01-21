@@ -29,25 +29,24 @@ function AppContent() {
   const isLoginPage = location.pathname === "/";
 
   /**
-   * Handles closing the mobile menu
+   * Handles toggling the mobile menu
    */
-  const handleMenuClose = useCallback(() => {
-    setIsMobileMenuOpen(false);
-  }, []);
-
-  /**
-   * Handles opening the mobile menu
-   */
-  const handleMenuOpen = useCallback(() => {
-    setIsMobileMenuOpen(true);
+  const handleMenuToggle = useCallback(() => {
+    setIsMobileMenuOpen((prev) => !prev);
   }, []);
 
   return (
     <div className="min-h-screen bg-dark">
       {!isLoginPage && (
         <>
-          <Navigation isOpen={isMobileMenuOpen} onClose={handleMenuClose} />
-          <MobileMenuButton onClick={handleMenuOpen} />
+          <Navigation
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          />
+          <MobileMenuButton
+            onClick={handleMenuToggle}
+            isOpen={isMobileMenuOpen}
+          />
           <FloatingMenu isNavOpen={isMobileMenuOpen} />
           <div className="tablet:ml-16 tablet:group-hover:ml-64 transition-[margin] duration-200 ease-in-out">
             <div className="max-w-[1920px] w-full mx-auto px-4 tablet:px-8 py-6 tablet:py-10">
