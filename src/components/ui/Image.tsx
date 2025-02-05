@@ -77,6 +77,12 @@ const Image: FC<ImageProps> = ({
   const imgRef = useRef<InstanceType<ImageElement>>(null);
   const observerRef = useRef<InstanceType<Observer> | null>(null);
 
+  useEffect(() => {
+    if (imgRef.current) {
+      imgRef.current.src = src;
+    }
+  }, [src]);
+
   /**
    * Cleanup function for the intersection observer
    */
@@ -136,9 +142,9 @@ const Image: FC<ImageProps> = ({
   const getImageUrl = useCallback(
     (url: string): string => {
       try {
-        const parsedUrl = new window.URL(url);
+        const parsedUrl = url.startsWith('http') ? new URL(url) : new URL(url, window.location.origin);
         const pathname = parsedUrl.pathname;
-        const params = new window.URLSearchParams(parsedUrl.search);
+        const params = new URLSearchParams(parsedUrl.search);
 
         if (width) params.set("w", width.toString());
         if (height) params.set("h", height.toString());
@@ -147,7 +153,7 @@ const Image: FC<ImageProps> = ({
 
         return `${pathname}?${params.toString()}`;
       } catch (error) {
-        window.console.error("Error parsing URL:", error);
+        console.error("Error parsing URL:", error);
         return url;
       }
     },

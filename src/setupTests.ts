@@ -1,3 +1,4 @@
+// import "./test/setup";
 /// <reference types="vitest" />
 /// <reference lib="dom" />
 /// <reference types="node" />
@@ -100,4 +101,3 @@ Object.defineProperty(window, "IntersectionObserver", {
 });
 
 // Import our IntersectionObserver mock
-import "./test/setup";
