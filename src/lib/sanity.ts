@@ -43,6 +43,9 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client);
 
+// Only log client config since builder.config() is not available
+debug.log("Sanity client config:", client.config());
+
 /**
  * Creates a URL builder for Sanity image assets
  * @param {Record<string, unknown>} source - The Sanity image reference object
