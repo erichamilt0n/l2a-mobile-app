@@ -80,6 +80,9 @@ export function EventCarousel(): ReactElement {
           eightWeeksFromNow: eightWeeksFromNow.toISOString(),
         });
 
+        debug.log("Fetched events:", fetchedEvents);
+        debug.log("First event mainImage:", fetchedEvents[0]?.mainImage);
+
         if (!fetchedEvents || !Array.isArray(fetchedEvents)) {
           throw new Error("Invalid response format");
         }
@@ -89,7 +92,7 @@ export function EventCarousel(): ReactElement {
         setError(
           err instanceof Error
             ? `Failed to load events: ${err.message}`
-            : "Failed to load events: Unknown error"
+            : "Failed to load events: Unknown error",
         );
       } finally {
         setIsLoading(false);
@@ -256,11 +259,18 @@ function EventCard({ event }: { event: SanityEvent }): ReactElement {
  * Renders the event image
  */
 function EventImage({ event }: { event: SanityEvent }): ReactElement | null {
-  if (!event.mainImage) return null;
+  if (!event.mainImage) {
+    debug.log("No mainImage for event:", event._id);
+    return null;
+  }
+
+  const imageUrl = urlFor(event.mainImage).width(300).height(400).url();
+  debug.log("Generated image URL:", imageUrl);
+  debug.log("mainImage data:", event.mainImage);
 
   return (
     <img
-      src={urlFor(event.mainImage).width(300).height(400).url()}
+      src={imageUrl}
       alt={event.mainImage.alt || "Event image"}
       className="w-full h-full object-cover rounded-lg transition-all duration-300 group-hover:brightness-75"
     />
