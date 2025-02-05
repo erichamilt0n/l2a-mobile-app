@@ -13,4 +13,10 @@ export const debug = {
       globalThis.console.error(...args);
     }
   },
+  warn: (...args: unknown[]): void => {
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-restricted-globals
+      globalThis.console.warn(...args);
+    }
+  },
 };
